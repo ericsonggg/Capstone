@@ -43,9 +43,6 @@ class HomeFragment : Fragment() {
         temperatureChart.invalidate()
 
         notificationTextView.text = "No Notifications to display"
-        //homeViewModel.text.observe(viewLifecycleOwner, Observer {
-        //    notificationTextView.text = it
-        //})
         return root
     }
 
