@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.coolerthanyou.R
 import com.example.coolerthanyou.ui.IDataContainer
@@ -30,15 +29,18 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val notificationTextView: TextView = root.findViewById(R.id.text_notification_body)
 
-        val chart = root.findViewById(R.id.testChart) as LineChart
+        val temperatureChart = root.findViewById(R.id.temperature_chart) as LineChart
+        val humidityChart = root.findViewById(R.id.humidity_chart) as LineChart
+
         var entries = populateData(getData())
         var lineDataSet = LineDataSet(entries,"testData")
 
         lineDataSet.setColor(5,4)
 
         var lineData = LineData(lineDataSet)
-        chart.setData(lineData)
-        chart.invalidate()
+        temperatureChart.setData(lineData)
+        humidityChart.setData(lineData)
+        temperatureChart.invalidate()
 
         notificationTextView.text = "No Notifications to display"
         //homeViewModel.text.observe(viewLifecycleOwner, Observer {
