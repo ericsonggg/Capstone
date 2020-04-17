@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
+        val notificationTextView: TextView = root.findViewById(R.id.text_notification_body)
 
         val chart = root.findViewById(R.id.testChart) as LineChart
         var entries = populateData(getData())
@@ -40,9 +40,10 @@ class HomeFragment : Fragment() {
         chart.setData(lineData)
         chart.invalidate()
 
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        notificationTextView.text = "No Notifications to display"
+        //homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        //    notificationTextView.text = it
+        //})
         return root
     }
 

@@ -11,6 +11,9 @@
     <string name="menu_data">Data</string>
     <string name="menu_about">About Application</string>
 
+<!--    Main Page Text Values  -->
+    <string name="notification_header">Notifications:</string>
+
     <string name="home_second">Home Second</string>
 
     <!-- TODO: Remove or change this placeholder text -->
