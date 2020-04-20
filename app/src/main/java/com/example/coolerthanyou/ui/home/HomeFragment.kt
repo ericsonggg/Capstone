@@ -9,14 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.coolerthanyou.R
-import com.example.coolerthanyou.ui.IDataContainer
+import com.example.coolerthanyou.BaseFragment
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 
-
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment(){
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -27,11 +23,11 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val notificationTextView: TextView = root.findViewById(R.id.text_notification_body)
+        root = inflater.inflate(R.layout.fragment_home, container, false)
+        val notificationTextView = findViewById(R.id.text_notification_body) as TextView
 
-        val temperatureChart = root.findViewById(R.id.temperature_chart) as LineChart
-        val humidityChart = root.findViewById(R.id.humidity_chart) as LineChart
+        val temperatureChart = findViewById(R.id.temperature_chart) as LineChart
+        val humidityChart = findViewById(R.id.humidity_chart) as LineChart
 
 
         homeViewModel.temperaturePlotData.observe(viewLifecycleOwner, Observer {
