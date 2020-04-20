@@ -33,7 +33,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/notification_header"
+                android:text="@string/fragment_home_notification_header"
                 android:gravity="center_horizontal" />
             <TextView
                 android:id="@+id/text_notification_body"
@@ -69,7 +69,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/temperature_data_header"
+                android:text="@string/fragment_home_temperature_data_header"
                 android:gravity="left" />
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/temperature_chart"
@@ -98,7 +98,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/humidity_data_header"
+                android:text="@string/fragment_home_humidity_data_header"
                 android:gravity="left" />
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/humidity_chart"
