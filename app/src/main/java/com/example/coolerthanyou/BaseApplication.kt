@@ -9,6 +9,6 @@ import com.example.coolerthanyou.dagger.DaggerApplicationComponent
  * Creates a new Dagger instance.
  */
 class BaseApplication : Application() {
-
+f
     internal val appComponent: ApplicationComponent = DaggerApplicationComponent.create()
 }

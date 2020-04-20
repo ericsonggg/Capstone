@@ -15,6 +15,7 @@
     <string name="notification_header">Notifications:</string>
     <string name="temperature_data_header">Temperature Data:</string>
     <string name="humidity_data_header">Humidity Data:</string>
+    <string name="no_notifications">No Notifications to Display</string>
 
     <string name="home_second">Home Second</string>
 

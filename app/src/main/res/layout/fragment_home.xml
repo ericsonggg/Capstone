@@ -17,7 +17,7 @@
             android:orientation="vertical"
             android:paddingBottom="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/magenta"
+            android:background="@color/washedOutGreen"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
             <TextView

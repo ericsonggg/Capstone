@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
         humidityChart.setData(lineData)
         temperatureChart.invalidate()
 
-        notificationTextView.text = "No Notifications to display"
+        notificationTextView.text = getText(R.string.no_notifications);
         return root
     }
 
