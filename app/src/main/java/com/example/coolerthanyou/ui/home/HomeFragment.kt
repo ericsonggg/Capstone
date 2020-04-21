@@ -5,18 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.coolerthanyou.R
-import com.example.coolerthanyou.ui.IDataContainer
+import com.example.coolerthanyou.BaseFragment
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 
-
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment(){
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -27,70 +22,22 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
+        root = inflater.inflate(R.layout.fragment_home, container, false)
+        val notificationTextView : TextView = findViewById(R.id.fragment_home_text_notification_body) as TextView
 
-        val chart = root.findViewById(R.id.testChart) as LineChart
-        var entries = populateData(getData())
-        var lineDataSet = LineDataSet(entries,"testData")
+        val temperatureChart : LineChart = findViewById(R.id.fragment_home_temperature_chart) as LineChart
+        val humidityChart : LineChart = findViewById(R.id.fragment_home_humidity_chart) as LineChart
 
-        lineDataSet.setColor(5,4)
 
-        var lineData = LineData(lineDataSet)
-        chart.setData(lineData)
-        chart.invalidate()
-
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        homeViewModel.getTemperaturePlotData().observe(viewLifecycleOwner, Observer {
+            temperatureChart.setData(it)
         })
+        homeViewModel.getHumidityPlotData().observe(viewLifecycleOwner, Observer {
+            humidityChart.setData(it)
+        })
+        temperatureChart.invalidate()
+
+        notificationTextView.text = getText(R.string.fragment_home_no_notifications);
         return root
     }
-
-    private fun populateData(dataToUse: Array<ChartDataContainer>) : MutableList<Entry>{
-        val entries: MutableList<Entry> = ArrayList()
-
-        for (data in dataToUse){
-            val newEntry = Entry(data.getValueX(),data.getValueY())
-            entries.add(newEntry)
-        }
-        return entries
-    }
-
-    private fun getData(): Array<ChartDataContainer>{
-        val dataArray = Array(3){ChartDataContainer(0f,0f)}
-        dataArray[0].setValueY(10f)
-        dataArray[1].setValueX(1f)
-        dataArray[1].setValueY(12f)
-        dataArray[2].setValueX(2f)
-        dataArray[2].setValueY(5f)
-        return dataArray
-    }
-
-    class ChartDataContainer(inputX: Float, inputY: Float) : IDataContainer{
-        private var valueX : Float
-        private var valueY : Float
-
-        init{
-            valueX = inputX
-            valueY = inputY
-        }
-
-        override fun getValueX(): Float {
-            return valueX;
-        }
-
-        override fun getValueY(): Float {
-            return valueY;
-        }
-
-        fun setValueX(newValueX: Float){
-            valueX = newValueX
-        }
-
-        fun setValueY(newValueY: Float){
-            valueY = newValueY
-        }
-
-    }
-
 }
