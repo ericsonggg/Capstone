@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
             <TextView
-                android:id="@+id/text_notification_header"
+                android:id="@+id/fragment_home_text_notification_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -36,7 +36,7 @@
                 android:text="@string/fragment_home_notification_header"
                 android:gravity="center_horizontal" />
             <TextView
-                android:id="@+id/text_notification_body"
+                android:id="@+id/fragment_home_text_notification_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -57,7 +57,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
             <TextView
-                android:id="@+id/text_temperature_data_header"
+                android:id="@+id/fragment_home_text_temperature_data_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -72,7 +72,7 @@
                 android:text="@string/fragment_home_temperature_data_header"
                 android:gravity="left" />
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/temperature_chart"
+                android:id="@+id/fragment_home_temperature_chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
             <TextView
-                android:id="@+id/text_humidity_data_header"
+                android:id="@+id/fragment_home_text_humidity_data_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -101,7 +101,7 @@
                 android:text="@string/fragment_home_humidity_data_header"
                 android:gravity="left" />
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/humidity_chart"
+                android:id="@+id/fragment_home_humidity_chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 app:layout_constraintEnd_toEndOf="parent"

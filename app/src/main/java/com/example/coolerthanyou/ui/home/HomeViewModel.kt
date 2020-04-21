@@ -13,7 +13,7 @@ class HomeViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
         value = "Main Application Page"
     }
-    val text: LiveData<String> = _text
+    fun getPageText(): LiveData<String> = _text
 
     private val _temperaturePlotData = MutableLiveData<LineData>().apply{
         var entries = populateData(getData())
@@ -22,7 +22,7 @@ class HomeViewModel : ViewModel() {
         lineDataSet.setColor(5,4)
         value = LineData(lineDataSet)
     }
-    val temperaturePlotData: LiveData<LineData> = _temperaturePlotData
+    fun getTemperaturePlotData(): LiveData<LineData> = _temperaturePlotData
 
     private val _humidityPlotData = MutableLiveData<LineData>().apply{
         var entries = populateData(getData())
@@ -31,7 +31,7 @@ class HomeViewModel : ViewModel() {
         lineDataSet.setColor(5,4)
         value = LineData(lineDataSet)
     }
-    val humidityPlotData: LiveData<LineData> = _temperaturePlotData
+    fun getHumidityPlotData(): LiveData<LineData> = _humidityPlotData
 
     private fun populateData(dataToUse: Array<ChartDataContainer>) : MutableList<Entry>{
         val entries: MutableList<Entry> = ArrayList()

@@ -21,8 +21,8 @@ class HomeSecondFragment : Fragment()  {
         homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notification_body)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = root.findViewById(R.id.fragment_home_text_notification_body)
+        homeViewModel.getPageText().observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
