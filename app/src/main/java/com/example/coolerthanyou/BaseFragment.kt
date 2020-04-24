@@ -12,11 +12,11 @@ abstract class BaseFragment : Fragment() {
     protected lateinit var application: BaseApplication
     protected lateinit var root: View
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         // Activity should be non-null after attach
-        application = activity!!.applicationContext as BaseApplication
+        application = requireActivity().applicationContext as BaseApplication
     }
 
     /**

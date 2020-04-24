@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_small"
+        android:padding="@dimen/padding_x_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,7 +23,7 @@
             android:id="@+id/fragment_control_box_select_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_med"
+            android:layout_marginEnd="@dimen/margin_small"
             android:text="@string/fragment_control_box_select_label" />
 
         <Spinner
@@ -43,7 +43,7 @@
         style="@style/TextHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_x_large"
+        android:layout_marginTop="@dimen/margin_xx_large"
         android:text="@string/fragment_control_current_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_control_box_select_barrier" />
@@ -60,7 +60,7 @@
         android:id="@+id/fragment_control_current_temperature_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_x_small"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_current_temperature_label"
         app:layout_constraintStart_toEndOf="@id/fragment_control_current_temperature_label" />
@@ -69,7 +69,7 @@
         android:id="@+id/fragment_control_current_temperature_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_x_small"
         app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_current_temperature_label"
         app:layout_constraintStart_toEndOf="@id/fragment_control_current_temperature_value" />
 
@@ -85,7 +85,7 @@
         android:id="@+id/fragment_control_current_humidity_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_x_small"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_current_humidity_label"
         app:layout_constraintStart_toEndOf="@id/fragment_control_current_humidity_label" />
@@ -94,7 +94,7 @@
         android:id="@+id/fragment_control_current_humidity_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_x_small"
         app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_current_humidity_label"
         app:layout_constraintStart_toEndOf="@id/fragment_control_current_humidity_value" />
 
@@ -109,7 +109,7 @@
         style="@style/TextHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_x_large"
+        android:layout_marginTop="@dimen/margin_xx_large"
         android:text="@string/fragment_control_setting_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_control_current_barrier" />
@@ -126,7 +126,7 @@
         android:id="@+id/fragment_control_setting_temperature_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_x_small"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_setting_temperature_label"
         app:layout_constraintStart_toEndOf="@id/fragment_control_setting_temperature_label" />
@@ -135,7 +135,7 @@
         android:id="@+id/fragment_control_setting_temperature_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_x_small"
         app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_setting_temperature_label"
         app:layout_constraintStart_toEndOf="@id/fragment_control_setting_temperature_value" />
 
@@ -152,7 +152,7 @@
         android:id="@+id/fragment_control_setting_humidity_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_med"
+        android:layout_marginTop="@dimen/margin_small"
         android:text="@string/fragment_control_humidity_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_control_setting_temperature_slider" />
@@ -161,7 +161,7 @@
         android:id="@+id/fragment_control_setting_humidity_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_x_small"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_setting_humidity_label"
         app:layout_constraintStart_toEndOf="@id/fragment_control_setting_humidity_label" />
@@ -170,7 +170,7 @@
         android:id="@+id/fragment_control_setting_humidity_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/margin_x_small"
         app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_setting_humidity_label"
         app:layout_constraintStart_toEndOf="@id/fragment_control_setting_humidity_value" />
 
@@ -194,7 +194,7 @@
         style="@style/TextHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_x_large"
+        android:layout_marginTop="@dimen/margin_xx_large"
         android:text="@string/fragment_control_history_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_control_setting_barrier" />

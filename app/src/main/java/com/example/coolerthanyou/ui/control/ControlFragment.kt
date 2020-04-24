@@ -80,8 +80,9 @@ class ControlFragment : BaseFragment() {
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
+
 
         application.appComponent.inject(this)
     }

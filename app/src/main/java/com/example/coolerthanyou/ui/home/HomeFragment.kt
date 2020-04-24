@@ -16,7 +16,7 @@ class HomeFragment : BaseFragment(){
 
     private lateinit var homeViewModel: HomeViewModel
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         application.appComponent.inject(this)
