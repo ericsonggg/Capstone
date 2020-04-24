@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/drawer_home">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/drawer_home"
         android:name="com.example.coolerthanyou.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/drawer_home"
         tools:layout="@layout/fragment_home">
 
         <action
@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_home_second">
         <action
             android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
+            app:destination="@id/drawer_home" />
 
         <argument
             android:name="myArg"
@@ -30,14 +30,20 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/drawer_control"
+        android:name="com.example.coolerthanyou.ui.control.ControlFragment"
+        android:label="@string/drawer_control"
+        tools:layout="@layout/fragment_control" />
+
+    <fragment
+        android:id="@+id/drawer_gallery"
         android:name="com.example.coolerthanyou.ui.gallery.GalleryFragment"
-        android:label="@string/menu_data"
+        android:label="@string/drawer_data"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/drawer_slideshow"
         android:name="com.example.coolerthanyou.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_about"
+        android:label="@string/drawer_about"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>

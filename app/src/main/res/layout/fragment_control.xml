@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:layout_marginVertical="@dimen/activity_vertical_margin"
+    tools:ignore="RtlCompat, RtlSymmetry">
+
+    <LinearLayout
+        android:id="@+id/fragment_control_box_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/fragment_control_box_select_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_med"
+            android:text="@string/fragment_control_box_select_label" />
+
+        <Spinner
+            android:id="@+id/fragment_control_box_select_spinner"
+            android:layout_width="@dimen/small"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/fragment_control_box_select_barrier"
+        style="@style/HorizontalBarrier"
+        app:constraint_referenced_ids="fragment_control_box_select"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/fragment_control_current_header"
+        style="@style/TextHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_x_large"
+        android:text="@string/fragment_control_current_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_box_select_barrier" />
+
+    <TextView
+        android:id="@+id/fragment_control_current_temperature_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_control_temperature_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_current_header" />
+
+    <TextView
+        android:id="@+id/fragment_control_current_temperature_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_current_temperature_label"
+        app:layout_constraintStart_toEndOf="@id/fragment_control_current_temperature_label" />
+
+    <TextView
+        android:id="@+id/fragment_control_current_temperature_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_current_temperature_label"
+        app:layout_constraintStart_toEndOf="@id/fragment_control_current_temperature_value" />
+
+    <TextView
+        android:id="@+id/fragment_control_current_humidity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_control_humidity_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_current_temperature_label" />
+
+    <TextView
+        android:id="@+id/fragment_control_current_humidity_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_current_humidity_label"
+        app:layout_constraintStart_toEndOf="@id/fragment_control_current_humidity_label" />
+
+    <TextView
+        android:id="@+id/fragment_control_current_humidity_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_current_humidity_label"
+        app:layout_constraintStart_toEndOf="@id/fragment_control_current_humidity_value" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/fragment_control_current_barrier"
+        style="@style/HorizontalBarrier"
+        app:constraint_referenced_ids="fragment_control_current_humidity_label, fragment_control_current_humidity_value, fragment_control_current_humidity_unit"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/fragment_control_setting_header"
+        style="@style/TextHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_x_large"
+        android:text="@string/fragment_control_setting_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_current_barrier" />
+
+    <TextView
+        android:id="@+id/fragment_control_setting_temperature_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_control_temperature_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_setting_header" />
+
+    <TextView
+        android:id="@+id/fragment_control_setting_temperature_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_setting_temperature_label"
+        app:layout_constraintStart_toEndOf="@id/fragment_control_setting_temperature_label" />
+
+    <TextView
+        android:id="@+id/fragment_control_setting_temperature_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_setting_temperature_label"
+        app:layout_constraintStart_toEndOf="@id/fragment_control_setting_temperature_value" />
+
+    <SeekBar
+        android:id="@+id/fragment_control_setting_temperature_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_setting_temperature_label" />
+
+    <TextView
+        android:id="@+id/fragment_control_setting_humidity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_med"
+        android:text="@string/fragment_control_humidity_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_setting_temperature_slider" />
+
+    <TextView
+        android:id="@+id/fragment_control_setting_humidity_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_setting_humidity_label"
+        app:layout_constraintStart_toEndOf="@id/fragment_control_setting_humidity_label" />
+
+    <TextView
+        android:id="@+id/fragment_control_setting_humidity_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        app:layout_constraintBaseline_toBaselineOf="@id/fragment_control_setting_humidity_label"
+        app:layout_constraintStart_toEndOf="@id/fragment_control_setting_humidity_value" />
+
+    <SeekBar
+        android:id="@+id/fragment_control_setting_humidity_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_setting_humidity_label" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/fragment_control_setting_barrier"
+        style="@style/HorizontalBarrier"
+        app:constraint_referenced_ids="fragment_control_setting_humidity_slider"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/fragment_control_history_header"
+        style="@style/TextHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_x_large"
+        android:text="@string/fragment_control_history_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_setting_barrier" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/fragment_control_history_chart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_control_history_header" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

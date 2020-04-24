@@ -7,11 +7,16 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_data">Data</string>
-    <string name="menu_about">About Application</string>
+    <string name="drawer_home">Home</string>
+    <string name="drawer_data">Data</string>
+    <string name="drawer_about">About Application</string>
+    <string name="drawer_control">Control</string>
 
-<!--    Main Page Text Values  -->
+    <!--    Common  -->
+    <string name="common_temperature">Temperature</string>
+    <string name="common_humidity">Humidity</string>
+
+    <!--    Home Page Text Values  -->
     <string name="fragment_home_notification_header">Notifications:</string>
     <string name="fragment_home_temperature_data_header">Temperature Data:</string>
     <string name="fragment_home_humidity_data_header">Humidity Data:</string>
@@ -19,6 +24,13 @@
 
     <string name="home_second">Home Second</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    Control Page    -->
+    <string name="fragment_control_box_select_label">Current Box:</string>
+    <string name="fragment_control_temperature_label">Temperature:</string>
+    <string name="fragment_control_humidity_label">Humidity:</string>
+    <string name="fragment_control_current_header">Current</string>
+    <string name="fragment_control_setting_header">Settings</string>
+    <string name="fragment_control_history_header">History</string>
+    <string name="fragment_control_history_temperature_label">@string/common_temperature</string>
+    <string name="fragment_control_history_humidity_label">@string/common_humidity</string>
 </resources>
