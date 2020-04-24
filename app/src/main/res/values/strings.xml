@@ -12,25 +12,6 @@
     <string name="drawer_about">About Application</string>
     <string name="drawer_control">Control</string>
 
-    <!--    Common  -->
     <string name="common_temperature">Temperature</string>
     <string name="common_humidity">Humidity</string>
-
-    <!--    Home Page Text Values  -->
-    <string name="fragment_home_notification_header">Notifications:</string>
-    <string name="fragment_home_temperature_data_header">Temperature Data:</string>
-    <string name="fragment_home_humidity_data_header">Humidity Data:</string>
-    <string name="fragment_home_no_notifications">No Notifications to Display</string>
-
-    <string name="home_second">Home Second</string>
-
-    <!--    Control Page    -->
-    <string name="fragment_control_box_select_label">Current Box:</string>
-    <string name="fragment_control_temperature_label">Temperature:</string>
-    <string name="fragment_control_humidity_label">Humidity:</string>
-    <string name="fragment_control_current_header">Current</string>
-    <string name="fragment_control_setting_header">Settings</string>
-    <string name="fragment_control_history_header">History</string>
-    <string name="fragment_control_history_temperature_label">@string/common_temperature</string>
-    <string name="fragment_control_history_humidity_label">@string/common_humidity</string>
 </resources>
