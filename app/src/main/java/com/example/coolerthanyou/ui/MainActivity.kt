@@ -50,8 +50,8 @@ class MainActivity : BaseActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.drawer_home,
-                R.id.drawer_gallery,
-                R.id.drawer_slideshow,
+                R.id.drawer_data,
+                R.id.drawer_about,
                 R.id.drawer_control
             ), drawerLayout
         )

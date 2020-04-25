@@ -98,7 +98,7 @@ class ControlFragment : BaseFragment() {
         root = inflater.inflate(R.layout.fragment_control, container, false)
 
         // Init spinner
-        _currentBoxSpinner = root.findViewById(R.id.fragment_control_box_select_spinner)
+        _currentBoxSpinner = findViewById(R.id.fragment_control_box_select_spinner) as Spinner
         ArrayAdapter(
             activity as Context,
             android.R.layout.simple_spinner_item,
@@ -110,24 +110,24 @@ class ControlFragment : BaseFragment() {
         _currentBoxSpinner.onItemSelectedListener = _currentBoxSpinnerListener
 
         // Init current values
-        val currentTemp: TextView = root.findViewById(R.id.fragment_control_current_temperature_value)
-        _viewModel.getCurrentTemperature().observe(this, Observer { temperature ->
+        val currentTemp: TextView = findViewById(R.id.fragment_control_current_temperature_value) as TextView
+        _viewModel.getCurrentTemperature().observe(viewLifecycleOwner, Observer { temperature ->
             currentTemp.text = temperature.toString()
         })
 
-        val currentHumidity: TextView = root.findViewById(R.id.fragment_control_current_humidity_value)
-        _viewModel.getCurrentHumidity().observe(this, Observer { humidity ->
+        val currentHumidity: TextView = findViewById(R.id.fragment_control_current_humidity_value) as TextView
+        _viewModel.getCurrentHumidity().observe(viewLifecycleOwner, Observer { humidity ->
             currentHumidity.text = humidity.toString()
         })
 
         // Init settings
-        _temperatureSlider = root.findViewById(R.id.fragment_control_setting_temperature_slider)
+        _temperatureSlider = findViewById(R.id.fragment_control_setting_temperature_slider) as SeekBar
         _viewModel.getTemperatureRange().also {
-            _temperatureSlider.min = it.first
+            _temperatureSlider.min = it.first //TODO: create API < 26 alternative
             _temperatureSlider.max = it.second
         }
-        val targetTemp: TextView = root.findViewById(R.id.fragment_control_setting_temperature_value)
-        _viewModel.getTargetTemp().observe(this, Observer { temp ->
+        val targetTemp: TextView = findViewById(R.id.fragment_control_setting_temperature_value) as TextView
+        _viewModel.getTargetTemp().observe(viewLifecycleOwner, Observer { temp ->
             targetTemp.text = temp.toString()
             if (_temperatureSlider.progress != temp) {
                 _temperatureSlider.setOnSeekBarChangeListener(null)
@@ -138,13 +138,13 @@ class ControlFragment : BaseFragment() {
         })
         _temperatureSlider.setOnSeekBarChangeListener(_temperatureSliderChangeListener)
 
-        _humiditySlider = root.findViewById(R.id.fragment_control_setting_humidity_slider)
+        _humiditySlider = findViewById(R.id.fragment_control_setting_humidity_slider) as SeekBar
         _viewModel.getHumidityRange().also {
             _humiditySlider.min = it.first
             _humiditySlider.max = it.second
         }
-        val targetHumidity: TextView = root.findViewById(R.id.fragment_control_setting_humidity_value)
-        _viewModel.getTargetHumidity().observe(this, Observer { humidity ->
+        val targetHumidity: TextView = findViewById(R.id.fragment_control_setting_humidity_value) as TextView
+        _viewModel.getTargetHumidity().observe(viewLifecycleOwner, Observer { humidity ->
             targetHumidity.text = humidity.toString()
             if (_humiditySlider.progress != humidity) {
                 _humiditySlider.setOnSeekBarChangeListener(null)
@@ -156,7 +156,7 @@ class ControlFragment : BaseFragment() {
         _humiditySlider.setOnSeekBarChangeListener(_humiditySliderChangeListener)
 
         // Init chart
-        val historyChart: LineChart = root.findViewById(R.id.fragment_control_history_chart)
+        val historyChart: LineChart = findViewById(R.id.fragment_control_history_chart) as LineChart
         val temperatureHistory = _viewModel.getTemperatureHistory().map { Entry(it.key.toFloat(), it.value.toFloat()) }
         val temperatureLineDataSet = LineDataSet(temperatureHistory, getString(R.string.fragment_control_history_temperature_label))
         temperatureLineDataSet.setColor(Color.RED, 255)
@@ -168,10 +168,10 @@ class ControlFragment : BaseFragment() {
         historyChart.invalidate()
 
         // Init units
-        val currentTempUnit: TextView = root.findViewById(R.id.fragment_control_current_temperature_unit)
-        val settingTempUnit: TextView = root.findViewById(R.id.fragment_control_setting_temperature_unit)
-        val currentHumidityUnit: TextView = root.findViewById(R.id.fragment_control_current_humidity_unit)
-        val settingHumidityUnit: TextView = root.findViewById(R.id.fragment_control_setting_humidity_unit)
+        val currentTempUnit: TextView = findViewById(R.id.fragment_control_current_temperature_unit) as TextView
+        val settingTempUnit: TextView = findViewById(R.id.fragment_control_setting_temperature_unit) as TextView
+        val currentHumidityUnit: TextView = findViewById(R.id.fragment_control_current_humidity_unit) as TextView
+        val settingHumidityUnit: TextView = findViewById(R.id.fragment_control_setting_humidity_unit) as TextView
         _viewModel.getTemperatureUnit().also { temp ->
             currentTempUnit.text = temp
             settingTempUnit.text = temp

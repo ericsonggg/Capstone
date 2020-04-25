@@ -19,13 +19,13 @@
         tools:layout="@layout/fragment_control" />
 
     <fragment
-        android:id="@+id/drawer_gallery"
+        android:id="@+id/drawer_data"
         android:name="com.example.coolerthanyou.ui.gallery.GalleryFragment"
         android:label="@string/drawer_data"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/drawer_slideshow"
+        android:id="@+id/drawer_about"
         android:name="com.example.coolerthanyou.ui.slideshow.SlideshowFragment"
         android:label="@string/drawer_about"
         tools:layout="@layout/fragment_slideshow" />
