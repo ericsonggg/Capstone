@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fragment_home_notification_header">Notifications:</string>
+    <string name="fragment_home_temperature_data_header">Temperature Data:</string>
+    <string name="fragment_home_humidity_data_header">Humidity Data:</string>
+    <string name="fragment_home_no_notifications">No Notifications to Display</string>
+</resources>

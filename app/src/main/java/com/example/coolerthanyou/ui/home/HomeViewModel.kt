@@ -7,8 +7,9 @@ import com.example.coolerthanyou.ui.IDataContainer
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "Main Application Page"
