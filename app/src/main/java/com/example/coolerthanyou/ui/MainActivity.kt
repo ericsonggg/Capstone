@@ -2,6 +2,8 @@ package com.example.coolerthanyou.ui
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
@@ -42,6 +44,14 @@ class MainActivity : BaseActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+        val boxValue : TextView = findViewById(R.id.box_value)
+        val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
+        quickAccessDrawer.setOnClickListener{ view ->
+            boxValue.text = getText(R.string.secondary_box_value)
+            Snackbar.make(view, "Make a selection popup appear instead", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)

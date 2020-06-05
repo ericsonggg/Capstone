@@ -2,4 +2,5 @@
 <resources>
     <string name="quick_access_drawer_caption">Current Box: </string>
     <string name="default_box_value">Box 1</string>
+    <string name="secondary_box_value">Box 2</string>
 </resources>
