@@ -19,7 +19,7 @@
         android:paddingBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/default_box_value"
+        android:text="@string/quick_access_drawer_default_box_value"
         android:textSize="@dimen/header_x_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

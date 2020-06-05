@@ -1,9 +1,12 @@
 package com.example.coolerthanyou.ui
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
@@ -45,11 +48,21 @@ class MainActivity : BaseActivity() {
                 .setAction("Action", null).show()
         }
         val boxValue : TextView = findViewById(R.id.box_value)
+
         val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
         quickAccessDrawer.setOnClickListener{ view ->
-            boxValue.text = getText(R.string.secondary_box_value)
-            Snackbar.make(view, "Make a selection popup appear instead", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            val items = arrayOf<CharSequence>(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Select Box")
+            val selectionClick = { dialog : DialogInterface, which: Int ->
+                boxValue.text = items[which]
+                Toast.makeText(applicationContext,
+                    getText(R.string.quick_access_drawer_update_notification), Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+
+            builder.setSingleChoiceItems(items,0, selectionClick)
+            builder.show()
         }
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
