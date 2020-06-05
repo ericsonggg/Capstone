@@ -49,19 +49,22 @@ class MainActivity : BaseActivity() {
         }
         val boxValue : TextView = findViewById(R.id.box_value)
 
+        var currentBoxValue = 0;
+        val boxValueList = arrayOf<CharSequence>(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
+
         val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
         quickAccessDrawer.setOnClickListener{ view ->
-            val items = arrayOf<CharSequence>(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Select Box")
             val selectionClick = { dialog : DialogInterface, which: Int ->
-                boxValue.text = items[which]
+                boxValue.text = boxValueList[which]
+                currentBoxValue = which
                 Toast.makeText(applicationContext,
                     getText(R.string.quick_access_drawer_update_notification), Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             }
 
-            builder.setSingleChoiceItems(items,0, selectionClick)
+            builder.setSingleChoiceItems(boxValueList,currentBoxValue, selectionClick)
             builder.show()
         }
 
