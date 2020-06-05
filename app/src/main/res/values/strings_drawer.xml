@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="quick_access_drawer_caption">Current Box: </string>
+    <string name="default_box_value">Box 1</string>
 </resources>
