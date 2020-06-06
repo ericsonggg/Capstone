@@ -47,25 +47,17 @@ class MainActivity : BaseActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        val boxValue : TextView = findViewById(R.id.box_value)
 
-        var currentBoxValue = 0;
-        val boxValueList = arrayOf<CharSequence>(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
+        val boxValue : TextView = findViewById(R.id.box_value)
+        val currentBoxValue = 0; // TODO: Replace this with some cross-session value
+        val boxValueList = arrayOf(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
+
+        var boxSelectionTool = BoxSelector(currentBoxValue, boxValueList)
 
         val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
         quickAccessDrawer.setOnClickListener{ view ->
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Select Box")
-            val selectionClick = { dialog : DialogInterface, which: Int ->
-                boxValue.text = boxValueList[which]
-                currentBoxValue = which
-                Toast.makeText(applicationContext,
-                    getText(R.string.quick_access_drawer_update_notification), Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            }
-
-            builder.setSingleChoiceItems(boxValueList,currentBoxValue, selectionClick)
-            builder.show()
+            var boxSelectionDialog : AlertDialog.Builder = boxSelectionTool.getAlertDialog(this, boxValue)
+            boxSelectionDialog.show()
         }
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
