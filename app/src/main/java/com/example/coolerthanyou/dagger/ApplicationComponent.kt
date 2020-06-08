@@ -4,6 +4,7 @@ import com.example.coolerthanyou.ui.MainActivity
 import com.example.coolerthanyou.ui.control.ControlFragment
 import com.example.coolerthanyou.ui.home.HomeFragment
 import dagger.Component
+import javax.inject.Singleton
 
 /**
  * Dagger [Component] for the whole application.
@@ -11,7 +12,8 @@ import dagger.Component
  *
  * TODO: split off injects for submodules
  */
-@Component(modules = [ViewModelFactoryModule::class, MainModule::class])
+@Singleton
+@Component(modules = [ViewModelFactoryModule::class, MainModule::class, RoomModule::class])
 interface ApplicationComponent {
 
     /** [MainModule] **/

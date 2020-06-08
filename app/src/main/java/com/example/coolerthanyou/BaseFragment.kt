@@ -3,12 +3,16 @@ package com.example.coolerthanyou
 import android.content.Context
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.example.coolerthanyou.dagger.ViewModelFactory
+import javax.inject.Inject
 
 /**
  * Base [Fragment] for all fragments in this project
  */
 abstract class BaseFragment : Fragment() {
 
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelFactory   // Use this when instantiating new ViewModels for fragments
     protected lateinit var application: BaseApplication
     protected lateinit var root: View
 
