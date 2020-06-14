@@ -17,6 +17,12 @@ import com.example.coolerthanyou.R
  * @constructor Stores the current index and the values to display
  */
 class BoxSelector(var _defaultCheckedValue: Int, var _boxValues: Array<CharSequence>) {
+    /**
+     * Gets an alert dialog based on previously populated data
+     * @param Context context for creation of dialogs and access of resources
+     * @param TextView the field which represents the box value
+     * @return An alert dialog builder.
+     */
     fun getAlertDialog(currentContext: Context, boxValue : TextView) : AlertDialog.Builder{
         val builder = AlertDialog.Builder(currentContext)
         builder.setTitle(currentContext.getText(R.string.quick_access_drawer_box_selection_text))
