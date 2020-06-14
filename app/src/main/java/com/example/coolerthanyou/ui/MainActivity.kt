@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -47,10 +48,9 @@ class MainActivity : BaseActivity() {
         }
 
         val boxValue : TextView = findViewById(R.id.quick_access_drawer_box_value)
-        val currentBoxValue = 0; // TODO: Replace this with some cross-session value
-        val boxValueList = arrayOf(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
 
-        val boxSelectionTool = BoxSelector(currentBoxValue, boxValueList)
+        val boxValueList = arrayOf(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
+        val boxSelectionTool = BoxSelector(boxValueList, viewModel)
 
         val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
         quickAccessDrawer.setOnClickListener{ view ->
