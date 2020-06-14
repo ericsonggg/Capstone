@@ -1,12 +1,10 @@
 package com.example.coolerthanyou.ui
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProviders
@@ -48,15 +46,15 @@ class MainActivity : BaseActivity() {
                 .setAction("Action", null).show()
         }
 
-        val boxValue : TextView = findViewById(R.id.box_value)
+        val boxValue : TextView = findViewById(R.id.quick_access_drawer_box_value)
         val currentBoxValue = 0; // TODO: Replace this with some cross-session value
         val boxValueList = arrayOf(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
 
-        var boxSelectionTool = BoxSelector(currentBoxValue, boxValueList)
+        val boxSelectionTool = BoxSelector(currentBoxValue, boxValueList)
 
         val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
         quickAccessDrawer.setOnClickListener{ view ->
-            var boxSelectionDialog : AlertDialog.Builder = boxSelectionTool.getAlertDialog(this, boxValue)
+            val boxSelectionDialog : AlertDialog.Builder = boxSelectionTool.getAlertDialog(this, boxValue)
             boxSelectionDialog.show()
         }
 
