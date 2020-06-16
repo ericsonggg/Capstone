@@ -7,11 +7,11 @@ import androidx.room.Query
 import com.example.coolerthanyou.model.Freezer
 
 /**
- * Room-specific implementation of [FreezerDataSource].
+ * Room-specific implementation of [IFreezerDataSource].
  * AKA data access object (DAO).
  */
 @Dao
-interface FreezerRoomDataSource : FreezerDataSource {
+interface IFreezerRoomDataSource : IFreezerDataSource {
 
     @Query("SELECT * FROM freezer")
     override fun getAllFreezers(): List<Freezer>

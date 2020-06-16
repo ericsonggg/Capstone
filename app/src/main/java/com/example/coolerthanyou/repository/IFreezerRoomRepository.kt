@@ -1,15 +1,15 @@
 package com.example.coolerthanyou.repository
 
-import com.example.coolerthanyou.datasource.FreezerRoomDataSource
+import com.example.coolerthanyou.datasource.IFreezerRoomDataSource
 import com.example.coolerthanyou.model.Freezer
 import javax.inject.Inject
 
 /**
- * Room-specific implementation of the [FreezerRepository]
+ * Room-specific implementation of the [IFreezerRepository]
  *
  * @property freezerDao The DAO for the Freezer entity
  */
-class FreezerRoomRepository @Inject constructor(private val freezerDao: FreezerRoomDataSource) : FreezerRepository {
+class IFreezerRoomRepository @Inject constructor(private val freezerDao: IFreezerRoomDataSource) : IFreezerRepository {
 
     override fun getAllFreezers(): List<Freezer> {
         return freezerDao.getAllFreezers()

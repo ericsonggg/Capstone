@@ -5,7 +5,7 @@ import com.example.coolerthanyou.model.Freezer
 /**
  * Repository for all [Freezer] related operations
  */
-interface FreezerRepository {
+interface IFreezerRepository {
 
     /**
      * Get all freezers in the database

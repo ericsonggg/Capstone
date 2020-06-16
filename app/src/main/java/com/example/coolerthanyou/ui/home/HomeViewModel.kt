@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.coolerthanyou.model.Freezer
-import com.example.coolerthanyou.repository.FreezerRepository
+import com.example.coolerthanyou.repository.IFreezerRepository
 import com.example.coolerthanyou.ui.IDataContainer
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -14,7 +14,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val freezerRepository: FreezerRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(private val IFreezerRepository: IFreezerRepository) : ViewModel() {
 
     //TODO: remove after testing, see testing comment below
     init {
@@ -72,26 +72,26 @@ class HomeViewModel @Inject constructor(private val freezerRepository: FreezerRe
         GlobalScope.launch {
             // delete all
             Log.d("KEK", "---Starting database wipe---")
-            val allBoxes = freezerRepository.getAllFreezers()
+            val allBoxes = IFreezerRepository.getAllFreezers()
             Log.d("KEK", "Found " + allBoxes.size + " items, listing all items: " + allBoxes?.toString())
             for (box in allBoxes) {
-                freezerRepository.deleteFreezer(box)
+                IFreezerRepository.deleteFreezer(box)
             }
-            val remainingBoxes = freezerRepository.getAllFreezers()
+            val remainingBoxes = IFreezerRepository.getAllFreezers()
             Log.d("KEK", "" + remainingBoxes.size + " items remaining")
             Log.d("KEK", "---Finished database wipe---")
 
             // test
             Log.d("KEK", "---Starting test---")
             val kek = Freezer("ABC", "name", 20.0, 30.0)
-            freezerRepository.addFreezer(kek)
-            Log.d("KEK", "A " + freezerRepository.getAllFreezers().toString())
-            Log.d("KEK", "B " + freezerRepository.getFreezerById("ABC")?.toString())
-            Log.d("KEK", "C " + freezerRepository.getFreezerById("name")?.toString())
-            Log.d("KEK", "D " + freezerRepository.getFreezerByName("name")?.toString())
-            Log.d("KEK", "E " + freezerRepository.getFreezerByName("ABC")?.toString())
-            freezerRepository.deleteFreezer(kek)
-            Log.d("KEK", "F " + freezerRepository.getAllFreezers().toString())
+            IFreezerRepository.addFreezer(kek)
+            Log.d("KEK", "A " + IFreezerRepository.getAllFreezers().toString())
+            Log.d("KEK", "B " + IFreezerRepository.getFreezerById("ABC")?.toString())
+            Log.d("KEK", "C " + IFreezerRepository.getFreezerById("name")?.toString())
+            Log.d("KEK", "D " + IFreezerRepository.getFreezerByName("name")?.toString())
+            Log.d("KEK", "E " + IFreezerRepository.getFreezerByName("ABC")?.toString())
+            IFreezerRepository.deleteFreezer(kek)
+            Log.d("KEK", "F " + IFreezerRepository.getAllFreezers().toString())
         }
     }
 

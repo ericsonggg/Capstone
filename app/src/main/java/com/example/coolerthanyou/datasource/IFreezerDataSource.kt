@@ -5,7 +5,7 @@ import com.example.coolerthanyou.model.Freezer
 /**
  * Data source for the [Freezer] model.
  */
-interface FreezerDataSource {
+interface IFreezerDataSource {
 
     /**
      * Get all freezers in the database

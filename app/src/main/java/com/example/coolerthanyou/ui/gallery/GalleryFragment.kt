@@ -1,5 +1,6 @@
 package com.example.coolerthanyou.ui.gallery
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,12 @@ import com.example.coolerthanyou.R
 class GalleryFragment : BaseFragment() {
 
     private val _galleryViewModel: GalleryViewModel by viewModels { viewModelFactory }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        application.appComponent.inject(this)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,

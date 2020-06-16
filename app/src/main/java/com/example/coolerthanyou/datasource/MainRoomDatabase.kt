@@ -11,9 +11,9 @@ import com.example.coolerthanyou.model.Freezer
 abstract class MainRoomDatabase : RoomDatabase() {
 
     /**
-     * Get the [FreezerRoomDataSource]
+     * Get the [IFreezerRoomDataSource]
      *
-     * @return  A [FreezerRoomDataSource]
+     * @return  A [IFreezerRoomDataSource]
      */
-    abstract fun getFreezerDao(): FreezerRoomDataSource
+    abstract fun getFreezerDao(): IFreezerRoomDataSource
 }
