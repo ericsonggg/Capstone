@@ -3,7 +3,9 @@ package com.example.coolerthanyou.dagger
 import androidx.lifecycle.ViewModel
 import com.example.coolerthanyou.ui.MainViewModel
 import com.example.coolerthanyou.ui.control.ControlViewModel
+import com.example.coolerthanyou.ui.gallery.GalleryViewModel
 import com.example.coolerthanyou.ui.home.HomeViewModel
+import com.example.coolerthanyou.ui.slideshow.SlideshowViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -38,4 +40,20 @@ abstract class MainModule {
     @IntoMap
     @ViewModelKey(ControlViewModel::class)
     abstract fun bindControlViewModel(controlViewModel: ControlViewModel): ViewModel
+
+    /**
+     * Bind the [GalleryViewModel] as a "value" to be used in the [Map] by [ViewModelFactory]
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(GalleryViewModel::class)
+    abstract fun bindGalleryViewModel(galleryViewModel: GalleryViewModel): ViewModel
+
+    /**
+     * Bind the [SlideshowViewModel] as a "value" to be used in the [Map] by [ViewModelFactory]
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(SlideshowViewModel::class)
+    abstract fun bindSlideshowViewModel(slideshowViewModel: SlideshowViewModel): ViewModel
 }
