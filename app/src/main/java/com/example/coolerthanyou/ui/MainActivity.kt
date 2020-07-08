@@ -1,9 +1,13 @@
 package com.example.coolerthanyou.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -42,6 +46,18 @@ class MainActivity : BaseActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
+
+        val boxValue : TextView = findViewById(R.id.quick_access_drawer_box_value)
+
+        val boxValueList = arrayOf(getText(R.string.quick_access_drawer_default_box_value), getText(R.string.quick_access_drawer_secondary_box_value),getText(R.string.quick_access_drawer_tertiary_box_value))
+        val boxSelectionTool = BoxSelector(boxValueList, viewModel)
+
+        val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
+        quickAccessDrawer.setOnClickListener{ view ->
+            val boxSelectionDialog : AlertDialog.Builder = boxSelectionTool.getAlertDialog(this, boxValue)
+            boxSelectionDialog.show()
+        }
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)

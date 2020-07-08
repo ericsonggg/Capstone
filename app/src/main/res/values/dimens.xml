@@ -6,6 +6,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="xx_small">50dp</dimen>
     <dimen name="x_small">64dp</dimen>
     <dimen name="small">128dp</dimen>
     <dimen name="medium">256dp</dimen>
@@ -18,6 +19,9 @@
     <dimen name="padding_large">8dp</dimen>
     <dimen name="padding_x_large">10dp</dimen>
     <dimen name="padding_xx_large">10dp</dimen>
+    <dimen name="padding_xxx_large">20dp</dimen>
+
+    <dimen name="padding_box_center_shift">125dp</dimen>
 
     <dimen name="margin_x_small">2dp</dimen>
     <dimen name="margin_small">4dp</dimen>
@@ -33,4 +37,6 @@
     <dimen name="header_x_small">18sp</dimen>
     <dimen name="header_small">20sp</dimen>
     <dimen name="header_med">24sp</dimen>
+
+
 </resources>

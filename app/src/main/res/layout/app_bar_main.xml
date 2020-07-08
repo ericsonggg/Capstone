@@ -22,6 +22,12 @@
 
     <include layout="@layout/content_main" />
 
+    <include layout="@layout/quick_access_drawer"
+        android:id="@+id/quick_access_drawer"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
