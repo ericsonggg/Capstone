@@ -1,28 +1,56 @@
 package com.example.coolerthanyou.dagger
 
-import com.example.coolerthanyou.ui.MainActivity
-import com.example.coolerthanyou.ui.control.ControlFragment
-import com.example.coolerthanyou.ui.gallery.GalleryFragment
-import com.example.coolerthanyou.ui.home.HomeFragment
-import com.example.coolerthanyou.ui.slideshow.SlideshowFragment
+import android.content.Context
+import com.example.coolerthanyou.AppConfiguration
+import com.example.coolerthanyou.ui.splash.SplashActivity
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 /**
  * Dagger [Component] for the whole application.
- * This component should have injectors for all activities, and subcomponents.
- *
- * TODO: split off injects for submodules
+ * This component should have injectors for modules that are critical to all other modules i.e. Room
  */
 @Singleton
-@Component(modules = [ViewModelFactoryModule::class, MainModule::class, RoomModule::class])
+@Component(modules = [ApplicationModule::class, RoomModule::class])
 interface ApplicationComponent {
 
-    /** [MainModule] **/
-    fun inject(activity: MainActivity)
+    /** Sub-component factory expose **/
+    fun mainComponent(): MainComponent.Factory
 
-    fun inject(fragment: HomeFragment)
-    fun inject(fragment: ControlFragment)
-    fun inject(fragment: GalleryFragment)
-    fun inject(fragment: SlideshowFragment)
+    /** Activities **/
+    fun inject(activity: SplashActivity)
+
+    /**
+     * Custom builder interface to accept common configurations
+     */
+    @Component.Builder
+    interface Builder {
+
+        /**
+         * Standard build method
+         *
+         * @return  Built component interface
+         */
+        fun build(): ApplicationComponent
+
+        /**
+         * Run-time specific app configuration
+         *
+         * @param conf  Configuration for the app at runtime
+         * @return      Builder
+         */
+        @BindsInstance
+        fun appConfiguration(conf: AppConfiguration): Builder
+
+        /**
+         * Context of the entire application.
+         * Used to build Room databases in [ApplicationModule]
+         *
+         * @param appContext    Context for the app
+         * @return              Builder
+         */
+        @BindsInstance
+        fun appContext(appContext: Context): Builder
+    }
 }

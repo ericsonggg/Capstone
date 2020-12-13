@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -27,15 +26,13 @@ import com.google.android.material.snackbar.Snackbar
  */
 class MainActivity : BaseActivity() {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels { viewModelFactory }
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Inject dependencies before init
-        (applicationContext as BaseApplication).appComponent.inject(this)
+        (applicationContext as BaseApplication).appComponent.mainComponent().create().inject(this)
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
 
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -53,7 +50,7 @@ class MainActivity : BaseActivity() {
         val boxSelectionTool = BoxSelector(boxValueList, viewModel)
 
         val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
-        quickAccessDrawer.setOnClickListener{ view ->
+        quickAccessDrawer.setOnClickListener{ _ ->
             val boxSelectionDialog : AlertDialog.Builder = boxSelectionTool.getAlertDialog(this, boxValue)
             boxSelectionDialog.show()
         }

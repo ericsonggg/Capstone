@@ -18,7 +18,7 @@ class GalleryFragment : BaseFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        application.appComponent.inject(this)
+        application.appComponent.mainComponent().create().inject(this)
     }
 
     override fun onCreateView(
