@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
  */
 class MainActivity : BaseActivity() {
 
+    private val logTag: String = "MainActivity"
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -33,6 +34,8 @@ class MainActivity : BaseActivity() {
         // Inject dependencies before init
         (applicationContext as BaseApplication).appComponent.mainComponent().create().inject(this)
         super.onCreate(savedInstanceState)
+
+        logger.d(logTag, "onCreate started")
 
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -70,6 +73,8 @@ class MainActivity : BaseActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        logger.d(logTag, "onCreate completed")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
