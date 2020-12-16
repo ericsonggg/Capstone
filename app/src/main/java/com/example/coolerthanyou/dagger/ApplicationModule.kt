@@ -1,5 +1,6 @@
 package com.example.coolerthanyou.dagger
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.coolerthanyou.AppConfiguration
@@ -49,7 +50,7 @@ abstract class ApplicationModule {
          */
         @JvmStatic
         @Provides
-        fun bindFileLogger(): FileLogger = FileLogger()
+        fun bindFileLogger(appContext: Context): FileLogger = FileLogger(appContext)
     }
 
     /**

@@ -48,6 +48,15 @@ interface ILogger {
     fun e(tag: String, message: String)
 
     /**
+     * Same as [e] but with an exception
+     *
+     * @param tag       The tag (i.e. caller)
+     * @param message   The messages
+     * @param exception The exception
+     */
+    fun e(tag: String, message: String, exception: Exception)
+
+    /**
      * WTF messages, use to indicate an error that should have never happened
      *
      * @param tag       The tag (i.e. caller)

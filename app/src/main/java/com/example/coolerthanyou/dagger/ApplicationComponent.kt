@@ -2,6 +2,7 @@ package com.example.coolerthanyou.dagger
 
 import android.content.Context
 import com.example.coolerthanyou.AppConfiguration
+import com.example.coolerthanyou.log.LogService
 import com.example.coolerthanyou.ui.splash.SplashActivity
 import dagger.BindsInstance
 import dagger.Component
@@ -20,6 +21,9 @@ interface ApplicationComponent {
 
     /** Activities **/
     fun inject(activity: SplashActivity)
+
+    /** Services **/
+    fun inject(service: LogService)
 
     /**
      * Custom builder interface to accept common configurations
