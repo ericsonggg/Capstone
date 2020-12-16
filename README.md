@@ -8,8 +8,6 @@ MVVM
 3. Auto-clean up code (ctrl + alt + shift + L) and optimize imports (ctrl + alt + o) on all files you change
 
 ## TODO (Unprioritized)
-* Database (maybe [Room?] (https://developer.android.com/topic/libraries/architecture/room))
 * More UI
 * Bluetooth
 * Online data backup
-* Logging system in-between
