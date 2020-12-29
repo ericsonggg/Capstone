@@ -11,4 +11,3 @@ MVVM
 * More UI
 * Bluetooth
 * Online data backup
-* Logging system in-between

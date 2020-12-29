@@ -14,12 +14,13 @@ import com.github.mikephil.charting.charts.LineChart
 
 class HomeFragment : BaseFragment() {
 
+    private val logTag: String = "HomeFragment"
     private val _homeViewModel: HomeViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        application.appComponent.inject(this)
+        application.appComponent.mainComponent().create().inject(this)
     }
 
     override fun onCreateView(
@@ -28,6 +29,7 @@ class HomeFragment : BaseFragment() {
             savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        logger.d(logTag, "onCreateView started")
 
         root = inflater.inflate(R.layout.fragment_home, container, false)
         val notificationTextView : TextView = findViewById(R.id.fragment_home_text_notification_body) as TextView
@@ -43,6 +45,7 @@ class HomeFragment : BaseFragment() {
         temperatureChart.invalidate()
 
         notificationTextView.text = getText(R.string.fragment_home_no_notifications);
+        logger.d(logTag, "onCreateView completed")
         return root
     }
 }

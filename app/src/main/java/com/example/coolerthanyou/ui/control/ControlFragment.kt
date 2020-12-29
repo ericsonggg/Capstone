@@ -21,6 +21,7 @@ import com.github.mikephil.charting.data.LineDataSet
  */
 class ControlFragment : BaseFragment() {
 
+    private val logTag: String = "ControlFragment"
     private val _controlViewModel: ControlViewModel by viewModels { viewModelFactory }
     private lateinit var _currentBoxSpinner: Spinner
     private lateinit var _temperatureSlider: SeekBar
@@ -83,8 +84,7 @@ class ControlFragment : BaseFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-
-        application.appComponent.inject(this)
+        application.appComponent.mainComponent().create().inject(this)
     }
 
     override fun onCreateView(
@@ -93,6 +93,7 @@ class ControlFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        logger.d(logTag, "onCreateView started")
 
         root = inflater.inflate(R.layout.fragment_control, container, false)
 
@@ -180,6 +181,7 @@ class ControlFragment : BaseFragment() {
             settingHumidityUnit.text = humidity
         }
 
+        logger.d(logTag, "onCreateView completed")
         return root
     }
 }

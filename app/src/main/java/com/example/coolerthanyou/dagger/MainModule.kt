@@ -11,8 +11,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 /**
- * Main [Module] for the app.
- * Only super-integral classes should be binded here - otherwise, put them in a respective feature module.
+ * Main [Module] for [MainActivity] and [MainComponent]
  */
 @Module
 abstract class MainModule {
