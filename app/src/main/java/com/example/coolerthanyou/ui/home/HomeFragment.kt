@@ -12,6 +12,10 @@ import com.example.coolerthanyou.BaseFragment
 import com.example.coolerthanyou.R
 import com.github.mikephil.charting.charts.LineChart
 
+/**
+ * Fragment that acts as a "Home" for navigational purposes.
+ * Displays an overview of all relevant data.
+ */
 class HomeFragment : BaseFragment() {
 
     private val logTag: String = "HomeFragment"
@@ -37,12 +41,13 @@ class HomeFragment : BaseFragment() {
         val humidityChart : LineChart = findViewById(R.id.fragment_home_humidity_chart) as LineChart
 
         _homeViewModel.getTemperaturePlotData().observe(viewLifecycleOwner, Observer {
-            temperatureChart.setData(it)
+            temperatureChart.data = it
         })
         _homeViewModel.getHumidityPlotData().observe(viewLifecycleOwner, Observer {
-            humidityChart.setData(it)
+            humidityChart.data = it
         })
         temperatureChart.invalidate()
+        humidityChart.invalidate()
 
         notificationTextView.text = getText(R.string.fragment_home_no_notifications);
         logger.d(logTag, "onCreateView completed")
