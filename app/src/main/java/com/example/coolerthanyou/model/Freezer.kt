@@ -9,13 +9,13 @@ import androidx.room.PrimaryKey
  *
  * @property boxId  The unique ID of the box
  * @property name   The user-set name of the box
- * @property setting_temperature    The set optimal temperature
- * @property setting_humidity       The set optimal humidity
+ * @property set_temperature    The set optimal temperature
+ * @property set_humidity       The set optimal humidity
  */
 @Entity
 data class Freezer(
-    @PrimaryKey val boxId: String,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "setting_temperature") val setting_temperature: Double,
-    @ColumnInfo(name = "setting_humidity") val setting_humidity: Double
+    @PrimaryKey val boxId: Long,
+    @ColumnInfo val name: String,
+    @ColumnInfo val set_temperature: Double,
+    @ColumnInfo val set_humidity: Double
 )
