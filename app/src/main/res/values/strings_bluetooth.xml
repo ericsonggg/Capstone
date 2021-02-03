@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bluetooth_off">Bluetooth is off!</string>
+    <string name="bluetooth_disconnected">No device connected</string>
+</resources>
