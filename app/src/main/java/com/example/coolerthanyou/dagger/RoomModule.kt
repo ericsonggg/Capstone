@@ -3,10 +3,8 @@ package com.example.coolerthanyou.dagger
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.example.coolerthanyou.datasource.IFreezerRoomDataSource
+import com.example.coolerthanyou.datasource.IFreezerDao
 import com.example.coolerthanyou.datasource.MainRoomDatabase
-import com.example.coolerthanyou.repository.IFreezerRepository
-import com.example.coolerthanyou.repository.IFreezerRoomRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -30,25 +28,14 @@ class RoomModule {
     }
 
     /**
-     * Provide the Room implementation of [IFreezerRoomDataSource]
+     * Provide the Room implementation of [IFreezerDao]
      *
      * @param mainRoomDatabase  The main Room database, from [providesMainRoomDatabase]
-     * @return  A FreezerDao to be used in repositories
+     * @return  A [IFreezerDao] to be used
      */
     @Provides
     @Singleton
-    fun providesFreezerDao(mainRoomDatabase: MainRoomDatabase): IFreezerRoomDataSource {
+    fun providesFreezerDao(mainRoomDatabase: MainRoomDatabase): IFreezerDao {
         return mainRoomDatabase.getFreezerDao()
-    }
-
-    /**
-     * Provide the Room implementation of [IFreezerRoomRepository]
-     *
-     * @param freezerDao    The Room DAO for Freezer, from [providesFreezerDao]
-     * @return  A FreezerRepository to be used in view models
-     */
-    @Provides
-    fun providesFreezerRepository(freezerDao: IFreezerRoomDataSource): IFreezerRepository {
-        return IFreezerRoomRepository(freezerDao)
     }
 }

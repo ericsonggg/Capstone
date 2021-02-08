@@ -1,26 +1,32 @@
 package com.example.coolerthanyou.bluetooth
 
+import android.bluetooth.BluetoothAdapter
+import android.content.IntentFilter
+
 /**
  * Singleton object to hold broadcast constants for [BluetoothService]
  * Also generates an intent filter for registering broadcast receivers
  */
 object BluetoothBroadcast {
-    const val ACTION_SERVICE_BOUND = "com.bme.solon.ACTION_SERVICE_BOUND"
-    const val ACTION_SERVICE_DISCONNECTED = "com.bme.solon.ACTION_SERVICE_DISCONNECTED"
-    const val ACTION_CONNECTING = "com.bme.solon.ACTION_CONNECTING"
-    const val ACTION_CONNECTED = "com.bme.solon.ACTION_CONNECTED"
-    const val ACTION_CONNECTED_UPDATE = "com.bme.solon.ACTION_CONNECTED_UPDATE"
-    const val ACTION_DISCONNECTED = "com.bme.solon.ACTION_DISCONNECTED"
-    const val ACTION_DEVICES_CHANGED = "com.bme.solon.ACTION_DEVICES_CHANGED"
-    const val ACTION_DEVICE_UPDATED = "com.bme.solon.ACTION_DEVICE_UPDATED"
-    const val ACTION_NEW_INSTANCE = "com.bme.solon.ACTION_NEW_INSTANCE"
-    const val ACTION_INSTANCE_UPDATE = "com.bme.solon.ACTION_INSTANCE_UPDATE"
-    const val ACTION_ADDRESS = "com.bme.solon.ADDRESS"
-    const val ACTION_SNOOZE = "com.bme.solon.SNOOZE"
+    const val ACTION_CONNECTED = "com.bme.pyrexia.ACTION_CONNECTED"
+    const val ACTION_DISCONNECTED = "com.bme.pyrexia.ACTION_DISCONNECTED"
+    const val ACTION_WARNING = "com.bme.pyrexia.ADDRESS"
+    const val ACTION_ALERT = "com.bme.pyrexia.SNOOZE"
+    const val ACTION_UPDATE = "com.bme.pyrexia.UPDATE"
 
-    const val KEY_DEVICE_NAME = "KEY_DEVICE_NAME"
-    const val KEY_DEVICE_ADDRESS = "KEY_DEVICE_ADDRESS"
-    const val KEY_DEVICE_ID = "KEY_DEVICE_ID"
-    const val KEY_INSTANCE_ID = "KEY_INSTANCE_ID"
+    const val KEY_ADDRESS = "KEY_ADDRESS"
 
+    /**
+     * Get an intent filter with all applicable actions for [BluetoothService]
+     *
+     * @return  A full intent filter
+     */
+    fun getIntentFilter(): IntentFilter = IntentFilter().apply {
+        addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+        addAction(ACTION_CONNECTED)
+        addAction(ACTION_DISCONNECTED)
+        addAction(ACTION_WARNING)
+        addAction(ACTION_ALERT)
+        addAction(ACTION_UPDATE)
+    }
 }
