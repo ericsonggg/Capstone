@@ -6,10 +6,18 @@ import java.util.*
 
 /**
  * Converts common data types into Room compatible types.
- *
- * @property dateFormatter  The date formatter to use for Room
  */
-class Converters(private val dateFormatter: SimpleDateFormat) {
+class Converters {
+
+    companion object {
+        const val ROOM_DATE_FORMAT = "yyyy-MM-dd-kk-mm-ss-SSS"
+    }
+
+    private val dateFormatter: SimpleDateFormat
+
+    init {
+        dateFormatter = SimpleDateFormat(ROOM_DATE_FORMAT)
+    }
 
     /**
      * Converts strings into the equivalent date.

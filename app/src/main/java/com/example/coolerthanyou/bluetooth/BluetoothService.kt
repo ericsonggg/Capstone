@@ -10,6 +10,7 @@ import android.content.Intent
 import android.os.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.coolerthanyou.BaseApplication
 import com.example.coolerthanyou.BaseService
 import com.example.coolerthanyou.R
 import com.example.coolerthanyou.datasource.IFreezerDao
@@ -32,11 +33,11 @@ class BluetoothService : BaseService() {
     private val logTag: String = "BluetoothService"
 
     @Inject
-    private lateinit var bluetoothManager: BluetoothManager
+    protected lateinit var bluetoothManager: BluetoothManager
     private val connectedDevices: MutableSet<BluetoothGatt> = mutableSetOf()
 
     @Inject
-    private lateinit var freezerDao: IFreezerDao
+    protected lateinit var freezerDao: IFreezerDao
 
     private lateinit var looper: Looper
     private lateinit var handler: Handler
@@ -142,7 +143,7 @@ class BluetoothService : BaseService() {
         }
     }
 
-    val broadcastReceiver = object : BroadcastReceiver() {
+    private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             logger.d(logTag, "onReceive action ${intent.action}")
             val notif: NotificationManagerCompat = NotificationManagerCompat.from(this@BluetoothService)
@@ -195,7 +196,7 @@ class BluetoothService : BaseService() {
             when (msg.what) {
                 HANDLER_MSG_CONNECT -> {
                     val address = msg.obj as String
-                    logger.i(logTag, "Handler@handleMessage connect to ${address}")
+                    logger.i(logTag, "Handler@handleMessage connect to $address")
 
                     bluetoothManager.getDevice(address)?.let { device ->
                         bluetoothManager.tryConnect(device, this@BluetoothService, gattCallback)
@@ -209,6 +210,7 @@ class BluetoothService : BaseService() {
      * Start thread and service as a foreground service
      */
     override fun onCreate() {
+        (applicationContext as BaseApplication).appComponent.inject(this)
         super.onCreate()
         logger.d(logTag, "onCreate started")
 

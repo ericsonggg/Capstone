@@ -16,7 +16,7 @@ class BluetoothManager {
     private val verifier: BluetoothSupportChecker = BluetoothSupportChecker()
 
     @Inject
-    private lateinit var logger: ILogger
+    protected lateinit var logger: ILogger
     private val logTag = "BluetoothManager"
 
     /**
