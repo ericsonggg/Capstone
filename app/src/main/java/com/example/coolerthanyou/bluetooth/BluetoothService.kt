@@ -1,9 +1,8 @@
 package com.example.coolerthanyou.bluetooth
 
-import android.bluetooth.BluetoothGatt
-import android.bluetooth.BluetoothGattCallback
-import android.bluetooth.BluetoothGattCharacteristic
-import android.bluetooth.BluetoothProfile
+import android.bluetooth.*
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanFilter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -16,6 +15,10 @@ import com.example.coolerthanyou.R
 import com.example.coolerthanyou.datasource.IFreezerDao
 import javax.inject.Inject
 
+/**
+ * Service for long-running Bluetooth operations.
+ * Uses [BluetoothManager]
+ */
 class BluetoothService : BaseService() {
 
     companion object {
@@ -25,9 +28,52 @@ class BluetoothService : BaseService() {
 
         const val HANDLER_MSG_CONNECT = 1
 
+        private const val HARDWARE_SCAN_UUID = "0000dfb0-0000-1000-8000-00805f9b34fb"
         const val HARDWARE_SERIAL_UUID = "0000dfb1-0000-1000-8000-00805f9b34fb"
         const val HARDWARE_COMMAND_UUID = "0000dfb2-0000-1000-8000-00805f9b34fb"
         const val HARDWARE_MODEL_NUMBER_UUID = "00002a24-0000-1000-8000-00805f9b34fb"
+
+        val scanFilter: ScanFilter = ScanFilter.Builder().setServiceUuid(ParcelUuid.fromString(HARDWARE_SCAN_UUID)).build()
+    }
+
+    /**
+     * Private [Handler] just for [BluetoothService]
+     * Runs [Message] and [Runnable] on separate thread
+     *
+     * @constructor create a Handler with the specific thread [Looper]
+     *
+     * @param looper    The thread looper
+     */
+    private inner class Handler(looper: Looper) : android.os.Handler(looper) {
+
+        /**
+         * [HANDLER_MSG_CONNECT] -> Try to start a connection with the freezer id from the message
+         */
+        override fun handleMessage(msg: Message) {
+            when (msg.what) {
+                HANDLER_MSG_CONNECT -> {
+                    val address = msg.obj as String
+                    logger.i(logTag, "Handler@handleMessage connect to $address")
+
+                    bluetoothManager.getDevice(address)?.let { device ->
+                        bluetoothManager.tryConnect(device, this@BluetoothService, gattCallback)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Custom Binder class for [BluetoothService]
+     */
+    internal inner class Binder : android.os.Binder() {
+
+        /**
+         * Get the BluetoothService for this [Binder]
+         *
+         * @return  The bound BluetoothService
+         */
+        fun getService(): BluetoothService = this@BluetoothService
     }
 
     private val logTag: String = "BluetoothService"
@@ -35,6 +81,7 @@ class BluetoothService : BaseService() {
     @Inject
     protected lateinit var bluetoothManager: BluetoothManager
     private val connectedDevices: MutableSet<BluetoothGatt> = mutableSetOf()
+    private var discoveryCallback: ScanCallback? = null
 
     @Inject
     protected lateinit var freezerDao: IFreezerDao
@@ -45,7 +92,6 @@ class BluetoothService : BaseService() {
     private val binder: IBinder = Binder()
 
     private val gattCallback: BluetoothGattCallback = object : BluetoothGattCallback() {
-
         /**
          * Start discovering services for all newly connected devices.
          * Also broadcast relevant status changes
@@ -180,33 +226,6 @@ class BluetoothService : BaseService() {
     }
 
     /**
-     * Private [Handler] just for [BluetoothService]
-     * Runs [Message] and [Runnable] on separate thread
-     *
-     * @constructor create a Handler with the specific thread [Looper]
-     *
-     * @param looper    The thread looper
-     */
-    private inner class Handler(looper: Looper) : android.os.Handler(looper) {
-
-        /**
-         * [HANDLER_MSG_CONNECT] -> Try to start a connection with the freezer id from the message
-         */
-        override fun handleMessage(msg: Message) {
-            when (msg.what) {
-                HANDLER_MSG_CONNECT -> {
-                    val address = msg.obj as String
-                    logger.i(logTag, "Handler@handleMessage connect to $address")
-
-                    bluetoothManager.getDevice(address)?.let { device ->
-                        bluetoothManager.tryConnect(device, this@BluetoothService, gattCallback)
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Start thread and service as a foreground service
      */
     override fun onCreate() {
@@ -270,6 +289,53 @@ class BluetoothService : BaseService() {
             gatt.close()
         }
         connectedDevices.clear()
+    }
+
+    /**
+     * Returns whether the Bluetooth is on or off
+     *
+     * @return  True if on, false if not
+     */
+    internal fun isBluetoothOn(): Boolean = bluetoothManager.isBluetoothOn()
+
+    /**
+     * Connect to a Bluetooth device
+     *
+     * @param device    The device to connect to
+     */
+    internal fun connectToDevice(device: BluetoothDevice) {
+        logger.d(logTag, "connectToDevice: posting task with device: $device")
+        handler.post {
+            bluetoothManager.tryConnect(device, this, gattCallback)
+        }
+    }
+
+    /**
+     * Start discovering Bluetooth LE devices, if a current scan is not underway
+     *
+     * @param callback  The callback for the scan results
+     */
+    internal fun startDiscovery(callback: ScanCallback) {
+        logger.d(logTag, "startDiscovery: posting task")
+        handler.post {
+            if (discoveryCallback == null) {
+                discoveryCallback = callback
+                bluetoothManager.startDiscovery(callback)
+            }
+        }
+    }
+
+    /**
+     * Stop discovering Bluetooth LE devices if a current scan is underway
+     */
+    internal fun stopDiscovery() {
+        logger.d(logTag, "stopDiscovery: posting task")
+        handler.post {
+            discoveryCallback?.let {
+                bluetoothManager.stopDiscovery(discoveryCallback!!)
+                discoveryCallback = null
+            }
+        }
     }
 
     private fun processCharacteristic(charac: ByteArray) {

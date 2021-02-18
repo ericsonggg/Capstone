@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CoolerThanYou</string>
+    <string name="app_name">PyrexiaMD</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Your Cooler Name Here</string>
@@ -14,4 +14,7 @@
 
     <string name="common_temperature">Temperature</string>
     <string name="common_humidity">Humidity</string>
+
+    <string name="okay">Okay</string>
+    <string name="something_went_wrong">Something went wrong, please restart the app</string>
 </resources>

@@ -2,30 +2,29 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/drawer_home">
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/drawer_home"
+        android:id="@+id/nav_home"
         android:name="com.example.coolerthanyou.ui.home.HomeFragment"
         android:label="@string/drawer_home"
-        tools:layout="@layout/fragment_home">
-    </fragment>
+        tools:layout="@layout/fragment_home"/>
 
     <fragment
-        android:id="@+id/drawer_control"
+        android:id="@+id/nav_control"
         android:name="com.example.coolerthanyou.ui.control.ControlFragment"
         android:label="@string/drawer_control"
         tools:layout="@layout/fragment_control" />
 
     <fragment
-        android:id="@+id/drawer_data"
+        android:id="@+id/nav_data"
         android:name="com.example.coolerthanyou.ui.gallery.GalleryFragment"
         android:label="@string/drawer_data"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/drawer_about"
+        android:id="@+id/nav_about"
         android:name="com.example.coolerthanyou.ui.slideshow.SlideshowFragment"
         android:label="@string/drawer_about"
         tools:layout="@layout/fragment_slideshow" />

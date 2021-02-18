@@ -4,6 +4,8 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanSettings
 import android.content.Context
 import com.example.coolerthanyou.log.ILogger
 import javax.inject.Inject
@@ -12,6 +14,10 @@ import javax.inject.Inject
  * Class to actually control all Bluetooth tasks
  */
 class BluetoothManager {
+
+    companion object {
+        const val REQUEST_ENABLE_BT = 57222 // for enable bluetooth intent
+    }
 
     private val verifier: BluetoothSupportChecker = BluetoothSupportChecker()
 
@@ -73,6 +79,15 @@ class BluetoothManager {
     }
 
     /**
+     * Check whether bluetooth is currently on.
+     *
+     * @return  True if on, false if not
+     */
+    internal fun isBluetoothOn(): Boolean {
+        return verifier.getAdapter().isEnabled
+    }
+
+    /**
      * Try to make a GATT connection to the [device]
      *
      * @param device    Bluetooth device to connect to
@@ -85,7 +100,21 @@ class BluetoothManager {
         return device.connectGatt(context, true, callback)
     }
 
-    internal fun isBluetoothOn(): Boolean {
-        return verifier.getAdapter().isEnabled
+    /**
+     * Start Bluetooth LE discovery
+     *
+     * @param callback   Callback for results
+     */
+    internal fun startDiscovery(callback: ScanCallback) {
+        verifier.getAdapter().bluetoothLeScanner.startScan(null, ScanSettings.Builder().build(), callback)
+    }
+
+    /**
+     * Stop Bluetooth LE discovery
+     *
+     * @param callback  Callback for results
+     */
+    internal fun stopDiscovery(callback: ScanCallback) {
+        verifier.getAdapter().bluetoothLeScanner.stopScan(callback)
     }
 }

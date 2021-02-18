@@ -40,6 +40,15 @@ interface ILogger {
     fun w(tag: String, message: String)
 
     /**
+     * Same as [w] but with an exception
+     *
+     * @param tag       The tag (i.e. caller)
+     * @param message   The messages
+     * @param exception The exception
+     */
+    fun w(tag: String, message: String, exception: Exception)
+
+    /**
      * Error messages, use to indicate occurred failure and reason for error
      *
      * @param tag       The tag (i.e. caller)
