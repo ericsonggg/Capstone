@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coolerthanyou.BaseActivity
 import com.example.coolerthanyou.BaseApplication
 import com.example.coolerthanyou.R
-import com.example.coolerthanyou.bluetooth.BluetoothBroadcast
 import com.example.coolerthanyou.bluetooth.BluetoothService
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -48,18 +47,12 @@ class MainActivity : BaseActivity() {
             logger.i(logTag, "Bluetooth service connected")
             bluetoothService = (binder as BluetoothService.Binder).getService()
             isServiceBound = true
-
-            // broadcast status change
-            sendBroadcast(Intent(BluetoothBroadcast.ACTION_SERVICE_BOUND))
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
             logger.i(logTag, "Bluetooth service disconnected")
             isServiceBound = false
             bluetoothService = null
-
-            // broadcast status change
-            sendBroadcast(Intent(BluetoothBroadcast.ACTION_SERVICE_UNBOUND))
         }
     }
 
@@ -71,9 +64,6 @@ class MainActivity : BaseActivity() {
             .setCancelable(true)
             .setOnCancelListener { _ ->
                 scanDialog.dismiss()
-                if (isServiceBound) {
-                    bluetoothService!!.stopDiscovery()
-                }
             }
             .setOnDismissListener { _ ->
                 if (isServiceBound) {
@@ -154,6 +144,9 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    /**
+     * Triggers the BLE discovery process
+     */
     private fun discoverDevices() {
         if (!isServiceBound) {
             logger.e(logTag, "discoverDevices went wrong, no service bound")

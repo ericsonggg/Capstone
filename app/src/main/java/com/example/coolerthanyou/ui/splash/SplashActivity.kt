@@ -35,6 +35,8 @@ class SplashActivity : BaseActivity() {
     companion object {
         private const val PERMISSION_FINE_LOCATION = 1
 
+        private const val TASK_BIND_BLUETOOTH_SERVICE = "TASK_BIND_BLUETOOTH_SERVICE"
+        private const val TASK_ENABLE_BLUETOOTH = "TASK_ENABLE_BLUETOOTH"
         private const val TASK_LOCATION_PERMISSION = "TASK_LOCATION_PERMISSION"
     }
 
@@ -42,20 +44,20 @@ class SplashActivity : BaseActivity() {
     private val viewModel: SplashViewModel by viewModels { viewModelFactory }
 
     private var isServiceBound: Boolean = false
+    private var bluetoothService: BluetoothService? = null
     private val bluetoothServiceConn: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(p0: ComponentName?, binder: IBinder?) {
             logger.i(logTag, "Bluetooth service connected")
             isServiceBound = true
+            bluetoothService = (binder as BluetoothService.Binder).getService()
 
             // try to turn on bluetooth if supported by phone
             try {
                 val bluetoothService = (binder as BluetoothService.Binder).getService()
                 if (!bluetoothService.isBluetoothOn()) {
                     // try to turn off bluetooth if off
+                    viewModel.addTask(TASK_ENABLE_BLUETOOTH)
                     startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), BluetoothManager.REQUEST_ENABLE_BT)
-                } else {
-                    //do other stuff
-                    //TODO
                 }
             } catch (e: BluetoothUnsupportedException) {
                 // Notify user that they cannot use app without bluetooth
@@ -69,11 +71,14 @@ class SplashActivity : BaseActivity() {
 
                 logger.e(logTag, "Phone does not support Bluetooth, quitting")
             }
+
+            viewModel.removeTask(TASK_BIND_BLUETOOTH_SERVICE)
         }
 
         override fun onServiceDisconnected(p0: ComponentName?) {
             logger.i(logTag, "Bluetooth service disconnected")
             isServiceBound = false
+            bluetoothService = null
         }
     }
 
@@ -110,7 +115,7 @@ class SplashActivity : BaseActivity() {
                 setSound(null, null) //disable sound
 
                 //register channel
-                getSystemService(NotificationManager::class.java).also { manager ->
+                getSystemService(NotificationManager::class.java)?.also { manager ->
                     manager.createNotificationChannel(this)
                 }
             }
@@ -125,6 +130,7 @@ class SplashActivity : BaseActivity() {
 
         // bind to BluetoothService
         bindService(Intent(this, BluetoothService::class.java), bluetoothServiceConn, Context.BIND_AUTO_CREATE)
+        viewModel.addTask(TASK_BIND_BLUETOOTH_SERVICE)
 
         //run tasks
         getPermissions()
@@ -148,7 +154,12 @@ class SplashActivity : BaseActivity() {
                 if (resultCode != RESULT_OK) {
                     // request denied
                     Toast.makeText(this, R.string.splash_bluetooth_disabled_toast, Toast.LENGTH_SHORT).show()
+                } else {
+                    if (isServiceBound) {
+                        bluetoothService!!.updateNotification()
+                    }
                 }
+                viewModel.removeTask(TASK_ENABLE_BLUETOOTH)
             }
             else -> {
                 super.onActivityResult(requestCode, resultCode, data)
@@ -197,7 +208,7 @@ class SplashActivity : BaseActivity() {
      * Background blocking sequence to check whether we can finish the activity
      */
     private fun changeActivity() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.Default) {
             while (!viewModel.isFinished()) {
                 Thread.sleep(200)
             }
