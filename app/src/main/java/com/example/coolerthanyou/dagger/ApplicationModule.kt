@@ -33,7 +33,7 @@ abstract class ApplicationModule {
         @Provides
         @Singleton
         fun provideLogger(conf: AppConfiguration, androidLogger: Provider<AndroidLogger>, fileLogger: Provider<FileLogger>): ILogger {
-            return if (conf.isDebug) androidLogger.get() else fileLogger.get();
+            return if (conf.isDebug) androidLogger.get() else fileLogger.get()
         }
 
         /**

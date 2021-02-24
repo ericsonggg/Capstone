@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.coolerthanyou">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -11,9 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".log.LogService" />
+        <service android:name=".bluetooth.BluetoothService" />
+
         <activity
             android:name=".ui.splash.SplashActivity"
             android:label="@string/splash_label"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

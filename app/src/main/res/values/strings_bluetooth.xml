@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notif_channel_bluetooth_name">BluetoothService Channel</string>
+    <string name="notif_channel_bluetooth_description">Notification channel for Bluetooth Service</string>
+    <string name="notif_bluetooth_off">Bluetooth is off!</string>
+    <string name="notif_bluetooth_no_devices">No freezers connected</string>
+    <string name="notif_bluetooth_x_devices">%1$d connected freezers</string>
+
+    <string name="bluetooth_is_off">Bluetooth must be on for this function</string>
+</resources>

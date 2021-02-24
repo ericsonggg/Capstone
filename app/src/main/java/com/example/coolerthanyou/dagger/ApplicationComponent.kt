@@ -2,6 +2,7 @@ package com.example.coolerthanyou.dagger
 
 import android.content.Context
 import com.example.coolerthanyou.AppConfiguration
+import com.example.coolerthanyou.bluetooth.BluetoothService
 import com.example.coolerthanyou.log.LogService
 import com.example.coolerthanyou.ui.splash.SplashActivity
 import dagger.BindsInstance
@@ -13,7 +14,7 @@ import javax.inject.Singleton
  * This component should have injectors for modules that are critical to all other modules i.e. Room
  */
 @Singleton
-@Component(modules = [ApplicationModule::class, RoomModule::class])
+@Component(modules = [ApplicationModule::class, RoomModule::class, BluetoothModule::class])
 interface ApplicationComponent {
 
     /** Sub-component factory expose **/
@@ -24,6 +25,7 @@ interface ApplicationComponent {
 
     /** Services **/
     fun inject(service: LogService)
+    fun inject(service: BluetoothService)
 
     /**
      * Custom builder interface to accept common configurations

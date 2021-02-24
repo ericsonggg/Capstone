@@ -5,18 +5,19 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.coolerthanyou.model.Converters
 import com.example.coolerthanyou.model.Freezer
+import com.example.coolerthanyou.model.FreezerRecord
 
 /**
  * Database object for all Room-based data sources (aka DAOs).
  */
-@Database(entities = [Freezer::class], version = 1)
+@Database(entities = [Freezer::class, FreezerRecord::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class MainRoomDatabase : RoomDatabase() {
 
     /**
-     * Get the [IFreezerRoomDataSource]
+     * Get the [IFreezerRoomDao]
      *
-     * @return  A [IFreezerRoomDataSource]
+     * @return  A [IFreezerRoomDao]
      */
-    abstract fun getFreezerDao(): IFreezerRoomDataSource
+    abstract fun getFreezerDao(): IFreezerRoomDao
 }

@@ -1,5 +1,6 @@
 package com.example.coolerthanyou.dagger
 
+import com.example.coolerthanyou.bluetooth.BluetoothService
 import com.example.coolerthanyou.ui.MainActivity
 import com.example.coolerthanyou.ui.control.ControlFragment
 import com.example.coolerthanyou.ui.gallery.GalleryFragment

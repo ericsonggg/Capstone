@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.util.Log
 import java.util.*
 
 /**
@@ -58,6 +57,10 @@ class FileLogger(applicationContext: Context) : ILogger {
 
     override fun w(tag: String, message: String) {
         tryToWriteLog(buildLogString("W", tag, message, null))
+    }
+
+    override fun w(tag: String, message: String, exception: Exception) {
+        tryToWriteLog(buildLogString("w", tag, message, exception))
     }
 
     override fun e(tag: String, message: String) {

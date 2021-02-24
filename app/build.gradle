@@ -9,12 +9,18 @@ android {
 
     defaultConfig {
         applicationId "com.example.coolerthanyou"
-        minSdkVersion 17
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -22,6 +28,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    kapt {
+        correctErrorTypes true
     }
 
 // To inline the bytecode built with JVM target 1.8 into

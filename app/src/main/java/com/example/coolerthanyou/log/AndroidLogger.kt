@@ -24,6 +24,10 @@ class AndroidLogger : ILogger {
         Log.w(tag, message)
     }
 
+    override fun w(tag: String, message: String, exception: Exception) {
+        Log.w(tag, message, exception)
+    }
+
     override fun e(tag: String, message: String) {
         Log.e(tag, message)
     }

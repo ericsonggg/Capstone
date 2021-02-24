@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="splash_label">@string/app_name</string>
+
+    <string name="splash_logo_desc">PyrexiaMD Logo</string>
+    <string name="splash_version">Version: %1$s</string>
+    
+    <string name="splash_bluetooth_unsupported_message">Sorry, PyrexiaMD requires a phone that supports Bluetooth.</string>
+    <string name="splash_bluetooth_disabled_toast">Bluetooth must be on for all features.</string>
+
+    <string name="splash_permission_info_title">Permissions</string>
+    <string name="splash_permission_location_message">We need location services to search for Bluetooth devices.</string>
+    <string name="splash_permission_disabled_toast">Some features may be disabled until permissions are given.</string>
 </resources>

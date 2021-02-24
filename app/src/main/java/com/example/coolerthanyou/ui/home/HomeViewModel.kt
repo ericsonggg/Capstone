@@ -3,20 +3,20 @@ package com.example.coolerthanyou.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.coolerthanyou.repository.IFreezerRepository
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(private val IFreezerRepository: IFreezerRepository) : ViewModel() {
+class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "Main Application Page"
     }
+
     fun getPageText(): LiveData<String> = _text
 
-    private val _temperaturePlotData = MutableLiveData<LineData>().apply{
+    private val _temperaturePlotData = MutableLiveData<LineData>().apply {
         val entries = populateData(getData())
         val lineDataSet = LineDataSet(entries, "testData")
 

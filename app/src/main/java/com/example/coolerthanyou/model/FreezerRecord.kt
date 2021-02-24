@@ -2,7 +2,6 @@ package com.example.coolerthanyou.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.util.*
 
 /**
@@ -12,11 +11,13 @@ import java.util.*
  * @property time   Timestamp
  * @property temperature    Temperature in Celsius
  * @property humidity   Humidity in percentage
+ * @property battery    Battery percentage
  */
-@Entity
+@Entity(primaryKeys = ["boxId", "time"])
 data class FreezerRecord(
-    @PrimaryKey val boxId: String,
+    @ColumnInfo val boxId: Long,
     @ColumnInfo val time: Date,
-    @ColumnInfo val temperature: Double,
-    @ColumnInfo val humidity: Double
+    @ColumnInfo val temperature: Float,
+    @ColumnInfo val humidity: Float,
+    @ColumnInfo val battery: Int
 )
