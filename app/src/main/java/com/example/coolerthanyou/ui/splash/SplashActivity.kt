@@ -53,7 +53,7 @@ class SplashActivity : BaseActivity() {
 
             // try to turn on bluetooth if supported by phone
             try {
-                val bluetoothService = (binder as BluetoothService.Binder).getService()
+                val bluetoothService = (binder).getService()
                 if (!bluetoothService.isBluetoothOn()) {
                     // try to turn off bluetooth if off
                     viewModel.addTask(TASK_ENABLE_BLUETOOTH)

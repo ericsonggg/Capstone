@@ -2,4 +2,6 @@
 <resources>
     <string name="main_scan_title">Scanning for Freezers&#8230;</string>
     <string name="main_scan_no_name">Unknown Device</string>
+
+    <string name="main_fab_desc">Add new freezer</string>
 </resources>

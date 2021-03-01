@@ -475,7 +475,7 @@ class BluetoothService : BaseService() {
                     val temperature = ByteBuffer.wrap(charac.sliceArray(2..5)).float
                     val humidity = ByteBuffer.wrap(charac.sliceArray(6..9)).float
                     val name = String(charac.sliceArray(10..25))
-                    freezerDao.insertAllFreezers(Freezer(name, temperature, humidity, isPowerOn, address))
+                    freezerDao.insertAllFreezers(Freezer(name, temperature, humidity, isPowerOn, address, false))
                 }
             }
             KEY_ERROR -> {

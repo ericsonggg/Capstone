@@ -43,13 +43,11 @@ class MainScanListAdapter(private val callback: (device: BluetoothDevice) -> Uni
     /**
      * OnClick Listener for each item (i.e. [ViewHolder])
      *
-     * @param position  Position of the item in the list
+     * @property position  Position of the item in the list
      */
-    internal inner class Listener(position: Int) : View.OnClickListener {
-        private val pos: Int = position
-
+    internal inner class Listener(private val position: Int) : View.OnClickListener {
         override fun onClick(p0: View?) {
-            callback(deviceList[pos])
+            callback(deviceList[position])
         }
     }
 

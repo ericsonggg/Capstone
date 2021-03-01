@@ -1,77 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
-    <LinearLayout
-        android:id="@+id/fragment_home_text_notification"
+    <Button
+        android:id="@+id/fragment_home_urgent_button"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_large"
+        android:layout_margin="@dimen/margin_xx_large"
+        android:background="@drawable/background_urgent_button"
+        android:padding="@dimen/padding_med"
+        android:text="@string/fragment_home_urgent_label"
+        app:layout_constraintEnd_toStartOf="@id/fragment_home_warning_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/fragment_home_warning_button"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_large"
+        android:layout_margin="@dimen/margin_xx_large"
+        android:background="@drawable/background_warning_button"
+        android:padding="@dimen/padding_med"
+        android:text="@string/fragment_home_warning_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fragment_home_urgent_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/fragment_home_notification_barrier"
+        style="@style/HorizontalBarrier"
+        app:constraint_referenced_ids="fragment_home_urgent_button,fragment_home_warning_button"
+        tools:ignore="MissingConstraints" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/washedOutGreen"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/padding_x_large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/fragment_home_text_notification_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_large"
-            android:gravity="center_horizontal"
-            android:text="@string/fragment_home_notification_header"
-            android:textAlignment="center"
-            android:textSize="@dimen/header_small" />
-
-        <TextView
-            android:id="@+id/fragment_home_text_notification_body"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_large"
-            android:gravity="center_horizontal"
-            android:textAlignment="center"
-            android:textSize="@dimen/text_large" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/fragment_home_text_temperature_data_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginTop="@dimen/margin_large"
-        android:text="@string/fragment_home_temperature_data_header"
-        android:textSize="@dimen/header_x_small"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_home_text_notification" />
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/fragment_home_temperature_chart"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_home_text_temperature_data_header" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_home_notification_barrier">
 
-    <TextView
-        android:id="@+id/fragment_home_text_humidity_data_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginTop="@dimen/margin_large"
-        android:text="@string/fragment_home_humidity_data_header"
-        android:textSize="@dimen/header_x_small"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_home_temperature_chart" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/fragment_home_humidity_chart"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_home_text_humidity_data_header" />
+            <TextView
+                style="@style/TextSectionHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_xx_large"
+                android:background="@drawable/background_fragment_home_freezer_item"
+                android:gravity="center"
+                android:paddingStart="@dimen/padding_x_large"
+                android:paddingTop="@dimen/padding_med"
+                android:paddingEnd="@dimen/padding_x_large"
+                android:paddingBottom="@dimen/padding_med"
+                android:text="@string/fragment_home_favorites_label" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_home_favorites_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:orientation="horizontal" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_home_freezers_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

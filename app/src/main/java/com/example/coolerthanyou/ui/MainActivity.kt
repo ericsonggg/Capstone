@@ -11,8 +11,6 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.view.Menu
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
@@ -90,21 +88,6 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        val boxValue: TextView = findViewById(R.id.quick_access_drawer_box_value)
-
-        val boxValueList = arrayOf(
-            getText(R.string.quick_access_drawer_default_box_value),
-            getText(R.string.quick_access_drawer_secondary_box_value),
-            getText(R.string.quick_access_drawer_tertiary_box_value)
-        )
-        val boxSelectionTool = BoxSelector(boxValueList, viewModel)
-
-        val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
-        quickAccessDrawer.setOnClickListener { _ ->
-            val boxSelectionDialog: AlertDialog.Builder = boxSelectionTool.getAlertDialog(this, boxValue)
-            boxSelectionDialog.show()
-        }
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -172,10 +155,6 @@ class MainActivity : BaseActivity() {
         val scanCallback: ScanCallback = object : ScanCallback() {
             override fun onScanResult(callbackType: Int, result: ScanResult) {
                 this@MainActivity.runOnUiThread {
-                    logger.w(
-                        "KEK",
-                        "scanCallback: scan found result - ${result.device.name} | ${BluetoothService.scanFilter.matches(result)}"
-                    )
                     if (BluetoothService.scanFilter.matches(result)) {
                         scanAdapter.apply {
                             addDevice(result.device)

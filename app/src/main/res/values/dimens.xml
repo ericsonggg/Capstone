@@ -6,7 +6,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="xx_small">50dp</dimen>
+    <dimen name="xx_small">48dp</dimen>
     <dimen name="x_small">64dp</dimen>
     <dimen name="small">128dp</dimen>
     <dimen name="medium">256dp</dimen>
@@ -18,7 +18,7 @@
     <dimen name="padding_med">6dp</dimen>
     <dimen name="padding_large">8dp</dimen>
     <dimen name="padding_x_large">10dp</dimen>
-    <dimen name="padding_xx_large">10dp</dimen>
+    <dimen name="padding_xx_large">12dp</dimen>
     <dimen name="padding_xxx_large">20dp</dimen>
 
     <dimen name="padding_box_center_shift">125dp</dimen>
@@ -31,12 +31,22 @@
     <dimen name="margin_xx_large">12dp</dimen>
 
     <!-- Text -->
-    <dimen name="text_med">12sp</dimen>
-    <dimen name="text_large">14sp</dimen>
+    <dimen name="single_space">6dp</dimen>
 
-    <dimen name="header_x_small">18sp</dimen>
-    <dimen name="header_small">20sp</dimen>
-    <dimen name="header_med">24sp</dimen>
+    <dimen name="text">16sp</dimen>
+    <dimen name="header">18sp</dimen>
+    <dimen name="section_header">24sp</dimen>
+    <dimen name="button_text">26sp</dimen>
 
+    <!-- UI -->
+    <dimen name="button_med">64dp</dimen>
+    <dimen name="button_large">96dp</dimen>
 
+    <dimen name="rect_corner_med">16dp</dimen>
+    <dimen name="rect_corner_large">24dp</dimen>
+    <dimen name="rect_corner_x_large">48dp</dimen>
+
+    <dimen name="icon">48dp</dimen>
+
+    <dimen name="component_freezer_overview_height">160dp</dimen>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.coolerthanyou.datasource
 
+import com.example.coolerthanyou.model.Alert
 import com.example.coolerthanyou.model.Freezer
 import com.example.coolerthanyou.model.FreezerRecord
 
@@ -39,9 +40,23 @@ interface IFreezerDao {
     fun getAllBluetooth(): List<String>
 
     /**
+     * Get one (or none) records per freezer
+     *
+     * @return  A list of unique records
+     */
+    fun getAllUniqueRecords(): List<FreezerRecord>
+
+    /**
+     * Get all alerts in the database
+     *
+     * @return  A list of all [Alert]s
+     */
+    fun getAllAlerts(): List<Alert>
+
+    /**
      * Add freezers to the database
      *
-     * @param freezer   The [Freezer] to add
+     * @param freezers   The [Freezer] to add
      */
     fun insertAllFreezers(vararg freezers: Freezer)
 
@@ -75,4 +90,11 @@ interface IFreezerDao {
      * @param battery   The current battery level
      */
     fun insertFreezerRecord(address: String, temp: Float, humid: Float, battery: Int)
+
+    /**
+     * Insert alerts to the database
+     *
+     * @param alert The [Alert]s to add
+     */
+    fun insertAlert(vararg alert: Alert)
 }

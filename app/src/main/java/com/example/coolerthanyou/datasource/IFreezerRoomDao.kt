@@ -1,6 +1,7 @@
 package com.example.coolerthanyou.datasource
 
 import androidx.room.*
+import com.example.coolerthanyou.model.Alert
 import com.example.coolerthanyou.model.Freezer
 import com.example.coolerthanyou.model.FreezerRecord
 import java.util.*
@@ -23,6 +24,12 @@ interface IFreezerRoomDao : IFreezerDao {
     @Query("SELECT bluetoothAddress FROM freezer")
     override fun getAllBluetooth(): List<String>
 
+    @Query("SELECT * FROM alert")
+    override fun getAllAlerts(): List<Alert>
+
+    @Query("SELECT * FROM freezerRecord GROUP BY boxId ORDER BY time DESC")
+    override fun getAllUniqueRecords(): List<FreezerRecord>
+
     @Insert
     override fun insertAllFreezers(vararg freezers: Freezer)
 
@@ -40,6 +47,9 @@ interface IFreezerRoomDao : IFreezerDao {
             insertFreezerRecord(FreezerRecord(id, Calendar.getInstance().time, temp, humid, battery))
         }
     }
+
+    @Insert
+    override fun insertAlert(vararg alert: Alert)
 
     @Query("SELECT boxId FROM freezer WHERE bluetoothAddress=:address")
     fun getIDofFreezer(address: String): Long

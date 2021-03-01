@@ -3,64 +3,93 @@ package com.example.coolerthanyou.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import androidx.lifecycle.viewModelScope
+import com.example.coolerthanyou.datasource.IFreezerDao
+import com.example.coolerthanyou.log.ILogger
+import com.example.coolerthanyou.model.Alert
+import com.example.coolerthanyou.model.Freezer
+import com.example.coolerthanyou.model.FreezerRecord
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(protected val freezerDao: IFreezerDao) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Main Application Page"
-    }
+    @Inject
+    protected lateinit var logger: ILogger
+    private val logTag: String = "HomeViewModel"
 
-    fun getPageText(): LiveData<String> = _text
+    private val freezers: MutableLiveData<MutableList<Freezer>> = MutableLiveData()
+    private val uniqueRecords: MutableLiveData<MutableList<FreezerRecord>> = MutableLiveData()
+    private val urgents: MutableLiveData<MutableSet<Alert>> = MutableLiveData()
+    private val warnings: MutableLiveData<MutableSet<Alert>> = MutableLiveData()
 
-    private val _temperaturePlotData = MutableLiveData<LineData>().apply {
-        val entries = populateData(getData())
-        val lineDataSet = LineDataSet(entries, "testData")
+    init {
+        // Send DB requests
+        viewModelScope.launch(Dispatchers.IO) {
+            val freezerList = freezerDao.getAllFreezers()
 
-        lineDataSet.setColor(5, 4)
-        value = LineData(lineDataSet)
-    }
-    fun getTemperaturePlotData(): LiveData<LineData> = _temperaturePlotData
-
-    private val _humidityPlotData = MutableLiveData<LineData>().apply {
-        val entries = populateData(getData())
-        val lineDataSet = LineDataSet(entries, "testData")
-
-        lineDataSet.setColor(5, 4)
-        value = LineData(lineDataSet)
-    }
-
-    fun getHumidityPlotData(): LiveData<LineData> = _humidityPlotData
-
-    /**
-     * Helper function to convert x y data into [Entry] for the graphs
-     *
-     * @param dataToUse Array of x,y data
-     * @return  List of [Entry] representation of [dataToUse]
-     */
-    private fun populateData(dataToUse: Array<Pair<Float, Float>>): MutableList<Entry> {
-        val entries: MutableList<Entry> = ArrayList()
-
-        for (data in dataToUse) {
-            val newEntry = Entry(data.first, data.second)
-            entries.add(newEntry)
+            viewModelScope.launch(Dispatchers.Main) {
+                freezers.value = freezerList.toMutableList()
+            }
         }
-        return entries
+        viewModelScope.launch(Dispatchers.IO) {
+            val uniqueRecordsList = freezerDao.getAllUniqueRecords()
+
+            viewModelScope.launch(Dispatchers.Main) {
+                uniqueRecords.value = uniqueRecordsList.toMutableList()
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            val urgentsList: MutableSet<Alert> = mutableSetOf()
+            val warningsList: MutableSet<Alert> = mutableSetOf()
+
+            freezerDao.getAllAlerts().forEach { alert ->
+                when (alert.type) {
+                    Alert.TYPE_URGENT -> {
+                        urgentsList.add(alert)
+                    }
+                    Alert.TYPE_WARNING -> {
+                        warningsList.add(alert)
+                    }
+                    else -> {
+                        logger.w(logTag, "Retrieved invalid alert: $alert")
+                    }
+                }
+            }
+
+            viewModelScope.launch(Dispatchers.Main) {
+                urgents.value = urgentsList
+                warnings.value = warningsList
+            }
+        }
     }
 
     /**
-     * TODO: replace with proper sample data entry
+     * Get all freezers
+     *
+     * @return  Live data for all freezers
      */
-    private fun getData(): Array<Pair<Float, Float>> {
-        return arrayOf(
-            Pair(0f, 0f),
-            Pair(1f, 1f),
-            Pair(2f, 4f),
-            Pair(3f, 9f),
-            Pair(4f, 16f)
-        )
-    }
+    internal fun getFreezers(): LiveData<MutableList<Freezer>> = freezers
+
+    /**
+     * Get all most recent unique records per freezer
+     *
+     * @return  Live data for all recent unique records
+     */
+    internal fun getUniqueRecords(): LiveData<MutableList<FreezerRecord>> = uniqueRecords
+
+    /**
+     * Get all urgent alerts
+     *
+     * @return  Live data for all urgents
+     */
+    internal fun getUrgents(): LiveData<MutableSet<Alert>> = urgents
+
+    /**
+     * Get all warning alerts
+     *
+     * @return  Live data for all warnings
+     */
+    internal fun getWarnings(): LiveData<MutableSet<Alert>> = warnings
 }
