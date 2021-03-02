@@ -13,6 +13,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * View model for [HomeFragment] and related classes
+ *
+ * @property freezerDao The DAO for Freezer and related structs
+ */
 class HomeViewModel @Inject constructor(protected val freezerDao: IFreezerDao) : ViewModel() {
 
     @Inject
