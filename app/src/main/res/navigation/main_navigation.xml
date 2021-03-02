@@ -25,7 +25,11 @@
         android:id="@+id/nav_details"
         android:name="com.example.coolerthanyou.ui.details.DetailsFragment"
         android:label="@string/main_nav_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="boxId"
+            app:argType="long" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_about"

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -45,8 +46,13 @@ class HomeFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        logger.d(logTag, "onCreateView started")
+        logger.d(logTag, "onCreateView")
         root = inflater.inflate(R.layout.fragment_home, container, false)
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // init buttons
         urgentButton = root.findViewById(R.id.fragment_home_urgent_button)
@@ -59,9 +65,6 @@ class HomeFragment : BaseFragment() {
         // add paging behavior to favorites
         PagerSnapHelper().attachToRecyclerView(favoritesList)
         favoritesList.addItemDecoration(LinePagerIndicatorDecoration())
-
-        logger.d(logTag, "onCreateView completed")
-        return root
     }
 
     override fun onStart() {
@@ -133,7 +136,15 @@ class HomeFragment : BaseFragment() {
         })
     }
 
+    /**
+     * OnClick listener for the freezer list.
+     * Starts the details fragment for the chosen freezer
+     *
+     * @param freezer   The freezer that was clicked
+     */
     private fun freezerListClickCallback(freezer: Freezer) {
-        //TODO: start detail activity
+        HomeFragmentDirections.actionNavHomeToNavDetails(freezer.boxId).apply {
+            findNavController().navigate(this)
+        }
     }
 }
