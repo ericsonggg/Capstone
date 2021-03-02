@@ -6,6 +6,8 @@
     <color name="primary">#3257A8</color>
     <color name="primaryDark">#3700B3</color>
     <color name="accent">#36A895</color>
+    <color name="accentLighter">#52c7b3</color>
+    <color name="accentDarker">#2c8778</color>
 
     <color name="background">#1D3362</color>
 

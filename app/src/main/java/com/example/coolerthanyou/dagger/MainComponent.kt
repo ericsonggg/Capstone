@@ -1,9 +1,8 @@
 package com.example.coolerthanyou.dagger
 
-import com.example.coolerthanyou.bluetooth.BluetoothService
 import com.example.coolerthanyou.ui.MainActivity
 import com.example.coolerthanyou.ui.control.ControlFragment
-import com.example.coolerthanyou.ui.gallery.GalleryFragment
+import com.example.coolerthanyou.ui.details.DetailsFragment
 import com.example.coolerthanyou.ui.home.HomeFragment
 import com.example.coolerthanyou.ui.slideshow.SlideshowFragment
 import dagger.Subcomponent
@@ -28,6 +27,6 @@ interface MainComponent {
     /** Fragments **/
     fun inject(fragment: HomeFragment)
     fun inject(fragment: ControlFragment)
-    fun inject(fragment: GalleryFragment)
+    fun inject(fragment: DetailsFragment)
     fun inject(fragment: SlideshowFragment)
 }

@@ -79,24 +79,23 @@ class MainActivity : BaseActivity() {
         logger.d(logTag, "onCreate started")
 
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.activity_main_toolbar)
         setSupportActionBar(toolbar)
 
-        (findViewById<FloatingActionButton>(R.id.fab)).apply {
+        (findViewById<FloatingActionButton>(R.id.activity_main_fab)).apply {
             setOnClickListener { _ ->
                 discoverDevices()
             }
         }
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        val drawerLayout: DrawerLayout = findViewById(R.id.activity_main_drawer_layout)
+        val navView: NavigationView = findViewById(R.id.activity_main_nav)
+        val navController = findNavController(R.id.activity_main_fragment_host)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
-                R.id.nav_data,
                 R.id.nav_about,
                 R.id.nav_control
             ), drawerLayout
@@ -114,7 +113,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.activity_main_fragment_host)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 

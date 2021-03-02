@@ -1,15 +1,5 @@
 <resources>
     <string name="app_name">PyrexiaMD</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_subtitle">Info Last Updated: x minutes ago</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="drawer_home">Home</string>
-    <string name="drawer_data">Data</string>
-    <string name="drawer_about">About Application</string>
-    <string name="drawer_control">Control</string>
 
     <string name="common_temperature">Temperature</string>
     <string name="common_humidity">Humidity</string>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="quick_access_drawer_caption">Current Box: </string>
-    <string name="quick_access_drawer_default_box_value">Box 1</string>
-    <string name="quick_access_drawer_secondary_box_value">Box 2</string>
-    <string name="quick_access_drawer_tertiary_box_value">Box 3</string>
-    <string name="quick_access_drawer_update_notification">Box Selection Updated</string>
-    <string name="quick_access_drawer_box_selection_text">"Select Box"</string>
-</resources>

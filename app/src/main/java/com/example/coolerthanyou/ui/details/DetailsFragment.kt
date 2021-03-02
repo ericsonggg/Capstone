@@ -1,4 +1,4 @@
-package com.example.coolerthanyou.ui.gallery
+package com.example.coolerthanyou.ui.details
 
 import android.content.Context
 import android.os.Bundle
@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import com.example.coolerthanyou.BaseFragment
 import com.example.coolerthanyou.R
 
-class GalleryFragment : BaseFragment() {
+class DetailsFragment : BaseFragment() {
 
-    private val _galleryViewModel: GalleryViewModel by viewModels { viewModelFactory }
+    private val _detailsViewModel: DetailsViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -26,9 +26,9 @@ class GalleryFragment : BaseFragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        _galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+        val root = inflater.inflate(R.layout.fragment_details, container, false)
+        val textView: TextView = root.findViewById(R.id.text_details)
+        _detailsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
