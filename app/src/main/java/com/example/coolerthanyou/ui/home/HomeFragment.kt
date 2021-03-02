@@ -22,7 +22,8 @@ import com.example.coolerthanyou.ui.LinePagerIndicatorDecoration
 
 /**
  * Fragment that acts as a "Home" for navigational purposes.
- * Displays an overview of all relevant data.
+ * Displays an overview of favorite freezers
+ * Lists all known freezers
  */
 class HomeFragment : BaseFragment() {
 
@@ -53,6 +54,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        logger.d(logTag, "onViewCreated")
 
         // init buttons
         urgentButton = root.findViewById(R.id.fragment_home_urgent_button)
