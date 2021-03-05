@@ -133,6 +133,7 @@ class SplashActivity : BaseActivity() {
         viewModel.addTask(TASK_BIND_BLUETOOTH_SERVICE)
 
         //run tasks
+        mockData()
         getPermissions()
         changeActivity()
     }
@@ -181,6 +182,13 @@ class SplashActivity : BaseActivity() {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults)
             }
         }
+    }
+
+    /**
+     * Run startup data mocks
+     */
+    private fun mockData() {
+        viewModel.runStartupMocks()
     }
 
     /**

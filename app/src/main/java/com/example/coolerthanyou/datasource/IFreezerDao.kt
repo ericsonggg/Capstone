@@ -25,14 +25,6 @@ interface IFreezerDao {
     fun getFreezerById(boxId: Long): Freezer
 
     /**
-     * Get a single freezer by its name
-     *
-     * @param name  The name of the freezer
-     * @return  A [Freezer] with the name matching [name]
-     */
-    fun getFreezerByName(name: String): Freezer
-
-    /**
      * Get a single freezer by its bluetooth address
      *
      * @param address   The bluetooth address
@@ -46,6 +38,13 @@ interface IFreezerDao {
      * @return  A list of all [Freezer]s' Bluetooth addresses.
      */
     fun getAllBluetooth(): List<String>
+
+    /**
+     * Get all freezer records in the database
+     *
+     * @return  A list of all freezer records
+     */
+    fun getAllFreezerRecords(): List<FreezerRecord>
 
     /**
      * Get one (or none) records per freezer
@@ -86,25 +85,11 @@ interface IFreezerDao {
     fun insertAllFreezers(vararg freezers: Freezer)
 
     /**
-     * Update freezers in the database
-     *
-     * @param freezers  The [Freezer]s to update
-     */
-    fun updateAllFreezers(vararg freezers: Freezer)
-
-    /**
-     * Delete a freezer from the database
-     *
-     * @param freezer   The [Freezer] to delete
-     */
-    fun deleteFreezer(freezer: Freezer)
-
-    /**
      * Insert freezer records to the database
      *
-     * @param freezerRecord The [FreezerRecord]s to add
+     * @param freezerRecords The [FreezerRecord]s to add
      */
-    fun insertFreezerRecord(vararg freezerRecord: FreezerRecord)
+    fun insertAllFreezerRecords(vararg freezerRecords: FreezerRecord)
 
     /**
      * Insert a freezer record based on its data
@@ -119,7 +104,35 @@ interface IFreezerDao {
     /**
      * Insert alerts to the database
      *
-     * @param alert The [Alert]s to add
+     * @param alerts The [Alert]s to add
      */
-    fun insertAlert(vararg alert: Alert)
+    fun insertAllAlerts(vararg alerts: Alert)
+
+    /**
+     * Update freezers in the database
+     *
+     * @param freezers  The [Freezer]s to update
+     */
+    fun updateAllFreezers(vararg freezers: Freezer)
+
+    /**
+     * Delete a freezer from the database
+     *
+     * @param freezer   The [Freezer] to delete
+     */
+    fun deleteFreezer(freezer: Freezer)
+
+    /**
+     * Delete a freezer record from the database
+     *
+     * @param freezerRecord The [FreezerRecord] to delete
+     */
+    fun deleteFreezerRecord(freezerRecord: FreezerRecord)
+
+    /**
+     * Delete an alert from the database
+     *
+     * @param alert The [Alert] to delete
+     */
+    fun deleteAlert(alert: Alert)
 }

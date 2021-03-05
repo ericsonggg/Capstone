@@ -183,14 +183,15 @@ class DetailsFragment : BaseFragment() {
             val humidEntries: MutableList<Entry> = mutableListOf()
             var time: Float
 
+            val sortedRecords = records.sortedBy { it.time }
             if (android.os.Build.VERSION.SDK_INT >= 26) {
-                for (record in records) {
+                for (record in sortedRecords) {
                     time = record.time.toInstant().toEpochMilli() / millisPerHour
                     tempEntries.add(Entry(time, record.temperature))
                     humidEntries.add(Entry(time, record.humidity))
                 }
             } else {
-                for (record in records) {
+                for (record in sortedRecords) {
                     time = record.time.time / millisPerHour
                     tempEntries.add(Entry(time, record.temperature))
                     humidEntries.add(Entry(time, record.humidity))

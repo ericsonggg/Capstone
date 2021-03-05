@@ -8,28 +8,41 @@
     android:paddingTop="@dimen/padding_x_large"
     android:paddingBottom="@dimen/padding_x_large">
 
-    <ImageView
-        android:id="@+id/fragment_home_freezer_item_alert_icon"
-        android:layout_width="@dimen/icon"
-        android:layout_height="@dimen/icon"
-        android:layout_margin="@dimen/margin_large"
-        android:contentDescription="@string/component_freezer_overview_alert_desc"
-        android:tint="@color/urgent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_alert" />
-
     <TextView
         android:id="@+id/fragment_home_freezer_item_name"
         style="@style/TextHeader"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_large"
         android:text="@string/fragment_home_freezer_list_name"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fragment_home_freezer_item_alert_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_home_freezer_item_alert_icon"
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
+        android:layout_margin="@dimen/margin_large"
+        android:contentDescription="@string/fragment_home_freezer_list_alert_desc"
+        android:tint="@color/urgent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fragment_home_freezer_item_details_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_alert" />
+
+    <ImageView
+        android:id="@+id/fragment_home_freezer_item_details_icon"
+        android:layout_width="@dimen/icon_small"
+        android:layout_height="@dimen/icon_small"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:contentDescription="@string/fragment_home_freezer_list_details_desc"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_right" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

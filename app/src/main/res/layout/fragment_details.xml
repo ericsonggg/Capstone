@@ -31,7 +31,9 @@
             layout="@layout/component_freezer_overview_item"
             android:layout_width="match_parent"
             android:layout_height="@dimen/component_freezer_overview_height"
-            android:layout_margin="@dimen/margin_small" />
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_large" />
 
         <TextView
             android:id="@+id/fragment_details_controls_header"
@@ -47,7 +49,9 @@
             android:id="@+id/fragment_details_controls_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_large"
             android:background="@drawable/background_complex_item"
             android:padding="@dimen/padding_x_large">
 
@@ -338,7 +342,9 @@
             android:id="@+id/fragment_details_history_temperature_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_large"
             android:background="@drawable/background_complex_item"
             android:padding="@dimen/padding_x_large">
 
@@ -389,7 +395,9 @@
             android:id="@+id/fragment_details_history_humidity_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_xx_large"
+            android:layout_marginEnd="@dimen/margin_large"
             android:background="@drawable/background_complex_item"
             android:padding="@dimen/padding_x_large">
 

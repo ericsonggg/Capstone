@@ -7,6 +7,7 @@ import com.example.coolerthanyou.AppConfiguration
 import com.example.coolerthanyou.log.AndroidLogger
 import com.example.coolerthanyou.log.FileLogger
 import com.example.coolerthanyou.log.ILogger
+import com.example.coolerthanyou.mock.Mocker
 import com.example.coolerthanyou.ui.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
@@ -51,6 +52,14 @@ abstract class ApplicationModule {
         @JvmStatic
         @Provides
         fun bindFileLogger(appContext: Context): FileLogger = FileLogger(appContext)
+
+        /**
+         * Provide a mocker
+         */
+        @JvmStatic
+        @Provides
+        @Singleton
+        fun provideMocker(): Mocker = Mocker()
     }
 
     /**

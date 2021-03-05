@@ -18,14 +18,20 @@ interface IFreezerRoomDao : IFreezerDao {
     @Query("SELECT * FROM freezer WHERE boxId=:boxId")
     override fun getFreezerById(boxId: Long): Freezer
 
-    @Query("SELECT * FROM freezer WHERE name=:name")
-    override fun getFreezerByName(name: String): Freezer
-
     @Query("SELECT * FROM freezer WHERE bluetoothAddress=:address")
     override fun getFreezerByAddress(address: String): Freezer
 
     @Query("SELECT bluetoothAddress FROM freezer")
     override fun getAllBluetooth(): List<String>
+
+    @Query("SELECT * FROM freezerRecord")
+    override fun getAllFreezerRecords(): List<FreezerRecord>
+
+    @Query("SELECT * FROM freezerRecord GROUP BY boxId ORDER BY time DESC")
+    override fun getAllUniqueRecords(): List<FreezerRecord>
+
+    @Query("SELECT * FROM freezerRecord WHERE boxId=:boxId ORDER BY time DESC LIMIT :numRecords")
+    override fun getRecordsForFreezer(boxId: Long, numRecords: Int): List<FreezerRecord>
 
     @Query("SELECT * FROM alert")
     override fun getAllAlerts(): List<Alert>
@@ -33,14 +39,20 @@ interface IFreezerRoomDao : IFreezerDao {
     @Query("SELECT * FROM alert WHERE boxId=:boxId")
     override fun getAllAlertsForFreezer(boxId: Long): List<Alert>
 
-    @Query("SELECT * FROM freezerRecord GROUP BY boxId ORDER BY time DESC")
-    override fun getAllUniqueRecords(): List<FreezerRecord>
-
-    @Query("SELECT * FROM freezerrecord WHERE boxId=:boxId ORDER BY time DESC LIMIT :numRecords")
-    override fun getRecordsForFreezer(boxId: Long, numRecords: Int): List<FreezerRecord>
-
     @Insert
     override fun insertAllFreezers(vararg freezers: Freezer)
+
+    @Insert
+    override fun insertAllFreezerRecords(vararg freezerRecords: FreezerRecord)
+
+    override fun insertFreezerRecord(address: String, temp: Float, humid: Float, battery: Int) {
+        getIDofFreezer(address).also { id ->
+            insertAllFreezerRecords(FreezerRecord(id, Calendar.getInstance().time, temp, humid, battery))
+        }
+    }
+
+    @Insert
+    override fun insertAllAlerts(vararg alerts: Alert)
 
     @Update
     override fun updateAllFreezers(vararg freezers: Freezer)
@@ -48,17 +60,11 @@ interface IFreezerRoomDao : IFreezerDao {
     @Delete
     override fun deleteFreezer(freezer: Freezer)
 
-    @Insert
-    override fun insertFreezerRecord(vararg freezerRecord: FreezerRecord)
+    @Delete
+    override fun deleteFreezerRecord(freezerRecord: FreezerRecord)
 
-    override fun insertFreezerRecord(address: String, temp: Float, humid: Float, battery: Int) {
-        getIDofFreezer(address).also { id ->
-            insertFreezerRecord(FreezerRecord(id, Calendar.getInstance().time, temp, humid, battery))
-        }
-    }
-
-    @Insert
-    override fun insertAlert(vararg alert: Alert)
+    @Delete
+    override fun deleteAlert(alert: Alert)
 
     @Query("SELECT boxId FROM freezer WHERE bluetoothAddress=:address")
     fun getIDofFreezer(address: String): Long

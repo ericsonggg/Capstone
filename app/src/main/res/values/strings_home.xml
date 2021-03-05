@@ -6,5 +6,7 @@
     <string name="fragment_home_favorites_label">Favorites</string>
 
     <string name="fragment_home_freezer_list_name">Freezer Name</string>
-    <string name="fragment_Home_freezer_list_none">No Freezers were found.\nAdd a new Freezer with the "+" button</string>
+    <string name="fragment_home_freezer_list_alert_desc">Alert</string>
+    <string name="fragment_home_freezer_list_details_desc">Details</string>
+    <string name="fragment_home_freezer_list_none">No Freezers were found.\nAdd a new Freezer with the "+" button</string>
 </resources>

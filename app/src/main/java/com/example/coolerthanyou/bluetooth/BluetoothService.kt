@@ -503,7 +503,11 @@ class BluetoothService : BaseService() {
                     val humidity = ByteBuffer.wrap(charac.sliceArray(6..9)).float
                     val samplingRate = charac[10].toInt()
                     val name = String(charac.sliceArray(10..25))
-                    freezerDao.insertAllFreezers(Freezer(name, address, temperature, humidity, samplingRate, isPowerOn, false))
+                    try {
+                        freezerDao.insertAllFreezers(Freezer(name, address, temperature, humidity, samplingRate, isPowerOn, false))
+                    } catch (e: IllegalArgumentException) {
+                        logger.e(logTag, "Failed to create a freezer", e)
+                    }
                 }
             }
             KEY_ERROR -> {
