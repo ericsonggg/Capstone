@@ -159,7 +159,7 @@ class DetailsFragment : BaseFragment() {
         alertsList.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = DetailsAlertsListAdapter()
+            adapter = alertsAdapter
         }
 
         _detailsViewModel.getFreezer().observe(this, Observer { freezer ->
@@ -204,11 +204,20 @@ class DetailsFragment : BaseFragment() {
             humidityChart.invalidate()
         })
         _detailsViewModel.getLatestRecord().observe(this, Observer { latestRecord ->
-            //populate overview
-            overviewTemperature.text = getString(R.string.component_freezer_overview_temp, latestRecord.temperature)
-            overviewHumidity.text = getString(R.string.component_freezer_overview_humidity, latestRecord.humidity)
-            overviewBattery.text = getString(R.string.component_freezer_overview_battery, latestRecord.battery)
-            overviewLastUpdate.text = getString(R.string.component_freezer_overview_last_update, latestRecord.time)
+            if (latestRecord == null) {
+                getString(R.string.component_freezer_overview_no_record).apply {
+                    overviewTemperature.text = this
+                    overviewHumidity.text = this
+                    overviewBattery.text = this
+                    overviewLastUpdate.text = this
+                }
+            } else {
+                //populate overview
+                overviewTemperature.text = getString(R.string.component_freezer_overview_temp, latestRecord.temperature)
+                overviewHumidity.text = getString(R.string.component_freezer_overview_humidity, latestRecord.humidity)
+                overviewBattery.text = getString(R.string.component_freezer_overview_battery, latestRecord.battery)
+                overviewLastUpdate.text = getString(R.string.component_freezer_overview_last_update, latestRecord.time)
+            }
         })
     }
 

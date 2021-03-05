@@ -70,7 +70,7 @@ class SplashViewModel @Inject constructor(
                 }
 
                 if (appConfiguration.runStartupAddFreezers) {
-                    freezerDao.insertAllFreezers(*mocker.mockFreezers(8).toTypedArray())
+                    freezerDao.insertAllFreezers(*mocker.mockFreezers(appConfiguration.runStartupNumFreezers).toTypedArray())
                 }
                 val ids = freezerDao.getAllFreezers().map { it.boxId }
                 if (appConfiguration.runStartupAddRecords) {

@@ -7,15 +7,18 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coolerthanyou.R
-import com.example.coolerthanyou.log.ILogger
 import com.example.coolerthanyou.model.Alert
-import javax.inject.Inject
 
 /**
  * List adapter for [Alert]s in [DetailsFragment]
  */
 class DetailsAlertsListAdapter : RecyclerView.Adapter<DetailsAlertsListAdapter.ViewHolder>() {
 
+    /**
+     * [ViewHolder] for [DetailsAlertsListAdapter]
+     *
+     * @param itemView  The view of the item layout
+     */
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.component_simple_list_item_text)
 
@@ -25,22 +28,19 @@ class DetailsAlertsListAdapter : RecyclerView.Adapter<DetailsAlertsListAdapter.V
          * @param alert The alert to bind data from
          */
         internal fun bindData(alert: Alert) {
+            val context = textView.context
+
             when (alert.type) {
                 Alert.TYPE_WARNING -> {
-                    textView.setBackgroundColor(ContextCompat.getColor(textView.context, R.color.warning))
+                    textView.setBackgroundColor(ContextCompat.getColor(context, R.color.warning))
                 }
                 Alert.TYPE_URGENT -> {
-                    textView.setBackgroundColor(ContextCompat.getColor(textView.context, R.color.urgent))
+                    textView.setBackgroundColor(ContextCompat.getColor(context, R.color.urgent))
                 }
             }
-
             textView.text = alert.message
         }
     }
-
-    @Inject
-    protected lateinit var logger: ILogger
-    private val logTag: String = "DetailsAlertsListAdapter"
 
     private var alerts: MutableList<Alert> = mutableListOf()
 

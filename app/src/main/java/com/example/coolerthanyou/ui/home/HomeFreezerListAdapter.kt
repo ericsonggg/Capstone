@@ -1,6 +1,5 @@
 package com.example.coolerthanyou.ui.home
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,18 +8,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coolerthanyou.R
-import com.example.coolerthanyou.log.ILogger
 import com.example.coolerthanyou.model.Alert
 import com.example.coolerthanyou.model.Freezer
-import javax.inject.Inject
 
 /**
  * List adapter for [HomeFragment]'s simple freezer list
  *
- * @property context    Calling context
  * @property callback   Callback method to call when a device is clicked
  */
-class HomeFreezerListAdapter(private val context: Context, private val callback: (freezer: Freezer) -> Unit) :
+class HomeFreezerListAdapter(private val callback: (freezer: Freezer) -> Unit) :
     RecyclerView.Adapter<HomeFreezerListAdapter.ViewHolder>() {
 
     companion object {
@@ -59,8 +55,9 @@ class HomeFreezerListAdapter(private val context: Context, private val callback:
          * @param alertType     The type of alert (0 if none)
          */
         internal fun bindData(freezer: Freezer, alertType: Int) {
-            name.text = freezer.name
+            val context = name.context
 
+            name.text = freezer.name
             when (alertType) {
                 Alert.TYPE_NONE -> {
                     alertIcon.visibility = View.INVISIBLE
@@ -84,17 +81,9 @@ class HomeFreezerListAdapter(private val context: Context, private val callback:
      */
     internal inner class Listener(private val boxId: Long) : View.OnClickListener {
         override fun onClick(p0: View?) {
-            try {
-                callback(freezers.first { it.boxId == boxId })
-            } catch (e: NoSuchElementException) {
-                logger.w(logTag, "Failed to find freezer with id $boxId when it should be there", e)
-            }
+            callback(freezers.first { it.boxId == boxId })
         }
     }
-
-    @Inject
-    protected lateinit var logger: ILogger
-    private val logTag: String = "HomeFreezerListAdapter"
 
     private var freezers: MutableList<Freezer> = mutableListOf()
     private var urgents: MutableMap<Long, Int> = mutableMapOf() // Map<boxId, count>
@@ -113,9 +102,7 @@ class HomeFreezerListAdapter(private val context: Context, private val callback:
                 }
             }
             else -> {
-                val message = "Somehow got a invalid ViewHolder type: $viewType"
-                logger.wtf(logTag, message)
-                throw IllegalStateException(message)
+                throw IllegalStateException("Somehow got a invalid ViewHolder type: $viewType")
             }
         }
     }

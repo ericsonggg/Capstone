@@ -74,13 +74,13 @@ class HomeFragment : BaseFragment() {
         logger.d(logTag, "onStart")
 
         //initialize recycler adapters
-        val favoriteListAdapter = ComponentFreezerOverviewListAdapter(requireContext(), logTag)
+        val favoriteListAdapter = ComponentFreezerOverviewListAdapter()
         favoritesList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = favoriteListAdapter
         }
-        val freezerListAdapter = HomeFreezerListAdapter(requireContext(), ::freezerListClickCallback)
+        val freezerListAdapter = HomeFreezerListAdapter(::freezerListClickCallback)
         freezerList.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(requireContext())

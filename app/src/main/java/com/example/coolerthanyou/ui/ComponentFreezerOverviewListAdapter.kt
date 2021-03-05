@@ -1,6 +1,5 @@
 package com.example.coolerthanyou.ui
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,23 +8,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coolerthanyou.R
-import com.example.coolerthanyou.log.ILogger
 import com.example.coolerthanyou.model.Alert
 import com.example.coolerthanyou.model.Freezer
 import com.example.coolerthanyou.model.FreezerRecord
 import com.example.coolerthanyou.ui.home.HomeFreezerListAdapter
-import javax.inject.Inject
 
 /**
  * List adapter for the generic component freezer overview list
- *
- * @property context    Calling context
- * @param   callerLogTag    The logTag of the calling class
  */
-class ComponentFreezerOverviewListAdapter(
-    private val context: Context,
-    callerLogTag: String
-) : RecyclerView.Adapter<ComponentFreezerOverviewListAdapter.ViewHolder>() {
+class ComponentFreezerOverviewListAdapter : RecyclerView.Adapter<ComponentFreezerOverviewListAdapter.ViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_NONE = 0
@@ -68,6 +59,8 @@ class ComponentFreezerOverviewListAdapter(
          * @param alert     The type of alert (0 if none)
          */
         internal fun bindData(freezer: Freezer, record: FreezerRecord?, alert: Int) {
+            val context = name.context
+
             name.text = freezer.name
             if (record == null) {
                 context.getString(R.string.component_freezer_overview_no_record).apply {
@@ -99,11 +92,6 @@ class ComponentFreezerOverviewListAdapter(
         }
     }
 
-    private val logTag: String = "ComponentFreezerOverviewListAdapter|$callerLogTag"
-
-    @Inject
-    protected lateinit var logger: ILogger
-
     private var freezers: MutableList<Freezer> = mutableListOf()
     private var records: MutableMap<Long, FreezerRecord> = mutableMapOf()
     private var urgents: MutableMap<Long, Int> = mutableMapOf() // Map<boxId, count>
@@ -123,7 +111,6 @@ class ComponentFreezerOverviewListAdapter(
             }
             else -> {
                 val message = "Somehow got a invalid ViewHolder type: $viewType"
-                logger.wtf(logTag, message)
                 throw IllegalStateException(message)
             }
         }

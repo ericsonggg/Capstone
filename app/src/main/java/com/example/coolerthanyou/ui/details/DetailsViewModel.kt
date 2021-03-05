@@ -25,7 +25,7 @@ class DetailsViewModel @Inject constructor(protected val freezerDao: IFreezerDao
     private val freezer: MutableLiveData<Freezer> = MutableLiveData()
     private val alerts: MutableLiveData<List<Alert>> = MutableLiveData()
     private val records: MutableLiveData<List<FreezerRecord>> = MutableLiveData()
-    private val latestRecord: MutableLiveData<FreezerRecord> = MutableLiveData()
+    private val latestRecord: MutableLiveData<FreezerRecord?> = MutableLiveData()
 
     /**
      * Get the information for the freezer with [boxId].
@@ -57,6 +57,8 @@ class DetailsViewModel @Inject constructor(protected val freezerDao: IFreezerDao
                 records.value = retrievedRecords
                 if (retrievedRecords.isNotEmpty()) {
                     latestRecord.value = retrievedRecords[0]
+                } else {
+                    latestRecord.value = null
                 }
             }
         }
@@ -88,5 +90,5 @@ class DetailsViewModel @Inject constructor(protected val freezerDao: IFreezerDao
      *
      * @return  Most recent freezer record
      */
-    internal fun getLatestRecord(): LiveData<FreezerRecord> = latestRecord
+    internal fun getLatestRecord(): LiveData<FreezerRecord?> = latestRecord
 }

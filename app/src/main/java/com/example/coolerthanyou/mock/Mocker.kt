@@ -128,7 +128,7 @@ class Mocker {
         ids.forEach { id ->
             val numRecords = random.nextInt(1, 11) //1 to 10 records
             for (i in 1..numRecords) {
-                calendar.add(Calendar.MINUTE, (random.nextInt() * (timeMaximum - timeMinimum) + timeMinimum))
+                calendar.add(Calendar.MINUTE, random.nextInt(timeMinimum, timeMaximum))
                 records.add(mockRecord(id, calendar.time))
             }
         }
@@ -181,7 +181,7 @@ class Mocker {
                 val numAlerts = random.nextInt(1, 4) //1 to 3 alerts
                 for (i in 1..numAlerts) {
                     //randomly increment calendar
-                    calendar.add(Calendar.MINUTE, (random.nextInt() * (timeMaximum - timeMinimum) + timeMinimum))
+                    calendar.add(Calendar.MINUTE, random.nextInt(timeMinimum, timeMaximum))
                     alerts.add(mockAlert(id, calendar.time))
                 }
             }

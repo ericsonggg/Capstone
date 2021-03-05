@@ -11,6 +11,7 @@ data class AppConfiguration(val isDebug: Boolean) {
     val runStartupMocks: Boolean = true //master key
     val runStartupClearDatabase = true
     val runStartupAddFreezers: Boolean = true
+    val runStartupNumFreezers: Int = 3
     val runStartupAddRecords: Boolean = true
     val runStartupAddAlerts: Boolean = true
 }
