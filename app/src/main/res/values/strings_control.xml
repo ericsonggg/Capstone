@@ -6,6 +6,6 @@
     <string name="fragment_control_current_header">Current</string>
     <string name="fragment_control_setting_header">Settings</string>
     <string name="fragment_control_history_header">History</string>
-    <string name="fragment_control_history_temperature_label">@string/common_temperature</string>
-    <string name="fragment_control_history_humidity_label">@string/common_humidity</string>
+    <string name="fragment_control_history_temperature_label">@string/temperature</string>
+    <string name="fragment_control_history_humidity_label">@string/humidity</string>
 </resources>

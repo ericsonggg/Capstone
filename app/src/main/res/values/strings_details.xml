@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fragment_details_overview_header">Overview</string>
+
+    <string name="fragment_details_controls_header">Controls</string>
+    <string name="fragment_details_controls_name_label">Name:</string>
+    <string name="fragment_details_controls_temperature_label">Temperature:</string>
+    <string name="fragment_details_controls_temperature_up_desc">Temperature Up</string>
+    <string name="fragment_details_controls_temperature_down_desc">Temperature Down</string>
+    <string name="fragment_details_controls_humidity_label">Humidity:</string>
+    <string name="fragment_details_controls_humidity_up_desc">Humidity Up</string>
+    <string name="fragment_details_controls_humidity_down_desc">Humidity Down</string>
+    <string name="fragment_details_controls_sampling_rate_label">Sampling rate:</string>
+    <string name="fragment_details_controls_sampling_rate_up_desc">Sampling Rate Up</string>
+    <string name="fragment_details_controls_sampling_rate_down_desc">Sampling Rate Down</string>
+    <string name="fragment_details_controls_power_label">Enable power:</string>
+    <string name="fragment_details_controls_address_label">Bluetooth address:</string>
+    <string name="fragment_details_controls_address_default">\?\?-\?\?-\?\?-\?\?-\?\?-\?\?</string>
+    <string name="fragment_details_controls_connect_label">Bluetooth connected:</string>
+    <string name="fragment_details_controls_manual_sample_label">Pull data now:</string>
+    <string name="fragment_details_controls_manual_sample_button">Sample</string>
+    <string name="fragment_details_controls_remove_label">Delete from app:</string>
+    <string name="fragment_details_controls_remove_button">Remove</string>
+
+    <string name="fragment_details_history_header">History</string>
+    <string name="fragment_details_history_temperature_header">Temperature</string>
+    <string name="fragment_details_history_temperature_more_desc">More temperature data</string>
+    <string name="fragment_details_history_humidity_header">Humidity</string>
+    <string name="fragment_details_history_humidity_more_desc">More humidity data</string>
+
+</resources>

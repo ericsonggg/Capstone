@@ -15,6 +15,9 @@ interface IFreezerRoomDao : IFreezerDao {
     @Query("SELECT * FROM freezer")
     override fun getAllFreezers(): List<Freezer>
 
+    @Query("SELECT * FROM freezer WHERE boxId=:boxId")
+    override fun getFreezerById(boxId: Long): Freezer
+
     @Query("SELECT * FROM freezer WHERE name=:name")
     override fun getFreezerByName(name: String): Freezer
 
@@ -27,8 +30,14 @@ interface IFreezerRoomDao : IFreezerDao {
     @Query("SELECT * FROM alert")
     override fun getAllAlerts(): List<Alert>
 
+    @Query("SELECT * FROM alert WHERE boxId=:boxId")
+    override fun getAllAlertsForFreezer(boxId: Long): List<Alert>
+
     @Query("SELECT * FROM freezerRecord GROUP BY boxId ORDER BY time DESC")
     override fun getAllUniqueRecords(): List<FreezerRecord>
+
+    @Query("SELECT * FROM freezerrecord WHERE boxId=:boxId ORDER BY time DESC LIMIT :numRecords")
+    override fun getRecordsForFreezer(boxId: Long, numRecords: Int): List<FreezerRecord>
 
     @Insert
     override fun insertAllFreezers(vararg freezers: Freezer)

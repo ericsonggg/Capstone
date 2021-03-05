@@ -36,14 +36,16 @@ class BluetoothService : BaseService() {
         const val HARDWARE_COMMAND_UUID = "0000dfb2-0000-1000-8000-00805f9b34fb"
         const val HARDWARE_MODEL_NUMBER_UUID = "00002a24-0000-1000-8000-00805f9b34fb"
 
-        private const val KEY_STANDARD = 0x00.toByte()
-        private const val KEY_SETTINGS = 0x01.toByte()
-        private const val KEY_ERROR = 0x10.toByte()
-        private const val KEY_UPDATE_NAME = 0x50.toByte()
-        private const val KEY_UPDATE_REFRESH = 0x51.toByte()
-        private const val KEY_UPDATE_SETTING = 0x52.toByte()
-        private const val KEY_MANUAL_PULL = 0x60.toByte()
-        private const val KEY_MANUAL_PULL_SETTINGS = 0x61.toByte()
+        private const val KEY_STANDARD: Byte = 0x00.toByte()
+        private const val KEY_SETTINGS: Byte = 0x01.toByte()
+        private const val KEY_ERROR: Byte = 0x10.toByte()
+        private const val KEY_UPDATE_NAME: Byte = 0x50.toByte()
+        private const val KEY_UPDATE_REFRESH: Byte = 0x51.toByte()
+        private const val KEY_UPDATE_SETTING: Byte = 0x52.toByte()
+        private const val KEY_MANUAL_PULL: Byte = 0x60.toByte()
+        private const val KEY_MANUAL_PULL_SETTINGS: Byte = 0x61.toByte()
+
+        private const val MESSAGE_SIZE: Int = 26
 
         val scanFilter: ScanFilter = ScanFilter.Builder().setServiceUuid(ParcelUuid.fromString(HARDWARE_SCAN_UUID)).build()
     }
@@ -122,6 +124,8 @@ class BluetoothService : BaseService() {
     private val binder: IBinder = Binder()
 
     private val gattCallback: BluetoothGattCallback = object : BluetoothGattCallback() {
+        private var characs: ByteBuffer = ByteBuffer.allocate(MESSAGE_SIZE)
+
         /**
          * Start discovering services for all newly connected devices.
          */
@@ -179,25 +183,40 @@ class BluetoothService : BaseService() {
             }
         }
 
-        /**
-         * Read data from the serial characteristic
-         */
         override fun onCharacteristicRead(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int) {
-            when (status) {
-                BluetoothGatt.GATT_FAILURE -> {
-                    logger.w(logTag, "Failed to read characteristic from ${gatt.device.address}")
-                }
-                else -> {
-                    processCharacteristic(gatt.device.address, characteristic.value)
-                }
-            }
+            // ignore first characteristic read
         }
 
         /**
-         * Read changed data from the device, via [onCharacteristicRead]
+         * Read changed data from the device and apply it to buffer.
          */
         override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
-            onCharacteristicRead(gatt, characteristic, BluetoothGatt.GATT_SUCCESS)
+            val data = characteristic.value
+            var dataIndex = 0
+            var availableSpace: Int = MESSAGE_SIZE - characs.position()
+            var remainingData: Int = data.size - dataIndex
+
+            // loop until data depleted
+            while (remainingData > 0) {
+                // fill as much of buffer as we can without overflow
+                dataIndex = if ((availableSpace - remainingData) <= 0) {
+                    characs.put(data, dataIndex, availableSpace)
+                    dataIndex + availableSpace
+                } else {
+                    characs.put(data, dataIndex, remainingData)
+                    dataIndex + remainingData
+                }
+
+                // only process if we've got MESSAGE_SIZE bytes
+                if (characs.position() == MESSAGE_SIZE) {
+                    processCharacteristic(gatt.device.address, characs.array())
+                    characs.clear()
+                }
+
+                // recalculate
+                availableSpace = MESSAGE_SIZE - characs.position()
+                remainingData = data.size - dataIndex
+            }
         }
 
         /**
@@ -457,8 +476,16 @@ class BluetoothService : BaseService() {
 
                 // Insert new record
                 handler.post {
-                    val temperature = ByteBuffer.wrap(charac.sliceArray(1..4)).float
-                    val humidity = ByteBuffer.wrap(charac.sliceArray(5..8)).float
+                    val temperature = charac.sliceArray(1..4).apply {
+                        reverse()
+                    }.let {
+                        ByteBuffer.wrap(it).float
+                    }
+                    val humidity = charac.sliceArray(5..8).apply {
+                        reverse()
+                    }.let {
+                        ByteBuffer.wrap(it).float
+                    }
                     val battery: Int = charac[9].toInt()
                     freezerDao.insertFreezerRecord(address, temperature, humidity, battery)
                 }
@@ -474,8 +501,9 @@ class BluetoothService : BaseService() {
                     val isPowerOn = charac[1] == 0.toByte()
                     val temperature = ByteBuffer.wrap(charac.sliceArray(2..5)).float
                     val humidity = ByteBuffer.wrap(charac.sliceArray(6..9)).float
+                    val samplingRate = charac[10].toInt()
                     val name = String(charac.sliceArray(10..25))
-                    freezerDao.insertAllFreezers(Freezer(name, temperature, humidity, isPowerOn, address, false))
+                    freezerDao.insertAllFreezers(Freezer(name, address, temperature, humidity, samplingRate, isPowerOn, false))
                 }
             }
             KEY_ERROR -> {

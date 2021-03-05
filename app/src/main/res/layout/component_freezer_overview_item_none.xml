@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/component_freezer_overview_height"
     android:layout_margin="@dimen/margin_small"
-    android:background="@drawable/background_component_freezer_overview_item"
+    android:background="@drawable/background_complex_item"
     android:padding="@dimen/padding_x_large">
 
     <TextView
         android:id="@+id/component_freezer_overview_none_text"
-        style="@style/TextSectionHeader"
+        style="@style/TextHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/component_freezer_overview_no_favorite"
-        android:textColor="@color/black"
+        android:textSize="@dimen/text_large"
         app:layout_constraintBottom_toTopOf="@id/component_freezer_overview_none_heart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

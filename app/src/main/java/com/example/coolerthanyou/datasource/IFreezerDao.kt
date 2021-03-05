@@ -17,6 +17,14 @@ interface IFreezerDao {
     fun getAllFreezers(): List<Freezer>
 
     /**
+     * Get a single freezer by its boxId
+     *
+     * @param boxId The boxId of the freezer
+     * @return  A [Freezer] with the boxId matching [boxId]
+     */
+    fun getFreezerById(boxId: Long): Freezer
+
+    /**
      * Get a single freezer by its name
      *
      * @param name  The name of the freezer
@@ -47,11 +55,28 @@ interface IFreezerDao {
     fun getAllUniqueRecords(): List<FreezerRecord>
 
     /**
+     * Get max [numRecords] [FreezerRecord]s for the freezer with boxId
+     *
+     * @param boxId     The boxId of the freezer
+     * @param numRecords    The max number of records to return
+     * @return  A list of records for the Freezer, with
+     */
+    fun getRecordsForFreezer(boxId: Long, numRecords: Int): List<FreezerRecord>
+
+    /**
      * Get all alerts in the database
      *
      * @return  A list of all [Alert]s
      */
     fun getAllAlerts(): List<Alert>
+
+    /**
+     * Get all alerts belonging to the Freezer with boxID
+     *
+     * @param boxId The freezer's boxId
+     * @return  All alerts belonging to it
+     */
+    fun getAllAlertsForFreezer(boxId: Long): List<Alert>
 
     /**
      * Add freezers to the database

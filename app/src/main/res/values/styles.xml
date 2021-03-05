@@ -30,6 +30,11 @@
         <item name="android:textSize">@dimen/button_text</item>
     </style>
 
+    <style name="ActorEditText" parent="android:Widget.EditText">
+        <item name="android:fontFamily">@font/actor</item>
+        <item name="android:textSize">@dimen/text</item>
+    </style>
+
     <style name="HorizontalBarrier">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -38,7 +43,7 @@
 
     <!-- Text -->
     <style name="TextHeader">
-        <item name="android:textSize">@dimen/section_header</item>
+        <item name="android:textSize">@dimen/header</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -47,8 +52,14 @@
     </style>
 
     <style name="TextSectionHeader">
-        <item name="android:textSize">@dimen/header</item>
+        <item name="android:textSize">@dimen/section_header</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:paddingStart">@dimen/padding_x_large</item>
+        <item name="android:paddingTop">@dimen/padding_med</item>
+        <item name="android:paddingEnd">@dimen/padding_x_large</item>
+        <item name="android:paddingBottom">@dimen/padding_med</item>
+        <item name="android:background">@drawable/background_simple_item</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>

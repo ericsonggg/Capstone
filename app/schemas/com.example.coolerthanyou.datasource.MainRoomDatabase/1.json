@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "76075641a83d7c5181057a5e8e15a1de",
+    "identityHash": "5ffd4c9d6843dffa3bff229e9fa7e164",
     "entities": [
       {
         "tableName": "Freezer",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`boxId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `set_temperature` REAL NOT NULL, `set_humidity` REAL NOT NULL, `set_power_on` INTEGER NOT NULL, `bluetoothAddress` TEXT NOT NULL, `is_favorite` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`boxId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `set_temperature` REAL NOT NULL, `set_humidity` REAL NOT NULL, `sampling_rate` INTEGER NOT NULL, `set_power_on` INTEGER NOT NULL, `bluetoothAddress` TEXT NOT NULL, `is_favorite` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "boxId",
@@ -30,6 +30,12 @@
             "fieldPath": "set_humidity",
             "columnName": "set_humidity",
             "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sampling_rate",
+            "columnName": "sampling_rate",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -148,7 +154,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '76075641a83d7c5181057a5e8e15a1de')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5ffd4c9d6843dffa3bff229e9fa7e164')"
     ]
   }
 }

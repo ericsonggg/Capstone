@@ -10,6 +10,7 @@
     <color name="accentDarker">#2c8778</color>
 
     <color name="background">#1D3362</color>
+    <color name="textDefault">#808080</color>
 
     <color name="urgent">#F79377</color>
     <color name="warning">#F4CF70</color>

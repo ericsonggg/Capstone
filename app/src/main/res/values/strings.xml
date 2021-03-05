@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">PyrexiaMD</string>
 
-    <string name="common_temperature">Temperature</string>
-    <string name="common_humidity">Humidity</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="time">Time</string>
 
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="okay">Okay</string>
+    <string name="more">More</string>
     <string name="something_went_wrong">Something went wrong, please restart the app</string>
 </resources>

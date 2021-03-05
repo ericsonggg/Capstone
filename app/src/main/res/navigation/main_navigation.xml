@@ -12,7 +12,12 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_nav_details"
-            app:destination="@id/nav_details" />
+            app:destination="@id/nav_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -25,7 +30,7 @@
         android:id="@+id/nav_details"
         android:name="com.example.coolerthanyou.ui.details.DetailsFragment"
         android:label="@string/main_nav_details"
-        tools:layout="@layout/fragment_details" >
+        tools:layout="@layout/fragment_details">
         <argument
             android:name="boxId"
             app:argType="long" />

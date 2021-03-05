@@ -39,9 +39,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_home_notification_barrier">
 
         <LinearLayout
@@ -55,12 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margin_xx_large"
-                android:background="@drawable/background_fragment_home_freezer_item"
-                android:gravity="center"
-                android:paddingStart="@dimen/padding_x_large"
-                android:paddingTop="@dimen/padding_med"
-                android:paddingEnd="@dimen/padding_x_large"
-                android:paddingBottom="@dimen/padding_med"
                 android:text="@string/fragment_home_favorites_label" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -78,6 +72,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
                 android:orientation="vertical" />
+
+            <Space
+                android:id="@+id/fragment_home_fab_space"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fab_space" />
 
         </LinearLayout>
     </ScrollView>
