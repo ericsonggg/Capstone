@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coolerthanyou.BaseFragment
 import com.example.coolerthanyou.R
+import com.example.coolerthanyou.model.FreezerRecord
+import com.example.coolerthanyou.ui.MainActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -23,12 +26,8 @@ import com.github.mikephil.charting.data.LineDataSet
  */
 class DetailsFragment : BaseFragment() {
 
-    companion object {
-        private const val millisPerHour: Float = 3600000f
-    }
-
     private val logTag: String = "DetailsFragment"
-    private val _detailsViewModel: DetailsViewModel by viewModels { viewModelFactory }
+    private val _detailsViewModel: DetailsViewModel by viewModels({ activity as MainActivity }) { viewModelFactory }
 
     private lateinit var alertsList: RecyclerView
     private lateinit var overviewName: TextView
@@ -129,24 +128,24 @@ class DetailsFragment : BaseFragment() {
         // Temperature "More"
         view.findViewById<TextView>(R.id.fragment_details_history_temperature_more_label).apply {
             setOnClickListener {
-                navigateTemperatureHistory()
+                navigateToHistory()
             }
         }
         view.findViewById<ImageView>(R.id.fragment_details_history_temperature_more_icon).apply {
             setOnClickListener {
-                navigateTemperatureHistory()
+                navigateToHistory()
             }
         }
 
         // Humidity "More"
         view.findViewById<TextView>(R.id.fragment_details_history_humidity_more_label).apply {
             setOnClickListener {
-                navigateHumidityHistory()
+                navigateToHistory()
             }
         }
         view.findViewById<ImageView>(R.id.fragment_details_history_humidity_more_icon).apply {
             setOnClickListener {
-                navigateHumidityHistory()
+                navigateToHistory()
             }
         }
     }
@@ -186,13 +185,13 @@ class DetailsFragment : BaseFragment() {
             val sortedRecords = records.sortedBy { it.time }
             if (android.os.Build.VERSION.SDK_INT >= 26) {
                 for (record in sortedRecords) {
-                    time = record.time.toInstant().toEpochMilli() / millisPerHour
+                    time = record.time.toInstant().toEpochMilli() / FreezerRecord.MILLIS_PER_HOUR
                     tempEntries.add(Entry(time, record.temperature))
                     humidEntries.add(Entry(time, record.humidity))
                 }
             } else {
                 for (record in sortedRecords) {
-                    time = record.time.time / millisPerHour
+                    time = record.time.time / FreezerRecord.MILLIS_PER_HOUR
                     tempEntries.add(Entry(time, record.temperature))
                     humidEntries.add(Entry(time, record.humidity))
                 }
@@ -222,16 +221,11 @@ class DetailsFragment : BaseFragment() {
     }
 
     /**
-     * Navigate to the temperature history
+     * Navigate to the history fragment
      */
-    private fun navigateTemperatureHistory() {
-
-    }
-
-    /**
-     * Navigate to the humidity history
-     */
-    private fun navigateHumidityHistory() {
-
+    private fun navigateToHistory() {
+        DetailsFragmentDirections.actionNavDetailsToNavHistory().apply {
+            findNavController().navigate(this)
+        }
     }
 }

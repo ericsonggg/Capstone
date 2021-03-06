@@ -31,7 +31,7 @@ import com.google.android.material.navigation.NavigationView
 
 /**
  * Main Activity for all core functions.
- * Each "function" should reside as a fragment within this activity, swapping the [Fragment] and [ViewModel] as necessary.
+ * Each "function" should reside as a fragment within this activity, swapping the Fragment and ViewModel as necessary.
  */
 class MainActivity : BaseActivity() {
 
@@ -60,10 +60,10 @@ class MainActivity : BaseActivity() {
             .setTitle(R.string.main_scan_title)
             .setView(R.layout.activity_main_scan_recycler)
             .setCancelable(true)
-            .setOnCancelListener { _ ->
+            .setOnCancelListener {
                 scanDialog.dismiss()
             }
-            .setOnDismissListener { _ ->
+            .setOnDismissListener {
                 if (isServiceBound) {
                     bluetoothService!!.stopDiscovery()
                 }
@@ -83,7 +83,7 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
 
         (findViewById<FloatingActionButton>(R.id.activity_main_fab)).apply {
-            setOnClickListener { _ ->
+            setOnClickListener {
                 discoverDevices()
             }
         }
@@ -96,7 +96,6 @@ class MainActivity : BaseActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
-                R.id.nav_about,
                 R.id.nav_control
             ), drawerLayout
         )
@@ -121,9 +120,7 @@ class MainActivity : BaseActivity() {
         super.onStart()
         logger.d(logTag, "onStart")
 
-        Intent(this, BluetoothService::class.java).let { intent ->
-            bindService(intent, bluetoothServiceConn, Context.BIND_AUTO_CREATE)
-        }
+        bindService(Intent(this, BluetoothService::class.java), bluetoothServiceConn, Context.BIND_AUTO_CREATE)
     }
 
     /**

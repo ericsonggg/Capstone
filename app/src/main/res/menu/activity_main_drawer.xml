@@ -8,13 +8,5 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/main_nav_home" />
-        <item
-            android:id="@+id/nav_control"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/main_nav_control" />
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/main_nav_about" />
     </group>
 </menu>

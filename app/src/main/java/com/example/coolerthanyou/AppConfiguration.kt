@@ -13,5 +13,7 @@ data class AppConfiguration(val isDebug: Boolean) {
     val runStartupAddFreezers: Boolean = true
     val runStartupNumFreezers: Int = 3
     val runStartupAddRecords: Boolean = true
+    val runStartupMaxRecords: Int = 40
     val runStartupAddAlerts: Boolean = true
+    val runStartupMaxAlerts: Int = 5
 }

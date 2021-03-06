@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * ViewModel for [DetailsFragment] and related classes.
+ * ViewModel for [DetailsFragment], [HistoryFragment] and related classes.
  * [getFreezerInfo] should be called first to initialize data
  */
 class DetailsViewModel @Inject constructor(protected val freezerDao: IFreezerDao) : ViewModel() {

@@ -109,9 +109,10 @@ class Mocker {
      * Generate random records for every freezer with an id
      *
      * @param ids   The freezer's boxId that will have records
+     * @param maxRecords    The maximum number of records that could be generated
      * @return  A list of random records
      */
-    fun mockRecords(ids: List<Long>): List<FreezerRecord> {
+    fun mockRecords(ids: List<Long>, maxRecords: Int = 10): List<FreezerRecord> {
         val records: MutableList<FreezerRecord> = mutableListOf()
         val calendar: Calendar = Calendar.getInstance().apply {
             if (get(Calendar.DAY_OF_MONTH) == 1) {
@@ -126,7 +127,7 @@ class Mocker {
         }
 
         ids.forEach { id ->
-            val numRecords = random.nextInt(1, 11) //1 to 10 records
+            val numRecords = random.nextInt(1, maxRecords + 1) //1 to 10 records
             for (i in 1..numRecords) {
                 calendar.add(Calendar.MINUTE, random.nextInt(timeMinimum, timeMaximum))
                 records.add(mockRecord(id, calendar.time))
@@ -160,9 +161,10 @@ class Mocker {
      * Generate random alerts for SOME of the ids in the list, with staggered times.
      *
      * @param ids   The list of freezer boxIds that may or may not get an alert.
+     * @param maxAlerts The maximum alerts that could possibly be generated
      * @return A list of random alerts.
      */
-    fun mockAlerts(ids: List<Long>): List<Alert> {
+    fun mockAlerts(ids: List<Long>, maxAlerts: Int = 3): List<Alert> {
         val alerts: MutableList<Alert> = mutableListOf()
         val calendar: Calendar = Calendar.getInstance().apply {
             if (get(Calendar.DAY_OF_MONTH) == 1) {
@@ -178,7 +180,7 @@ class Mocker {
 
         ids.forEach { id ->
             if (random.nextBoolean()) {
-                val numAlerts = random.nextInt(1, 4) //1 to 3 alerts
+                val numAlerts = random.nextInt(1, maxAlerts + 1) //1 to 3 alerts
                 for (i in 1..numAlerts) {
                     //randomly increment calendar
                     calendar.add(Calendar.MINUTE, random.nextInt(timeMinimum, timeMaximum))

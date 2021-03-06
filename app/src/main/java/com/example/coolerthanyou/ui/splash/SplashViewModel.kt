@@ -74,10 +74,10 @@ class SplashViewModel @Inject constructor(
                 }
                 val ids = freezerDao.getAllFreezers().map { it.boxId }
                 if (appConfiguration.runStartupAddRecords) {
-                    freezerDao.insertAllFreezerRecords(*mocker.mockRecords(ids).toTypedArray())
+                    freezerDao.insertAllFreezerRecords(*mocker.mockRecords(ids, appConfiguration.runStartupMaxRecords).toTypedArray())
                 }
                 if (appConfiguration.runStartupAddAlerts) {
-                    freezerDao.insertAllAlerts(*mocker.mockAlerts(ids).toTypedArray())
+                    freezerDao.insertAllAlerts(*mocker.mockAlerts(ids, appConfiguration.runStartupMaxAlerts).toTypedArray())
                 }
 
                 removeTask(TASK_STARTUP_MOCKS)
