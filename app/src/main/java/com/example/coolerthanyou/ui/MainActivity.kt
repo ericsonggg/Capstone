@@ -124,6 +124,15 @@ class MainActivity : BaseActivity() {
     }
 
     /**
+     * Update the action bar
+     *
+     * @param title New title of the action bar
+     */
+    internal fun updateActionBar(title: String) {
+        supportActionBar?.title = title
+    }
+
+    /**
      * Triggers the BLE discovery process
      */
     private fun discoverDevices() {

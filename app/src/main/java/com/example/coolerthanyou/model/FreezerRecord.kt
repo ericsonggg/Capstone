@@ -20,9 +20,4 @@ data class FreezerRecord(
     @ColumnInfo val temperature: Float,
     @ColumnInfo val humidity: Float,
     @ColumnInfo val battery: Int
-) {
-
-    companion object {
-        const val MILLIS_PER_HOUR: Float = 3600000f
-    }
-}
+)

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fragment_history_appbar_title">%1$s History</string>
     <string name="fragment_history_chart_header">%1$s History</string>
     <string name="fragment_history_event_list_header">Events</string>
     <string name="fragment_history_list_record">%1$tb %1$te %1$tH:%1$tM:%1$tS.%1$tL | Temp: %2$.2f\u2103 Hum: %3$.2f%%</string>

@@ -6,17 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coolerthanyou.BaseFragment
 import com.example.coolerthanyou.R
-import com.example.coolerthanyou.model.FreezerRecord
+import com.example.coolerthanyou.ui.DateValueFormatter
 import com.example.coolerthanyou.ui.MainActivity
 import com.example.coolerthanyou.ui.details.DetailsViewModel
 import com.example.coolerthanyou.ui.details.HistoryListAdapter
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -66,6 +69,19 @@ class HistoryFragment : BaseFragment() {
         header = view.findViewById(R.id.fragment_history_chart_header)
         chart = view.findViewById(R.id.fragment_history_chart)
         eventList = view.findViewById(R.id.fragment_history_event_list)
+
+        chart.apply {
+            isKeepPositionOnRotation = true
+            description = Description().apply {
+                isEnabled = false
+            }
+            axisRight.isEnabled = false
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                granularity = DateValueFormatter.MILLIS_PER_MIN.toFloat()
+                valueFormatter = DateValueFormatter()
+            }
+        }
     }
 
     override fun onStart() {
@@ -80,6 +96,7 @@ class HistoryFragment : BaseFragment() {
         }
 
         _detailsViewModel.getFreezer().observe(this, Observer { freezer ->
+            (activity as MainActivity).updateActionBar(getString(R.string.fragment_history_appbar_title, freezer.name))
             header.text = getString(R.string.fragment_history_chart_header, freezer.name)
         })
         _detailsViewModel.getRecords().observe(this, Observer { records ->
@@ -88,22 +105,23 @@ class HistoryFragment : BaseFragment() {
             val humidEntries: MutableList<Entry> = mutableListOf()
             var time: Float
 
-            val sortedRecords = records.sortedBy { it.time }
-            if (android.os.Build.VERSION.SDK_INT >= 26) {
-                for (record in sortedRecords) {
-                    time = record.time.toInstant().toEpochMilli() / FreezerRecord.MILLIS_PER_HOUR
-                    tempEntries.add(Entry(time, record.temperature))
-                    humidEntries.add(Entry(time, record.humidity))
-                }
-            } else {
-                for (record in sortedRecords) {
-                    time = record.time.time / FreezerRecord.MILLIS_PER_HOUR
+            records.sortedBy { it.time }.apply {
+                for (record in this) {
+                    time = record.time.time.toFloat()
                     tempEntries.add(Entry(time, record.temperature))
                     humidEntries.add(Entry(time, record.humidity))
                 }
             }
 
-            chart.data = LineData(LineDataSet(tempEntries, temperatureChartLabel), LineDataSet(humidEntries, humidityChartLabel))
+            LineData().apply {
+                addDataSet(LineDataSet(tempEntries, temperatureChartLabel).apply {
+                    color = ContextCompat.getColor(requireContext(), R.color.chart_temperature)
+                })
+                addDataSet(LineDataSet(humidEntries, humidityChartLabel).apply {
+                    color = ContextCompat.getColor(requireContext(), R.color.chart_humidity)
+                })
+                chart.data = this
+            }
             chart.invalidate()
 
             // update event list

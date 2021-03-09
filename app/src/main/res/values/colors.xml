@@ -14,4 +14,7 @@
 
     <color name="urgent">#F79377</color>
     <color name="warning">#F4CF70</color>
+
+    <color name="chart_temperature">#9536a8</color>
+    <color name="chart_humidity">#0e1e95</color>
 </resources>

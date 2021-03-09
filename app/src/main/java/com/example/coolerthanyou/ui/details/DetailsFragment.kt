@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,9 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coolerthanyou.BaseFragment
 import com.example.coolerthanyou.R
-import com.example.coolerthanyou.model.FreezerRecord
+import com.example.coolerthanyou.ui.DateValueFormatter
 import com.example.coolerthanyou.ui.MainActivity
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -120,6 +123,32 @@ class DetailsFragment : BaseFragment() {
         temperatureChart = view.findViewById(R.id.fragment_details_history_temperature_chart)
         humidityChart = view.findViewById(R.id.fragment_details_history_humidity_chart)
 
+        //charts
+        temperatureChart.apply {
+            isKeepPositionOnRotation = true
+            description = Description().apply {
+                isEnabled = false
+            }
+            axisRight.isEnabled = false
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                granularity = DateValueFormatter.MILLIS_PER_MIN.toFloat()
+                valueFormatter = DateValueFormatter()
+            }
+        }
+        humidityChart.apply {
+            isKeepPositionOnRotation = true
+            description = Description().apply {
+                isEnabled = false
+            }
+            axisRight.isEnabled = false
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                granularity = DateValueFormatter.MILLIS_PER_MIN.toFloat()
+                valueFormatter = DateValueFormatter()
+            }
+        }
+
         // don't need to show alerts icon
         view.findViewById<ImageView>(R.id.component_freezer_overview_alert_icon).apply {
             visibility = View.GONE
@@ -162,6 +191,7 @@ class DetailsFragment : BaseFragment() {
         }
 
         _detailsViewModel.getFreezer().observe(this, Observer { freezer ->
+            (activity as MainActivity).updateActionBar(getString(R.string.fragment_details_appbar_title, freezer.name))
             overviewName.text = freezer.name
 
             nameEdit.setText(freezer.name)
@@ -182,24 +212,28 @@ class DetailsFragment : BaseFragment() {
             val humidEntries: MutableList<Entry> = mutableListOf()
             var time: Float
 
-            val sortedRecords = records.sortedBy { it.time }
-            if (android.os.Build.VERSION.SDK_INT >= 26) {
-                for (record in sortedRecords) {
-                    time = record.time.toInstant().toEpochMilli() / FreezerRecord.MILLIS_PER_HOUR
-                    tempEntries.add(Entry(time, record.temperature))
-                    humidEntries.add(Entry(time, record.humidity))
-                }
-            } else {
-                for (record in sortedRecords) {
-                    time = record.time.time / FreezerRecord.MILLIS_PER_HOUR
+            records.sortedBy { it.time }.apply {
+                for (record in this) {
+                    time = record.time.time.toFloat()
                     tempEntries.add(Entry(time, record.temperature))
                     humidEntries.add(Entry(time, record.humidity))
                 }
             }
 
-            temperatureChart.data = LineData(LineDataSet(tempEntries, temperatureChartLabel))
+            LineData().apply {
+                addDataSet(LineDataSet(tempEntries, temperatureChartLabel).apply {
+                    color = ContextCompat.getColor(requireContext(), R.color.chart_temperature)
+                })
+                temperatureChart.data = this
+            }
             temperatureChart.invalidate()
-            humidityChart.data = LineData(LineDataSet(humidEntries, humidityChartLabel))
+
+            LineData().apply {
+                addDataSet(LineDataSet(humidEntries, humidityChartLabel).apply {
+                    color = ContextCompat.getColor(requireContext(), R.color.chart_humidity)
+                })
+                humidityChart.data = this
+            }
             humidityChart.invalidate()
         })
         _detailsViewModel.getLatestRecord().observe(this, Observer { latestRecord ->

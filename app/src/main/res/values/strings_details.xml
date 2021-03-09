@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fragment_details_appbar_title">%1$s Details</string>
     <string name="fragment_details_overview_header">Overview</string>
 
     <string name="fragment_details_controls_header">Controls</string>
