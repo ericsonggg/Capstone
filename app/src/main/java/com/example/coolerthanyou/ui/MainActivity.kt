@@ -11,6 +11,7 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.view.Menu
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
@@ -37,6 +38,8 @@ class MainActivity : BaseActivity() {
 
     private val logTag: String = "MainActivity"
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
+
+    private lateinit var fab: FloatingActionButton
 
     private var isServiceBound: Boolean = false
     private var bluetoothService: BluetoothService? = null
@@ -79,11 +82,7 @@ class MainActivity : BaseActivity() {
         val toolbar: Toolbar = findViewById(R.id.activity_main_toolbar)
         setSupportActionBar(toolbar)
 
-        (findViewById<FloatingActionButton>(R.id.activity_main_fab)).apply {
-            setOnClickListener {
-                discoverDevices()
-            }
-        }
+        fab = findViewById(R.id.activity_main_fab)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.activity_main_drawer_layout)
         val navView: NavigationView = findViewById(R.id.activity_main_nav)
@@ -115,6 +114,10 @@ class MainActivity : BaseActivity() {
         logger.d(logTag, "onStart")
 
         bindService(Intent(this, BluetoothService::class.java), bluetoothServiceConn, Context.BIND_AUTO_CREATE)
+
+        fab.setOnClickListener {
+            discoverDevices()
+        }
     }
 
     /**
@@ -125,6 +128,21 @@ class MainActivity : BaseActivity() {
     internal fun updateActionBar(title: String) {
         supportActionBar?.title = title
     }
+
+    /**
+     * Show the fab
+     */
+    internal fun showFab() {
+        fab.visibility = View.VISIBLE
+    }
+
+    /**
+     * Hide the fab
+     */
+    internal fun hideFab() {
+        fab.visibility = View.GONE
+    }
+
 
     /**
      * Triggers the BLE discovery process

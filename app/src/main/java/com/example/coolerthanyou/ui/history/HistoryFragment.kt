@@ -82,6 +82,9 @@ class HistoryFragment : BaseFragment() {
                 valueFormatter = DateValueFormatter()
             }
         }
+
+        //hide the fab since it interferes with the events list
+        (activity as MainActivity).hideFab()
     }
 
     override fun onStart() {
@@ -131,5 +134,13 @@ class HistoryFragment : BaseFragment() {
             historyAdapter.updateAlerts(alerts)
             historyAdapter.notifyDataSetChanged()
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        logger.d(logTag, "onDestroyView")
+
+        //reshow the fab
+        (activity as MainActivity).showFab()
     }
 }
