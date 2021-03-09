@@ -2,7 +2,6 @@ package com.example.coolerthanyou.dagger
 
 import androidx.lifecycle.ViewModel
 import com.example.coolerthanyou.ui.MainViewModel
-import com.example.coolerthanyou.ui.control.ControlViewModel
 import com.example.coolerthanyou.ui.details.DetailsViewModel
 import com.example.coolerthanyou.ui.home.HomeViewModel
 import dagger.Binds
@@ -30,14 +29,6 @@ abstract class MainModule {
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
     abstract fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
-
-    /**
-     * Bind the [ControlViewModel] as a "value" to be used in the [Map] by [ViewModelFactory]
-     */
-    @Binds
-    @IntoMap
-    @ViewModelKey(ControlViewModel::class)
-    abstract fun bindControlViewModel(controlViewModel: ControlViewModel): ViewModel
 
     /**
      * Bind the [DetailsViewModel] as a "value" to be used in the [Map] by [ViewModelFactory]

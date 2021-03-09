@@ -1,7 +1,6 @@
 package com.example.coolerthanyou.dagger
 
 import com.example.coolerthanyou.ui.MainActivity
-import com.example.coolerthanyou.ui.control.ControlFragment
 import com.example.coolerthanyou.ui.details.DetailsFragment
 import com.example.coolerthanyou.ui.history.HistoryFragment
 import com.example.coolerthanyou.ui.home.HomeFragment
@@ -26,7 +25,6 @@ interface MainComponent {
 
     /** Fragments **/
     fun inject(fragment: HomeFragment)
-    fun inject(fragment: ControlFragment)
     fun inject(fragment: DetailsFragment)
     fun inject(fragment: HistoryFragment)
 }
