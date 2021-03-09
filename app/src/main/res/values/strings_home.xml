@@ -3,6 +3,11 @@
     <string name="fragment_home_urgent_label">Urgent (%1$d)</string>
     <string name="fragment_home_warning_label">Warning (%1$d)</string>
 
+    <string name="fragment_home_urgent_dialog_title">Go to Freezer with Urgent Alerts</string>
+    <string name="fragment_home_urgent_dialog_list_item">%1$s : %2$d Urgents</string>
+    <string name="fragment_home_warning_dialog_title">Go to Freezer with Warnings</string>
+    <string name="fragment_home_warning_dialog_list_item">%1$s : %2$d Warnings</string>
+
     <string name="fragment_home_favorites_label">Favorites</string>
 
     <string name="fragment_home_freezer_list_name">Freezer Name</string>

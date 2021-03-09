@@ -91,4 +91,20 @@ class DetailsViewModel @Inject constructor(protected val freezerDao: IFreezerDao
      * @return  Most recent freezer record
      */
     internal fun getLatestRecord(): LiveData<FreezerRecord?> = latestRecord
+
+    /**
+     * Toggle whether the freezer is a favorite or not.
+     */
+    internal fun toggleFavorite() {
+        freezer.value?.let { oldFreezer ->
+            viewModelScope.launch(Dispatchers.IO) {
+                val newFreezer = oldFreezer.copy(is_favorite = !oldFreezer.is_favorite)
+                freezerDao.updateAllFreezers(newFreezer)
+
+                viewModelScope.launch(Dispatchers.Main) {
+                    freezer.value = newFreezer
+                }
+            }
+        }
+    }
 }

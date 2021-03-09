@@ -97,7 +97,6 @@ class HistoryFragment : BaseFragment() {
 
         _detailsViewModel.getFreezer().observe(this, Observer { freezer ->
             (activity as MainActivity).updateActionBar(getString(R.string.fragment_history_appbar_title, freezer.name))
-            header.text = getString(R.string.fragment_history_chart_header, freezer.name)
         })
         _detailsViewModel.getRecords().observe(this, Observer { records ->
             //populate charts

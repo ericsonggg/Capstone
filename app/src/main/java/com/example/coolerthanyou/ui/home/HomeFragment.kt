@@ -1,10 +1,12 @@
 package com.example.coolerthanyou.ui.home
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -72,9 +74,18 @@ class HomeFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         logger.d(logTag, "onStart")
+        _homeViewModel.updateData()
+
+        //add click listeners to buttons
+        urgentButton.setOnClickListener {
+            showUrgentDialog()
+        }
+        warningButton.setOnClickListener {
+            showWarningDialog()
+        }
 
         //initialize recycler adapters
-        val favoriteListAdapter = ComponentFreezerOverviewListAdapter()
+        val favoriteListAdapter = ComponentFreezerOverviewListAdapter(::freezerListClickCallback)
         favoritesList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -142,10 +153,79 @@ class HomeFragment : BaseFragment() {
      * OnClick listener for the freezer list.
      * Starts the details fragment for the chosen freezer
      *
-     * @param freezer   The freezer that was clicked
+     * @param boxId The boxId of the freezer that was clicked
      */
-    private fun freezerListClickCallback(freezer: Freezer) {
-        HomeFragmentDirections.actionNavHomeToNavDetails(freezer.boxId).apply {
+    private fun freezerListClickCallback(boxId: Long) {
+        navigateToDetails(boxId)
+    }
+
+    /**
+     * Create and show a dialog that lists all freezers with urgents in descending order
+     * Does nothing if the view model is missing data
+     */
+    private fun showUrgentDialog() {
+        val clickList: MutableList<Long> = mutableListOf()
+
+        val dataAdapter = ArrayAdapter<String>(requireContext(), R.layout.component_simple_dialog_item).apply {
+            // map freezers into [boxId, name]
+            val freezers = _homeViewModel.getFreezers().value?.groupBy({ it.boxId }, { it.name }) ?: return
+
+            // map urgents into [boxId, count(Urgents)], in descending order, and add each urgent to the array
+            val urgents = _homeViewModel.getUrgents().value ?: return
+            urgents.groupingBy { it.boxId }.eachCount().toList().sortedByDescending { it.second }.forEach {
+                add(getString(R.string.fragment_home_urgent_dialog_list_item, freezers[it.first], it.second))
+                clickList.add(it.first) //add to list so we know which one was clicked later
+            }
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.fragment_home_urgent_dialog_title)
+            .setAdapter(dataAdapter) { dialogInterface, i ->
+                navigateToDetails(clickList[i])
+                dialogInterface.dismiss()
+            }
+            .setCancelable(true)
+            .create()
+            .show()
+    }
+
+    /**
+     * Create and show a dialog that lists all freezers with warnings in descending order
+     * Does nothing if the view model is missing data
+     */
+    private fun showWarningDialog() {
+        val clickList: MutableList<Long> = mutableListOf()
+
+        val dataAdapter = ArrayAdapter<String>(requireContext(), R.layout.component_simple_dialog_item).apply {
+            // map freezers into [boxId, name]
+            val freezers = _homeViewModel.getFreezers().value?.groupBy({ it.boxId }, { it.name }) ?: return
+
+            // map urgents into [boxId, count(Urgents)], in descending order, and add each urgent to the array
+            val warnings = _homeViewModel.getWarnings().value ?: return
+            warnings.groupingBy { it.boxId }.eachCount().toList().sortedByDescending { it.second }.forEach {
+                add(getString(R.string.fragment_home_warning_dialog_list_item, freezers[it.first], it.second))
+                clickList.add(it.first) //add to list so we know which one was clicked later
+            }
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.fragment_home_warning_dialog_title)
+            .setAdapter(dataAdapter) { dialogInterface, i ->
+                navigateToDetails(clickList[i])
+                dialogInterface.dismiss()
+            }
+            .setCancelable(true)
+            .create()
+            .show()
+    }
+
+    /**
+     * Helper function to navigate to the Details fragment
+     *
+     * @param boxId The boxId of the freezer that was clicked
+     */
+    private fun navigateToDetails(boxId: Long) {
+        HomeFragmentDirections.actionNavHomeToNavDetails(boxId).apply {
             findNavController().navigate(this)
         }
     }

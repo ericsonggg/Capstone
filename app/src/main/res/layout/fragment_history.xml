@@ -22,7 +22,7 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/fragment_history_chart"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/chart_height"
+        android:layout_height="@dimen/chart_height_large"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_large"

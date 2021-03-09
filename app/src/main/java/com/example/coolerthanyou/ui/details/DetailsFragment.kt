@@ -38,6 +38,7 @@ class DetailsFragment : BaseFragment() {
     private lateinit var overviewHumidity: TextView
     private lateinit var overviewBattery: TextView
     private lateinit var overviewLastUpdate: TextView
+    private lateinit var overviewFavorite: ImageView
     private lateinit var nameEdit: EditText
     private lateinit var temperatureEdit: EditText
     private lateinit var temperatureUp: ImageView
@@ -105,6 +106,7 @@ class DetailsFragment : BaseFragment() {
         overviewHumidity = view.findViewById(R.id.component_freezer_overview_humidity)
         overviewBattery = view.findViewById(R.id.component_freezer_overview_battery)
         overviewLastUpdate = view.findViewById(R.id.component_freezer_overview_last_update)
+        overviewFavorite = view.findViewById(R.id.component_freezer_overview_favorite)
         nameEdit = view.findViewById(R.id.fragment_details_controls_name)
         temperatureEdit = view.findViewById(R.id.fragment_details_controls_temperature)
         temperatureUp = view.findViewById(R.id.fragment_details_controls_temperature_up)
@@ -147,6 +149,9 @@ class DetailsFragment : BaseFragment() {
                 granularity = DateValueFormatter.MILLIS_PER_MIN.toFloat()
                 valueFormatter = DateValueFormatter()
             }
+        }
+        overviewFavorite.setOnClickListener {
+            _detailsViewModel.toggleFavorite()
         }
 
         // don't need to show alerts icon
@@ -201,6 +206,12 @@ class DetailsFragment : BaseFragment() {
             powerSwitch.isChecked = freezer.set_power_on
             powerSwitch.text = if (freezer.set_power_on) powerOnLabel else powerOffLabel
             btAddress.text = freezer.bluetoothAddress
+
+            if (freezer.is_favorite) {
+                overviewFavorite.setImageResource(R.drawable.ic_heart)
+            } else {
+                overviewFavorite.setImageResource(R.drawable.ic_heart_outline)
+            }
         })
         _detailsViewModel.getAlerts().observe(this, Observer { alerts ->
             alertsAdapter.updateAlerts(alerts)

@@ -60,9 +60,6 @@ class MainActivity : BaseActivity() {
             .setTitle(R.string.main_scan_title)
             .setView(R.layout.activity_main_scan_recycler)
             .setCancelable(true)
-            .setOnCancelListener {
-                scanDialog.dismiss()
-            }
             .setOnDismissListener {
                 if (isServiceBound) {
                     bluetoothService!!.stopDiscovery()

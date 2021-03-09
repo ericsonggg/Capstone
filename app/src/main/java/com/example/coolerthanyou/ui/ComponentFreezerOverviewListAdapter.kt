@@ -15,8 +15,11 @@ import com.example.coolerthanyou.ui.home.HomeFreezerListAdapter
 
 /**
  * List adapter for the generic component freezer overview list
+ *
+ * @property alertCallback   Callback method to call when the alert icon is clicked. Null if no callback needed.
  */
-class ComponentFreezerOverviewListAdapter : RecyclerView.Adapter<ComponentFreezerOverviewListAdapter.ViewHolder>() {
+class ComponentFreezerOverviewListAdapter(private val alertCallback: ((boxId: Long) -> Unit)) :
+    RecyclerView.Adapter<ComponentFreezerOverviewListAdapter.ViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_NONE = 0
@@ -50,6 +53,7 @@ class ComponentFreezerOverviewListAdapter : RecyclerView.Adapter<ComponentFreeze
         private val battery: TextView = itemView.findViewById(R.id.component_freezer_overview_battery)
         private val lastUpdate: TextView = itemView.findViewById(R.id.component_freezer_overview_last_update)
         private val alertIcon: ImageView = itemView.findViewById(R.id.component_freezer_overview_alert_icon)
+        private val favoriteIcon: ImageView = itemView.findViewById(R.id.component_freezer_overview_favorite)
 
         /**
          * Bind the freezer's data to this view holder and display it.
@@ -60,6 +64,9 @@ class ComponentFreezerOverviewListAdapter : RecyclerView.Adapter<ComponentFreeze
          */
         internal fun bindData(freezer: Freezer, record: FreezerRecord?, alert: Int) {
             val context = name.context
+
+            //hide favorites
+            favoriteIcon.visibility = View.GONE
 
             name.text = freezer.name
             if (record == null) {
@@ -89,6 +96,20 @@ class ComponentFreezerOverviewListAdapter : RecyclerView.Adapter<ComponentFreeze
                     alertIcon.setColorFilter(ContextCompat.getColor(context, R.color.warning))
                 }
             }
+
+            // add callbacks
+            alertIcon.setOnClickListener(Listener(freezer.boxId))
+        }
+    }
+
+    /**
+     * OnClick Listener for each item (i.e. [ViewHolder])
+     *
+     * @property boxId    The boxId of the freezer this listener is for
+     */
+    internal inner class Listener(private val boxId: Long) : View.OnClickListener {
+        override fun onClick(p0: View?) {
+            alertCallback(boxId)
         }
     }
 

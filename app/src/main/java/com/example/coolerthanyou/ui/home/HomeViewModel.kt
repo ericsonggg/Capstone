@@ -29,8 +29,10 @@ class HomeViewModel @Inject constructor(protected val freezerDao: IFreezerDao) :
     private val urgents: MutableLiveData<MutableSet<Alert>> = MutableLiveData()
     private val warnings: MutableLiveData<MutableSet<Alert>> = MutableLiveData()
 
-    init {
-        // Send DB requests
+    /**
+     * Update all data held by this view model from the data base
+     */
+    internal fun updateData() {
         viewModelScope.launch(Dispatchers.IO) {
             val freezerList = freezerDao.getAllFreezers()
 

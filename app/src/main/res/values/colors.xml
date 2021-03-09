@@ -12,8 +12,12 @@
     <color name="background">#1D3362</color>
     <color name="textDefault">#808080</color>
 
+    <color name="urgent_lighter">#fbc5b7</color>
     <color name="urgent">#F79377</color>
+    <color name="urgent_darker">#f4663e</color>
+    <color name="warning_lighter">#fbefd0</color>
     <color name="warning">#F4CF70</color>
+    <color name="warning_darker">#edaf12</color>
 
     <color name="chart_temperature">#9536a8</color>
     <color name="chart_humidity">#0e1e95</color>

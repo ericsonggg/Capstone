@@ -41,6 +41,7 @@
     <!-- UI -->
     <dimen name="button_med">64dp</dimen>
     <dimen name="button_large">96dp</dimen>
+    <dimen name="button_border">4dp</dimen>
 
     <dimen name="rect_corner_med">16dp</dimen>
     <dimen name="rect_corner_large">24dp</dimen>
@@ -51,6 +52,7 @@
     <dimen name="icon_button_padding">6dp</dimen>
 
     <dimen name="chart_height">256dp</dimen>
+    <dimen name="chart_height_large">384dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_space">85dp</dimen>

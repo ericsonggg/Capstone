@@ -16,7 +16,7 @@ import com.example.coolerthanyou.model.Freezer
  *
  * @property callback   Callback method to call when a device is clicked
  */
-class HomeFreezerListAdapter(private val callback: (freezer: Freezer) -> Unit) :
+class HomeFreezerListAdapter(private val callback: (boxId: Long) -> Unit) :
     RecyclerView.Adapter<HomeFreezerListAdapter.ViewHolder>() {
 
     companion object {
@@ -77,11 +77,11 @@ class HomeFreezerListAdapter(private val callback: (freezer: Freezer) -> Unit) :
     /**
      * OnClick Listener for each item (i.e. [ViewHolder])
      *
-     * @param boxId     The boxId of the freezer
+     * @property boxId     The boxId of the freezer
      */
     internal inner class Listener(private val boxId: Long) : View.OnClickListener {
         override fun onClick(p0: View?) {
-            callback(freezers.first { it.boxId == boxId })
+            callback(boxId)
         }
     }
 
