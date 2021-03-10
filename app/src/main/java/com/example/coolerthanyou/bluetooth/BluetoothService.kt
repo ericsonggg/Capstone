@@ -185,13 +185,6 @@ class BluetoothService : BaseService() {
         }
 
         override fun onCharacteristicRead(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int) {
-            // ignore first characteristic read
-        }
-
-        /**
-         * Read changed data from the device and apply it to buffer.
-         */
-        override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
             val data = characteristic.value
             var dataIndex = 0
             var availableSpace: Int = MESSAGE_SIZE - characs.position()
@@ -218,6 +211,13 @@ class BluetoothService : BaseService() {
                 availableSpace = MESSAGE_SIZE - characs.position()
                 remainingData = data.size - dataIndex
             }
+        }
+
+        /**
+         * Read changed data from the device and apply it to buffer.
+         */
+        override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
+
         }
 
         /**
@@ -530,7 +530,7 @@ class BluetoothService : BaseService() {
                         ByteBuffer.wrap(it).float
                     }
                     val battery: Int = charac[9].toInt()
-                    freezerDao.insertFreezerRecord(address, temperature, humidity, battery)
+                    freezerDao.insertAndValidateFreezerRecord(address, temperature, humidity, battery)
                 }
             }
             KEY_SETTINGS -> {
@@ -579,8 +579,8 @@ class BluetoothService : BaseService() {
     private fun writeCharacteristic(data: ByteArray, address: String) {
         connectedDevices[address]?.let { gatt ->
             findSerialCharacteristic(gatt)?.let { charac ->
-                charac.value = data
-                writeQueue.add(Pair(gatt, charac))
+//                charac.value = data
+//                writeQueue.add(Pair(gatt, charac))
             }
         }
     }

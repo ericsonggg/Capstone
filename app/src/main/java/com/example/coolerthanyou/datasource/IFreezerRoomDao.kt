@@ -39,12 +39,35 @@ interface IFreezerRoomDao : IFreezerDao {
     @Insert
     override fun insertAllFreezers(vararg freezers: Freezer)
 
-    @Insert
-    override fun insertAllFreezerRecords(vararg freezerRecords: FreezerRecord)
+    override fun insertAndValidateAllFreezerRecords(vararg freezerRecords: FreezerRecord) {
+        freezerRecords.forEach { record ->
+            getFreezerById(record.boxId)?.let { freezer ->
+                if (record.validateTemperature(freezer)) {
+                    val alert = getAllAlertsForFreezer(record.boxId).filter { !it.solved }.find { it.dataType == Alert.DATA_TYPE_TEMPERATURE }
+                    if (alert == null) {
+                        insertAllAlerts(Alert(record.boxId, record.time, Alert.TYPE_URGENT, Alert.DATA_TYPE_TEMPERATURE, "KEK"))
+                    }
+                }
+                if (record.validateHumidity(freezer)) {
+                    val alert = getAllAlertsForFreezer(record.boxId).filter { !it.solved }.find { it.dataType == Alert.DATA_TYPE_HUMIDITY }
+                    if (alert == null) {
+                        insertAllAlerts(Alert(record.boxId, record.time, Alert.TYPE_URGENT, Alert.DATA_TYPE_HUMIDITY, "KEK"))
+                    }
+                }
+                if (record.validateBattery()) {
+                    val alert = getAllAlertsForFreezer(record.boxId).filter { !it.solved }.find { it.dataType == Alert.DATA_TYPE_BATTERY }
+                    if (alert == null) {
+                        insertAllAlerts(Alert(record.boxId, record.time, Alert.TYPE_URGENT, Alert.DATA_TYPE_BATTERY, "KEK"))
+                    }
+                }
+            }
+            insertFreezerRecord(record)
+        }
+    }
 
-    override fun insertFreezerRecord(address: String, temp: Float, humid: Float, battery: Int) {
+    override fun insertAndValidateFreezerRecord(address: String, temp: Float, humid: Float, battery: Int) {
         getIDofFreezer(address).also { id ->
-            insertAllFreezerRecords(FreezerRecord(id, Calendar.getInstance().time, temp, humid, battery))
+            insertAndValidateAllFreezerRecords(FreezerRecord(id, Calendar.getInstance().time, temp, humid, battery))
         }
     }
 
@@ -81,6 +104,9 @@ interface IFreezerRoomDao : IFreezerDao {
 
     @Query("SELECT boxId FROM freezer WHERE bluetoothAddress=:address")
     fun getIDofFreezer(address: String): Long
+
+    @Insert
+    fun insertFreezerRecord(record: FreezerRecord)
 
     @Query("DELETE FROM freezerRecord WHERE boxId=:boxId")
     fun deleteFreezerRecordsOfFreezer(boxId: Long)

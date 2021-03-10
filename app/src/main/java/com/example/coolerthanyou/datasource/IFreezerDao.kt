@@ -77,21 +77,21 @@ interface IFreezerDao {
     fun insertAllFreezers(vararg freezers: Freezer)
 
     /**
-     * Insert freezer records to the database
+     * Insert freezer records to the database, and trigger alerts if invalid
      *
      * @param freezerRecords The [FreezerRecord]s to add
      */
-    fun insertAllFreezerRecords(vararg freezerRecords: FreezerRecord)
+    fun insertAndValidateAllFreezerRecords(vararg freezerRecords: FreezerRecord)
 
     /**
-     * Insert a freezer record based on its data
+     * Insert a freezer record based on its data, and trigger an alert if invalid
      *
      * @param address   The BLE address of the freezer
      * @param temp      The current temperature
      * @param humid     The current humidity
      * @param battery   The current battery level
      */
-    fun insertFreezerRecord(address: String, temp: Float, humid: Float, battery: Int)
+    fun insertAndValidateFreezerRecord(address: String, temp: Float, humid: Float, battery: Int)
 
     /**
      * Insert alerts to the database

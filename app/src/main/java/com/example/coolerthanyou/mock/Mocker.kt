@@ -149,11 +149,19 @@ class Mocker {
             2 -> Alert.TYPE_WARNING
             else -> Alert.TYPE_NONE // should not happen
         }
+        val dataType = when (random.nextInt(1, 4)) {
+            1 -> Alert.DATA_TYPE_TEMPERATURE
+            2 -> Alert.DATA_TYPE_HUMIDITY
+            3 -> Alert.DATA_TYPE_BATTERY
+            else -> Alert.DATA_TYPE_TEMPERATURE // should not happen lol
+        }
         return Alert(
             boxId,
             time,
             type,
-            if (type == Alert.TYPE_URGENT) "This is an urgent alert for freezer #$boxId" else "This is a warning for freezer #$boxId"
+            dataType,
+            if (type == Alert.TYPE_URGENT) "This is an urgent alert for freezer #$boxId" else "This is a warning for freezer #$boxId",
+            solved = true
         )
     }
 

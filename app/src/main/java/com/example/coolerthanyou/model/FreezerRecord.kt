@@ -20,4 +20,41 @@ data class FreezerRecord(
     @ColumnInfo val temperature: Float,
     @ColumnInfo val humidity: Float,
     @ColumnInfo val battery: Int
-)
+) {
+
+    companion object {
+        const val TEMPERATURE_STABILITY = 3f
+        const val HUMIDITY_STABILITY = 5f
+        const val BATTERY_LOW = 15
+    }
+
+
+    /**
+     * Validate the temperature and humidity.
+     *
+     * @param freezer   The freezer to validate against
+     * @return  True if in +-[TEMPERATURE_STABILITY], false if not
+     */
+    fun validateTemperature(freezer: Freezer):Boolean {
+        return temperature in (freezer.set_temperature - TEMPERATURE_STABILITY)..(freezer.set_temperature+ TEMPERATURE_STABILITY)
+    }
+
+    /**
+     * Validate the humidity
+     *
+     * @param freezer   The freezer to validate against
+     * @return  True if in +-[HUMIDITY_STABILITY], false if not
+     */
+    fun validateHumidity(freezer: Freezer) :Boolean {
+        return humidity in (freezer.set_humidity - HUMIDITY_STABILITY)..(freezer.set_humidity+ HUMIDITY_STABILITY)
+    }
+
+    /**
+     * Validate whether the battery is OK.
+     *
+     * @return  True if > [BATTERY_LOW], false if not
+     */
+    fun validateBattery():Boolean {
+        return battery > BATTERY_LOW
+    }
+}
