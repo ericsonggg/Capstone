@@ -23,14 +23,14 @@ class Mocker {
 
         private const val alphanumeric: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-        private const val temperatureLower: Float = 2f
-        private const val temperatureHigher: Float = 25f
+        private const val temperatureLower: Float = Freezer.MIN_TEMPERATURE
+        private const val temperatureHigher: Float = Freezer.MAX_TEMPERATURE
 
-        private const val humidityLower: Float = 0f
-        private const val humidityHigher: Float = 40f
+        private const val humidityLower: Float = Freezer.MIN_HUMIDITY
+        private const val humidityHigher: Float = Freezer.MAX_HUMIDITY
 
-        private const val samplingRateLower: Int = 5
-        private const val samplingRateHigher: Int = 900 //15 mins
+        private const val samplingRateLower: Int = Freezer.MIN_SAMPLING_RATE
+        private const val samplingRateHigher: Int = Freezer.MAX_SAMPLING_RATE
 
         private const val timeMinimum: Int = 10
         private const val timeMaximum: Int = 1440

@@ -2,21 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5ffd4c9d6843dffa3bff229e9fa7e164",
+    "identityHash": "3a9d5b9e34b5fc90a21e0188fde67deb",
     "entities": [
       {
         "tableName": "Freezer",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`boxId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `set_temperature` REAL NOT NULL, `set_humidity` REAL NOT NULL, `sampling_rate` INTEGER NOT NULL, `set_power_on` INTEGER NOT NULL, `bluetoothAddress` TEXT NOT NULL, `is_favorite` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `bluetoothAddress` TEXT NOT NULL, `set_temperature` REAL NOT NULL, `set_humidity` REAL NOT NULL, `sampling_rate` INTEGER NOT NULL, `set_power_on` INTEGER NOT NULL, `is_favorite` INTEGER NOT NULL, `boxId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "boxId",
-            "columnName": "boxId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bluetoothAddress",
+            "columnName": "bluetoothAddress",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -45,14 +45,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "bluetoothAddress",
-            "columnName": "bluetoothAddress",
-            "affinity": "TEXT",
+            "fieldPath": "is_favorite",
+            "columnName": "is_favorite",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "is_favorite",
-            "columnName": "is_favorite",
+            "fieldPath": "boxId",
+            "columnName": "boxId",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -113,7 +113,7 @@
       },
       {
         "tableName": "Alert",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`boxId` INTEGER NOT NULL, `time` TEXT NOT NULL, `type` INTEGER NOT NULL, `message` TEXT NOT NULL, PRIMARY KEY(`boxId`, `time`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`boxId` INTEGER NOT NULL, `time` TEXT NOT NULL, `type` INTEGER NOT NULL, `message` TEXT NOT NULL, `solved` INTEGER NOT NULL, PRIMARY KEY(`boxId`, `time`))",
         "fields": [
           {
             "fieldPath": "boxId",
@@ -138,6 +138,12 @@
             "columnName": "message",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "solved",
+            "columnName": "solved",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -154,7 +160,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5ffd4c9d6843dffa3bff229e9fa7e164')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3a9d5b9e34b5fc90a21e0188fde67deb')"
     ]
   }
 }

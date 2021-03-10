@@ -11,13 +11,15 @@ import java.util.*
  * @property time   The time that it occurred
  * @property type   The type of the alert
  * @property message    The message for the alert
+ * @property solved Whether this alert was solved (i.e. dismissed) or not. True if solved, false if not.
  */
 @Entity(primaryKeys = ["boxId", "time"])
 data class Alert(
     @ColumnInfo val boxId: Long,
     @ColumnInfo val time: Date,
     @ColumnInfo val type: Int,
-    @ColumnInfo val message: String
+    @ColumnInfo val message: String,
+    @ColumnInfo val solved: Boolean = false
 ) {
     companion object {
         const val TYPE_NONE = 0 // for other classes using Alert

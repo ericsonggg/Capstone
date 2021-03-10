@@ -40,17 +40,6 @@ class MainScanListAdapter(private val callback: (device: BluetoothDevice) -> Uni
         }
     }
 
-    /**
-     * OnClick Listener for each item (i.e. [ViewHolder])
-     *
-     * @property position  Position of the item in the list
-     */
-    internal inner class Listener(private val position: Int) : View.OnClickListener {
-        override fun onClick(p0: View?) {
-            callback(deviceList[position])
-        }
-    }
-
     private val deviceList: MutableList<BluetoothDevice> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -62,7 +51,8 @@ class MainScanListAdapter(private val callback: (device: BluetoothDevice) -> Uni
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
             bindData(deviceList[position])
-            itemView.setOnClickListener(Listener(position))
+            val device = deviceList[position]
+            itemView.setOnClickListener { callback(device) }
         }
     }
 

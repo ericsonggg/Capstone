@@ -12,6 +12,9 @@
     <color name="background">#1D3362</color>
     <color name="textDefault">#808080</color>
 
+    <color name="button_lighter">#d1d1e0</color>
+    <color name="button">#a3a3c2</color>
+    <color name="button_darker">#666699</color>
     <color name="urgent_lighter">#fbc5b7</color>
     <color name="urgent">#F79377</color>
     <color name="urgent_darker">#f4663e</color>

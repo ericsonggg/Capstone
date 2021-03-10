@@ -12,4 +12,5 @@
     <string name="okay">Okay</string>
     <string name="more">More</string>
     <string name="something_went_wrong">Something went wrong, please restart the app</string>
+    <string name="try_again">Something went wrong, please try again</string>
 </resources>

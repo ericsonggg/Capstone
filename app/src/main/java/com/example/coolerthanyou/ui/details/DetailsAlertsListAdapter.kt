@@ -11,8 +11,10 @@ import com.example.coolerthanyou.model.Alert
 
 /**
  * List adapter for [Alert]s in [DetailsFragment]
+ *
+ * @property callback  The callback method for when an alert is tapped
  */
-class DetailsAlertsListAdapter : RecyclerView.Adapter<DetailsAlertsListAdapter.ViewHolder>() {
+class DetailsAlertsListAdapter(private val callback: (alert: Alert) -> Unit) : RecyclerView.Adapter<DetailsAlertsListAdapter.ViewHolder>() {
 
     /**
      * [ViewHolder] for [DetailsAlertsListAdapter]
@@ -53,6 +55,10 @@ class DetailsAlertsListAdapter : RecyclerView.Adapter<DetailsAlertsListAdapter.V
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
             bindData(alerts[position])
+            val alert = alerts[position]
+            itemView.setOnClickListener {
+                callback(alert)
+            }
         }
     }
 
@@ -65,5 +71,26 @@ class DetailsAlertsListAdapter : RecyclerView.Adapter<DetailsAlertsListAdapter.V
      */
     internal fun updateAlerts(newAlerts: List<Alert>) {
         alerts = newAlerts.toMutableList()
+    }
+
+    /**
+     * Remove this alert if exists
+     *
+     * @param alert The alert to remove
+     * @return  The index of the removed item. -1 if not found.
+     */
+    internal fun removeAlert(alert: Alert): Int {
+        var index = -1
+        for (i in 0 until alerts.size) {
+            if (alerts[i].boxId == alert.boxId && alerts[i].time == alert.time) {
+                index = i
+                break
+            }
+        }
+
+        if (index != -1) {
+            alerts.removeAt(index)
+        }
+        return index
     }
 }

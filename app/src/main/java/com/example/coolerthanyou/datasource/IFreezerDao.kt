@@ -22,15 +22,7 @@ interface IFreezerDao {
      * @param boxId The boxId of the freezer
      * @return  A [Freezer] with the boxId matching [boxId]
      */
-    fun getFreezerById(boxId: Long): Freezer
-
-    /**
-     * Get a single freezer by its bluetooth address
-     *
-     * @param address   The bluetooth address
-     * @return  A [Freezer] with the bluetooth address matching [address]
-     */
-    fun getFreezerByAddress(address: String): Freezer
+    fun getFreezerById(boxId: Long): Freezer?
 
     /**
      * Get the Bluetooth addresses for all [Freezer]s in the database
@@ -116,11 +108,32 @@ interface IFreezerDao {
     fun updateAllFreezers(vararg freezers: Freezer)
 
     /**
+     * Update the freezer, inserting it if an entry does not already exist
+     *
+     * @param freezer   The freezer to update
+     */
+    fun updateFreezerAndInsertIfNotExists(freezer: Freezer)
+
+    /**
+     * Update alerts in the database
+     *
+     * @param alerts    The [Alert]s to update
+     */
+    fun updateAllAlerts(vararg alerts: Alert)
+
+    /**
      * Delete a freezer from the database
      *
      * @param freezer   The [Freezer] to delete
      */
     fun deleteFreezer(freezer: Freezer)
+
+    /**
+     * Delete all freezer related data, including records and alerts
+     *
+     * @param freezer   The [Freezer]'s data to delete
+     */
+    fun deleteFreezerRelatedData(freezer: Freezer)
 
     /**
      * Delete a freezer record from the database

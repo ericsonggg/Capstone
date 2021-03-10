@@ -74,17 +74,6 @@ class HomeFreezerListAdapter(private val callback: (boxId: Long) -> Unit) :
         }
     }
 
-    /**
-     * OnClick Listener for each item (i.e. [ViewHolder])
-     *
-     * @property boxId     The boxId of the freezer
-     */
-    internal inner class Listener(private val boxId: Long) : View.OnClickListener {
-        override fun onClick(p0: View?) {
-            callback(boxId)
-        }
-    }
-
     private var freezers: MutableList<Freezer> = mutableListOf()
     private var urgents: MutableMap<Long, Int> = mutableMapOf() // Map<boxId, count>
     private var warnings: MutableMap<Long, Int> = mutableMapOf()
@@ -114,7 +103,7 @@ class HomeFreezerListAdapter(private val callback: (boxId: Long) -> Unit) :
                 (holder as RegularViewHolder).apply {
                     val freezer = freezers[position]
                     bindData(freezer, determineAlertType(freezer.boxId))
-                    itemView.setOnClickListener(Listener(freezer.boxId))
+                    itemView.setOnClickListener { callback(freezer.boxId) }
                 }
             }
         }

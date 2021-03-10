@@ -16,10 +16,7 @@ interface IFreezerRoomDao : IFreezerDao {
     override fun getAllFreezers(): List<Freezer>
 
     @Query("SELECT * FROM freezer WHERE boxId=:boxId")
-    override fun getFreezerById(boxId: Long): Freezer
-
-    @Query("SELECT * FROM freezer WHERE bluetoothAddress=:address")
-    override fun getFreezerByAddress(address: String): Freezer
+    override fun getFreezerById(boxId: Long): Freezer?
 
     @Query("SELECT bluetoothAddress FROM freezer")
     override fun getAllBluetooth(): List<String>
@@ -57,15 +54,37 @@ interface IFreezerRoomDao : IFreezerDao {
     @Update
     override fun updateAllFreezers(vararg freezers: Freezer)
 
+    override fun updateFreezerAndInsertIfNotExists(freezer: Freezer) {
+        if (getFreezerById(freezer.boxId) == null) {
+            insertAllFreezers(freezer)
+        } else {
+            updateAllFreezers(freezer)
+        }
+    }
+
+    @Update
+    override fun updateAllAlerts(vararg alerts: Alert)
+
     @Delete
     override fun deleteFreezer(freezer: Freezer)
 
     @Delete
     override fun deleteFreezerRecord(freezerRecord: FreezerRecord)
 
+    override fun deleteFreezerRelatedData(freezer: Freezer) {
+        deleteFreezerRecordsOfFreezer(freezer.boxId)
+        deleteAlertsOfFreezer(freezer.boxId)
+    }
+
     @Delete
     override fun deleteAlert(alert: Alert)
 
     @Query("SELECT boxId FROM freezer WHERE bluetoothAddress=:address")
     fun getIDofFreezer(address: String): Long
+
+    @Query("DELETE FROM freezerRecord WHERE boxId=:boxId")
+    fun deleteFreezerRecordsOfFreezer(boxId: Long)
+
+    @Query("DELETE FROM alert WHERE boxId=:boxId")
+    fun deleteAlertsOfFreezer(boxId: Long)
 }

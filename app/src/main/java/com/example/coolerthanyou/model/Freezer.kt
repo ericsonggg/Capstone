@@ -37,18 +37,80 @@ data class Freezer(
 
         const val MAX_NAME_LENGTH: Int = 15
         const val MAX_ADDRESS_LENGTH: Int = 17
-        const val MAX_SAMPLING_RATE: Int = 900
+        const val MAX_TEMPERATURE: Float = 25f
+        const val MIN_TEMPERATURE: Float = 0f
+        const val MAX_HUMIDITY: Float = 40f
+        const val MIN_HUMIDITY: Float = 0f
+        const val MAX_SAMPLING_RATE: Int = 15
+        const val MIN_SAMPLING_RATE: Int = 1
+
+        /**
+         * Check whether [name] is valid for a freezer
+         *
+         * @param name  The name to validate
+         * @return  True if valid, false if not
+         */
+        fun validateName(name: String): Boolean {
+            return (name.isNotBlank() && name.length in 1..MAX_NAME_LENGTH)
+        }
+
+        /**
+         * Check whether [address] is valid for a freezer
+         *
+         * @param address  The address to validate
+         * @return  True if valid, false if not
+         */
+        fun validateAddress(address: String): Boolean {
+            return address.isNotBlank() && address.length == MAX_ADDRESS_LENGTH
+        }
+
+        /**
+         * Check whether [temperature] is valid for a freezer
+         *
+         * @param temperature  The temperature to validate
+         * @return  True if valid, false if not
+         */
+        fun validateTemperature(temperature: Float): Boolean {
+            return (temperature in MIN_TEMPERATURE..MAX_TEMPERATURE)
+        }
+
+        /**
+         * Check whether [humidity] is valid for a freezer
+         *
+         * @param humidity  The humidity to validate
+         * @return  True if valid, false if not
+         */
+        fun validateHumidity(humidity: Float): Boolean {
+            return (humidity in MIN_HUMIDITY..MAX_HUMIDITY)
+        }
+
+        /**
+         * Check whether [rate] is valid for a freezer
+         *
+         * @param rate  The rate to validate
+         * @return  True if valid, false if not
+         */
+        fun validateSamplingRate(rate: Int): Boolean {
+            return (rate in MIN_SAMPLING_RATE..MAX_SAMPLING_RATE)
+        }
     }
 
     init {
-        if (name.length > MAX_NAME_LENGTH) {
-            throw IllegalArgumentException("A freezer's name can be max 15 characters. Freezer: $this")
+        if (!validateName(name)) {
+            throw IllegalArgumentException("A freezer's name can be max $MAX_NAME_LENGTH characters. Freezer: $this")
         }
-        if (bluetoothAddress.length != MAX_ADDRESS_LENGTH) {
+        if (!validateAddress(bluetoothAddress)) {
             throw IllegalArgumentException("A freezer's bluetooth address must be of the form ??-??-??-??-??-??. Freezer: $this")
         }
-        if (sampling_rate < 0 || sampling_rate > MAX_SAMPLING_RATE) {
-            throw IllegalArgumentException("A freezer's sampling rate must be from [0, $MAX_SAMPLING_RATE] seconds. Freezer: $this")
+        if (!validateTemperature(set_temperature)) {
+            throw IllegalArgumentException("A freezer's temperature must be from [$MIN_TEMPERATURE, $MAX_TEMPERATURE] degrees. Freezer: $this")
+        }
+        if (!validateHumidity(set_humidity)) {
+            throw IllegalArgumentException("A freezer's humidity must be from [$MIN_HUMIDITY, $MAX_HUMIDITY] percent. Freezer: $this")
+        }
+        if (!validateSamplingRate(sampling_rate)) {
+            throw IllegalArgumentException("A freezer's sampling rate must be from [$MIN_SAMPLING_RATE, $MAX_SAMPLING_RATE] seconds. Freezer: $this")
         }
     }
+
 }
