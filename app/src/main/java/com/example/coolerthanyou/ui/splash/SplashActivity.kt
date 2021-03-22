@@ -138,6 +138,7 @@ class SplashActivity : BaseActivity() {
         mockData()
         getPermissions()
         changeActivity()
+        runPerformanceTests()
     }
 
     override fun onStop() {
@@ -191,6 +192,13 @@ class SplashActivity : BaseActivity() {
      */
     private fun mockData() {
         viewModel.runStartupMocks()
+    }
+
+    /**
+     * Run startup tests
+     */
+    private fun runPerformanceTests() {
+        viewModel.runStartupTests()
     }
 
     /**

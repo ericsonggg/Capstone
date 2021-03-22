@@ -5,6 +5,7 @@ import com.example.coolerthanyou.AppConfiguration
 import com.example.coolerthanyou.BaseViewModel
 import com.example.coolerthanyou.datasource.IFreezerDao
 import com.example.coolerthanyou.mock.Mocker
+import com.example.coolerthanyou.mock.StartupPerformanceTester
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
     private val appConfiguration: AppConfiguration,
     private val mocker: Mocker,
+    private val performanceTester: StartupPerformanceTester,
     private val freezerDao: IFreezerDao
 ) : BaseViewModel() {
 
@@ -82,6 +84,15 @@ class SplashViewModel @Inject constructor(
 
                 removeTask(TASK_STARTUP_MOCKS)
             }
+        }
+    }
+
+    /**
+     * Run startup performance tests
+     */
+    internal fun runStartupTests() {
+        if (appConfiguration.runStartupTests) {
+            performanceTester.uploadMaxDataPerWeek(freezerDao)
         }
     }
 }

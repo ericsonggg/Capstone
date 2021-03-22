@@ -8,6 +8,7 @@ import com.example.coolerthanyou.log.AndroidLogger
 import com.example.coolerthanyou.log.FileLogger
 import com.example.coolerthanyou.log.ILogger
 import com.example.coolerthanyou.mock.Mocker
+import com.example.coolerthanyou.mock.StartupPerformanceTester
 import com.example.coolerthanyou.ui.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
@@ -60,6 +61,14 @@ abstract class ApplicationModule {
         @Provides
         @Singleton
         fun provideMocker(): Mocker = Mocker()
+
+        /**
+         * Provide a startup performance tester
+         */
+        @JvmStatic
+        @Provides
+        @Singleton
+        fun provideStartupPerformanceTester(mocker: Mocker): StartupPerformanceTester = StartupPerformanceTester(mocker)
     }
 
     /**
