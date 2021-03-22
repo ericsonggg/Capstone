@@ -2,4 +2,13 @@
 <resources>
     <string name="main_scan_title">Scanning for Freezers&#8230;</string>
     <string name="main_scan_no_name">Unknown Device</string>
+
+    <string name="main_nav_header_desc">Navigation header</string>
+
+    <string name="main_nav_home">Home</string>
+    <string name="main_nav_details">Details</string>
+    <string name="main_nav_history">History</string>
+    <string name="main_nav_control">Control</string>
+
+    <string name="main_fab_desc">Add new freezer</string>
 </resources>

@@ -12,8 +12,10 @@ import javax.inject.Inject
 
 /**
  * Class to actually control all Bluetooth tasks
+ *
+ * @property logger The logger instance
  */
-class BluetoothManager {
+class BluetoothManager @Inject constructor(protected val logger: ILogger) {
 
     companion object {
         const val REQUEST_ENABLE_BT = 57222 // for enable bluetooth intent
@@ -21,8 +23,6 @@ class BluetoothManager {
 
     private val verifier: BluetoothSupportChecker = BluetoothSupportChecker()
 
-    @Inject
-    protected lateinit var logger: ILogger
     private val logTag = "BluetoothManager"
 
     /**

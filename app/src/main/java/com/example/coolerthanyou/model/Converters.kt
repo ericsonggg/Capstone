@@ -10,7 +10,7 @@ import java.util.*
 class Converters {
 
     companion object {
-        const val ROOM_DATE_FORMAT = "yyyy-MM-dd-kk-mm-ss-SSS"
+        const val ROOM_DATE_FORMAT = "yyyy-MM-dd HH-mm-ss-SSS"
     }
 
     private val dateFormatter: SimpleDateFormat

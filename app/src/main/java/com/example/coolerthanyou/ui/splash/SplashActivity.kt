@@ -53,7 +53,7 @@ class SplashActivity : BaseActivity() {
 
             // try to turn on bluetooth if supported by phone
             try {
-                val bluetoothService = (binder as BluetoothService.Binder).getService()
+                val bluetoothService = (binder).getService()
                 if (!bluetoothService.isBluetoothOn()) {
                     // try to turn off bluetooth if off
                     viewModel.addTask(TASK_ENABLE_BLUETOOTH)
@@ -61,13 +61,15 @@ class SplashActivity : BaseActivity() {
                 }
             } catch (e: BluetoothUnsupportedException) {
                 // Notify user that they cannot use app without bluetooth
-                AlertDialog.Builder(this@SplashActivity).apply {
-                    setMessage(R.string.splash_bluetooth_unsupported_message)
-                    setPositiveButton(R.string.okay) { _, _ ->
+                AlertDialog.Builder(this@SplashActivity)
+                    .setMessage(R.string.splash_bluetooth_unsupported_message)
+                    .setPositiveButton(R.string.okay) { _, _ ->
                         android.os.Process.killProcess(android.os.Process.myPid()) //kill app
                     }
-                    create().show()
-                }
+                    .create().apply {
+                        show()
+                        setDefaults()
+                    }
 
                 logger.e(logTag, "Phone does not support Bluetooth, quitting")
             }
@@ -133,8 +135,10 @@ class SplashActivity : BaseActivity() {
         viewModel.addTask(TASK_BIND_BLUETOOTH_SERVICE)
 
         //run tasks
+        mockData()
         getPermissions()
         changeActivity()
+        runPerformanceTests()
     }
 
     override fun onStop() {
@@ -184,6 +188,20 @@ class SplashActivity : BaseActivity() {
     }
 
     /**
+     * Run startup data mocks
+     */
+    private fun mockData() {
+        viewModel.runStartupMocks()
+    }
+
+    /**
+     * Run startup tests
+     */
+    private fun runPerformanceTests() {
+        viewModel.runStartupTests()
+    }
+
+    /**
      * Ask user for location permissions if not granted
      */
     private fun getPermissions() {
@@ -191,14 +209,16 @@ class SplashActivity : BaseActivity() {
             logger.i(logTag, "asking user for location services")
 
             //Info dialog
-            AlertDialog.Builder(this).apply {
-                setTitle(R.string.splash_permission_info_title)
-                setMessage(R.string.splash_permission_location_message)
-                setPositiveButton(android.R.string.ok) { _, _ ->
+            AlertDialog.Builder(this)
+                .setTitle(R.string.splash_permission_info_title)
+                .setMessage(R.string.splash_permission_location_message)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
                     requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_FINE_LOCATION)
                 }
-                create().show()
-            }
+                .create().apply {
+                    show()
+                    setDefaults()
+                }
 
             viewModel.addTask(TASK_LOCATION_PERMISSION)
         }

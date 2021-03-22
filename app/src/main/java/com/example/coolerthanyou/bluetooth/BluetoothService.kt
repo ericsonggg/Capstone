@@ -36,14 +36,16 @@ class BluetoothService : BaseService() {
         const val HARDWARE_COMMAND_UUID = "0000dfb2-0000-1000-8000-00805f9b34fb"
         const val HARDWARE_MODEL_NUMBER_UUID = "00002a24-0000-1000-8000-00805f9b34fb"
 
-        private const val KEY_STANDARD = 0x00.toByte()
-        private const val KEY_SETTINGS = 0x01.toByte()
-        private const val KEY_ERROR = 0x10.toByte()
-        private const val KEY_UPDATE_NAME = 0x50.toByte()
-        private const val KEY_UPDATE_REFRESH = 0x51.toByte()
-        private const val KEY_UPDATE_SETTING = 0x52.toByte()
-        private const val KEY_MANUAL_PULL = 0x60.toByte()
-        private const val KEY_MANUAL_PULL_SETTINGS = 0x61.toByte()
+        private const val KEY_STANDARD: Byte = 0x00.toByte()
+        private const val KEY_SETTINGS: Byte = 0x01.toByte()
+        private const val KEY_ERROR: Byte = 0x10.toByte()
+        private const val KEY_UPDATE_NAME: Byte = 0x50.toByte()
+        private const val KEY_UPDATE_REFRESH: Byte = 0x51.toByte()
+        private const val KEY_UPDATE_SETTING: Byte = 0x52.toByte()
+        private const val KEY_MANUAL_PULL: Byte = 0x60.toByte()
+        private const val KEY_MANUAL_PULL_SETTINGS: Byte = 0x61.toByte()
+
+        private const val MESSAGE_SIZE: Int = 26
 
         val scanFilter: ScanFilter = ScanFilter.Builder().setServiceUuid(ParcelUuid.fromString(HARDWARE_SCAN_UUID)).build()
     }
@@ -122,6 +124,8 @@ class BluetoothService : BaseService() {
     private val binder: IBinder = Binder()
 
     private val gattCallback: BluetoothGattCallback = object : BluetoothGattCallback() {
+        private var characs: ByteBuffer = ByteBuffer.allocate(MESSAGE_SIZE)
+
         /**
          * Start discovering services for all newly connected devices.
          */
@@ -165,6 +169,7 @@ class BluetoothService : BaseService() {
                         with(gatt) {
                             setCharacteristicNotification(charac, true)
                             readCharacteristic(charac)
+                            pullSettings(gatt.device.address)   // request the settings
                         }
                         return
                     }
@@ -179,25 +184,40 @@ class BluetoothService : BaseService() {
             }
         }
 
-        /**
-         * Read data from the serial characteristic
-         */
         override fun onCharacteristicRead(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int) {
-            when (status) {
-                BluetoothGatt.GATT_FAILURE -> {
-                    logger.w(logTag, "Failed to read characteristic from ${gatt.device.address}")
+            val data = characteristic.value
+            var dataIndex = 0
+            var availableSpace: Int = MESSAGE_SIZE - characs.position()
+            var remainingData: Int = data.size - dataIndex
+
+            // loop until data depleted
+            while (remainingData > 0) {
+                // fill as much of buffer as we can without overflow
+                dataIndex = if ((availableSpace - remainingData) <= 0) {
+                    characs.put(data, dataIndex, availableSpace)
+                    dataIndex + availableSpace
+                } else {
+                    characs.put(data, dataIndex, remainingData)
+                    dataIndex + remainingData
                 }
-                else -> {
-                    processCharacteristic(gatt.device.address, characteristic.value)
+
+                // only process if we've got MESSAGE_SIZE bytes
+                if (characs.position() == MESSAGE_SIZE) {
+                    processCharacteristic(gatt.device.address, characs.array())
+                    characs.clear()
                 }
+
+                // recalculate
+                availableSpace = MESSAGE_SIZE - characs.position()
+                remainingData = data.size - dataIndex
             }
         }
 
         /**
-         * Read changed data from the device, via [onCharacteristicRead]
+         * Read changed data from the device and apply it to buffer.
          */
         override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
-            onCharacteristicRead(gatt, characteristic, BluetoothGatt.GATT_SUCCESS)
+
         }
 
         /**
@@ -236,7 +256,7 @@ class BluetoothService : BaseService() {
 
         // Create notification and start service as foreground
         serviceNotification = NotificationCompat.Builder(this, NOTIFICATION_SERVICE_CHANNEL).apply {
-            setSmallIcon(R.mipmap.ic_launcher) //TODO: update with app icon
+            setSmallIcon(R.mipmap.ic_launcher)
             priority = NotificationCompat.PRIORITY_LOW
             setContentTitle(getString(if (bluetoothManager.isBluetoothOn()) R.string.notif_bluetooth_no_devices else R.string.notif_bluetooth_off))
         }
@@ -295,14 +315,45 @@ class BluetoothService : BaseService() {
     internal fun isBluetoothOn(): Boolean = bluetoothManager.isBluetoothOn()
 
     /**
-     * Connect to a Bluetooth device
+     * Connect to a Bluetooth device if not already connected
      *
      * @param device    The device to connect to
      */
     internal fun connectToDevice(device: BluetoothDevice) {
         logger.d(logTag, "connectToDevice: posting task with device: $device")
         handler.post {
-            bluetoothManager.tryConnect(device, this, gattCallback)
+            if (!connectedDevices.containsKey(device.address)) {
+                bluetoothManager.tryConnect(device, this, gattCallback)
+            }
+        }
+    }
+
+    /**
+     * Connect to the Bluetooth device for this address if not already connected.
+     * Will not work if the device has not been paired previously
+     *
+     * @param address   The bluetooth MAC address
+     */
+    internal fun connectToDevice(address: String) {
+        logger.d(logTag, "connectToDevice: posting task with address: $address")
+        handler.post {
+            bluetoothManager.getDevice(address)?.let { device ->
+                connectToDevice(device)
+            }
+        }
+    }
+
+    /**
+     * Disconnect to the Bluetooth device for this address if already connected
+     *
+     * @param address   The bluetooth MAC address
+     */
+    internal fun disconnectDevice(address: String) {
+        logger.d(logTag, "connectToDevice: posting task with address: $address")
+        handler.post {
+            connectedDevices[address]?.let { gatt ->
+                gatt.disconnect()
+            }
         }
     }
 
@@ -350,13 +401,12 @@ class BluetoothService : BaseService() {
     /**
      * Update refresh rate of a freezer via BLE
      *
-     * @param freezer   Freezer to update
-     * @param rate  The new rate in seconds
+     * @param freezer   Freezer with updated settings
      */
-    internal fun updateRefreshRate(freezer: Freezer, rate: Int) {
+    internal fun updateRefreshRate(freezer: Freezer) {
         byteArrayOf().apply {
             this + KEY_UPDATE_REFRESH
-            this + rate.toByte()
+            this + freezer.sampling_rate.toByte()
             writeCharacteristic(this, freezer.bluetoothAddress)
         }
     }
@@ -401,6 +451,16 @@ class BluetoothService : BaseService() {
     }
 
     /**
+     * Check whether a particular freezer is connected via bluetooth
+     *
+     * @param freezer   The freezer to check
+     * @return  True if connected, false if not
+     */
+    internal fun checkIfConnected(freezer: Freezer): Boolean {
+        return connectedDevices.containsKey(freezer.bluetoothAddress)
+    }
+
+    /**
      * Update the notification
      */
     internal fun updateNotification() {
@@ -441,9 +501,11 @@ class BluetoothService : BaseService() {
      * Converts the read characteristic into data
      *
      * @param address   The address of the GATT device
-     * @param charac    The characteristic that should be processed
+     * @param origCharac    The characteristic that should be processed
      */
-    private fun processCharacteristic(address: String, charac: ByteArray) {
+    private fun processCharacteristic(address: String, origCharac: ByteArray) {
+        val charac = origCharac.clone() // to prevent race conditions
+
         if (charac.size < 2) {
             logger.w(logTag, "invalid characteristic with $charac")
         }
@@ -457,10 +519,18 @@ class BluetoothService : BaseService() {
 
                 // Insert new record
                 handler.post {
-                    val temperature = ByteBuffer.wrap(charac.sliceArray(1..4)).float
-                    val humidity = ByteBuffer.wrap(charac.sliceArray(5..8)).float
+                    val temperature = charac.sliceArray(1..4).apply {
+                        reverse()
+                    }.let {
+                        ByteBuffer.wrap(it).float
+                    }
+                    val humidity = charac.sliceArray(5..8).apply {
+                        reverse()
+                    }.let {
+                        ByteBuffer.wrap(it).float
+                    }
                     val battery: Int = charac[9].toInt()
-                    freezerDao.insertFreezerRecord(address, temperature, humidity, battery)
+                    freezerDao.insertAndValidateFreezerRecord(address, temperature, humidity, battery)
                 }
             }
             KEY_SETTINGS -> {
@@ -474,8 +544,13 @@ class BluetoothService : BaseService() {
                     val isPowerOn = charac[1] == 0.toByte()
                     val temperature = ByteBuffer.wrap(charac.sliceArray(2..5)).float
                     val humidity = ByteBuffer.wrap(charac.sliceArray(6..9)).float
+                    val samplingRate = charac[10].toInt()
                     val name = String(charac.sliceArray(10..25))
-                    freezerDao.insertAllFreezers(Freezer(name, temperature, humidity, isPowerOn, address))
+                    try {
+                        freezerDao.updateAllFreezers(Freezer(name, address, temperature, humidity, samplingRate, isPowerOn, false))
+                    } catch (e: IllegalArgumentException) {
+                        logger.e(logTag, "Failed to update a freezer", e)
+                    }
                 }
             }
             KEY_ERROR -> {
@@ -486,9 +561,7 @@ class BluetoothService : BaseService() {
 
                 handler.post {
                     val error = String(charac.sliceArray(1..8))
-                    freezerDao.getFreezerByAddress(address).also { freezer ->
-                        logger.e(logTag, "received error from Freezer ${freezer.name} with error: $error")
-                    }
+                    logger.e(logTag, "received error from device with address $address with error: $error")
                 }
             }
             else -> {
@@ -506,8 +579,8 @@ class BluetoothService : BaseService() {
     private fun writeCharacteristic(data: ByteArray, address: String) {
         connectedDevices[address]?.let { gatt ->
             findSerialCharacteristic(gatt)?.let { charac ->
-                charac.value = data
-                writeQueue.add(Pair(gatt, charac))
+//                charac.value = data
+//                writeQueue.add(Pair(gatt, charac))
             }
         }
     }

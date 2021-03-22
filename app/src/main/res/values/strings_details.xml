@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fragment_details_appbar_title">%1$s Details</string>
+
+    <string name="fragment_details_alert_dialog_title">Dismiss this Alert?</string>
+
+    <string name="fragment_details_overview_header">Overview</string>
+
+    <string name="fragment_details_controls_header">Controls</string>
+    <string name="fragment_details_controls_name_label">Name:</string>
+    <string name="fragment_details_controls_name_invalid_toast">Name must be less than %1$d characters</string>
+    <string name="fragment_details_controls_temperature_label">Temperature (\u2103):</string>
+    <string name="fragment_details_controls_temperature_up_desc">Temperature Up</string>
+    <string name="fragment_details_controls_temperature_down_desc">Temperature Down</string>
+    <string name="fragment_details_controls_temperature_invalid_toast">Temperature must be in [%1$d, %2$d]\u2103</string>
+    <string name="fragment_details_controls_humidity_label">Humidity (&#37;):</string>
+    <string name="fragment_details_controls_humidity_up_desc">Humidity Up</string>
+    <string name="fragment_details_controls_humidity_down_desc">Humidity Down</string>
+    <string name="fragment_details_controls_humidity_invalid_toast">Humidity must be in [%1$d, %2$d] %%</string>
+    <string name="fragment_details_controls_sampling_rate_invalid_toast">Sampling rate must be in [%1$d, %2$d] min</string>
+    <string name="fragment_details_controls_sampling_rate_label">Sampling rate (min):</string>
+    <string name="fragment_details_controls_sampling_rate_up_desc">Sampling Rate Up</string>
+    <string name="fragment_details_controls_sampling_rate_down_desc">Sampling Rate Down</string>
+    <string name="fragment_details_controls_power_label">Enable power:</string>
+    <string name="fragment_details_controls_address_label">Bluetooth address:</string>
+    <string name="fragment_details_controls_address_default">\?\?-\?\?-\?\?-\?\?-\?\?-\?\?</string>
+    <string name="fragment_details_controls_connect_label">Bluetooth connected:</string>
+    <string name="fragment_details_controls_connect_connecting_toast">Trying to connect over Bluetooth&#8230;</string>
+    <string name="fragment_details_controls_connect_disconnecting_toast">Disconnecting from this device&#8230;</string>
+    <string name="fragment_details_controls_manual_sample_label">Pull data now:</string>
+    <string name="fragment_details_controls_manual_sample_button">Sample</string>
+    <string name="fragment_details_controls_manual_sample_toast">Requesting data over Bluetooth&#8230;</string>
+    <string name="fragment_details_controls_manual_sample_disconnected_toast">The freezer is not connected via Bluetooth</string>
+    <string name="fragment_details_controls_remove_label">Delete from app:</string>
+    <string name="fragment_details_controls_remove_button">Remove</string>
+    <string name="fragment_details_controls_remove_dialog_title">Delete Unit From App</string>
+    <string name="fragment_details_controls_remove_dialog_message">This will delete this unit FOREVER. Are you sure you want to continue?</string>
+
+    <string name="fragment_details_history_header">History</string>
+    <string name="fragment_details_history_temperature_header">Temperature</string>
+    <string name="fragment_details_history_temperature_more_desc">More temperature data</string>
+    <string name="fragment_details_history_humidity_header">Humidity</string>
+    <string name="fragment_details_history_humidity_more_desc">More humidity data</string>
+
+    <string name="fragment_details_bluetooth_must_be_on">Bluetooth must be on for this feature</string>
+</resources>

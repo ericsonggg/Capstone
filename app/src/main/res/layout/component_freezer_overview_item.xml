@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/component_freezer_overview_height"
+    android:layout_margin="@dimen/margin_small"
+    android:background="@drawable/background_complex_item"
+    android:padding="@dimen/padding_x_large">
+
+    <TextView
+        android:id="@+id/component_freezer_overview_name"
+        style="@style/TextHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_med"
+        android:text="@string/component_freezer_overview_freezer_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/component_freezer_overview_temp_label"
+        style="@style/TextLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/component_freezer_overview_temp_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/component_freezer_overview_name" />
+
+    <TextView
+        android:id="@+id/component_freezer_overview_temp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/single_space"
+        android:text="@string/component_freezer_overview_temp"
+        app:layout_constraintBaseline_toBaselineOf="@id/component_freezer_overview_temp_label"
+        app:layout_constraintEnd_toStartOf="@id/component_freezer_overview_favorite"
+        app:layout_constraintStart_toEndOf="@id/component_freezer_overview_temp_label" />
+
+    <TextView
+        android:id="@+id/component_freezer_overview_humidity_label"
+        style="@style/TextLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/component_freezer_overview_humidity_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/component_freezer_overview_temp_label" />
+
+    <TextView
+        android:id="@+id/component_freezer_overview_humidity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/single_space"
+        android:text="@string/component_freezer_overview_humidity"
+        app:layout_constraintBaseline_toBaselineOf="@id/component_freezer_overview_humidity_label"
+        app:layout_constraintEnd_toStartOf="@id/component_freezer_overview_favorite"
+        app:layout_constraintStart_toEndOf="@id/component_freezer_overview_humidity_label" />
+
+    <TextView
+        android:id="@+id/component_freezer_overview_battery_label"
+        style="@style/TextLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/component_freezer_overview_battery_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/component_freezer_overview_humidity_label" />
+
+    <TextView
+        android:id="@+id/component_freezer_overview_battery"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/single_space"
+        android:text="@string/component_freezer_overview_battery"
+        app:layout_constraintBaseline_toBaselineOf="@id/component_freezer_overview_battery_label"
+        app:layout_constraintEnd_toStartOf="@id/component_freezer_overview_favorite"
+        app:layout_constraintStart_toEndOf="@id/component_freezer_overview_battery_label" />
+
+    <TextView
+        android:id="@+id/component_freezer_overview_last_update_label"
+        style="@style/TextLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/component_freezer_overview_last_update_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/component_freezer_overview_battery_label" />
+
+    <TextView
+        android:id="@+id/component_freezer_overview_last_update"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/single_space"
+        android:text="@string/component_freezer_overview_last_update"
+        app:layout_constraintBaseline_toBaselineOf="@id/component_freezer_overview_last_update_label"
+        app:layout_constraintEnd_toStartOf="@id/component_freezer_overview_favorite"
+        app:layout_constraintStart_toEndOf="@id/component_freezer_overview_last_update_label" />
+
+    <ImageView
+        android:id="@+id/component_freezer_overview_favorite"
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
+        android:layout_margin="@dimen/margin_large"
+        android:contentDescription="@string/component_freezer_overview_favorite_desc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/component_freezer_overview_alert_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_heart_outline" />
+
+    <ImageView
+        android:id="@+id/component_freezer_overview_alert_icon"
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
+        android:layout_margin="@dimen/margin_large"
+        android:contentDescription="@string/component_freezer_overview_alert_desc"
+        android:tint="@color/urgent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_alert" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

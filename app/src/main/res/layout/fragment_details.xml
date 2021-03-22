@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.details.DetailsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_details_alerts_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/fragment_details_overview_header"
+            style="@style/TextSectionHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_xx_large"
+            android:background="@drawable/background_simple_item"
+            android:text="@string/fragment_details_overview_header" />
+
+        <include
+            android:id="@+id/fragment_details_overview"
+            layout="@layout/component_freezer_overview_item"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/component_freezer_overview_height"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_large" />
+
+        <TextView
+            android:id="@+id/fragment_details_controls_header"
+            style="@style/TextSectionHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_xx_large"
+            android:background="@drawable/background_simple_item"
+            android:text="@string/fragment_details_controls_header" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_details_controls_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:background="@drawable/background_complex_item"
+            android:padding="@dimen/padding_x_large">
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/fragment_details_controls_label_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="fragment_details_controls_name_label, fragment_details_controls_temperature_label, fragment_details_controls_humidity_label, fragment_details_controls_sampling_rate_label, fragment_details_controls_power_label, fragment_details_controls_address_label, fragment_details_controls_connect_label, fragment_details_controls_manual_sample_label, fragment_details_controls_remove_label" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/fragment_details_controls_name"
+                android:text="@string/fragment_details_controls_name_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/fragment_details_controls_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:importantForAutofill="no"
+                android:inputType="textNoSuggestions"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/text"
+                app:layout_constraintBaseline_toBaselineOf="@id/fragment_details_controls_name_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_temperature_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_details_control_spacing"
+                android:labelFor="@id/fragment_details_controls_temperature"
+                android:text="@string/fragment_details_controls_temperature_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_name_label" />
+
+            <ImageView
+                android:id="@+id/fragment_details_controls_temperature_up"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/fragment_details_controls_temperature_up_desc"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_temperature_label"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_controls_temperature"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_temperature_label"
+                app:srcCompat="@drawable/ic_wedge_up" />
+
+            <EditText
+                android:id="@+id/fragment_details_controls_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:gravity="center"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:textCursorDrawable="@null"
+                app:layout_constraintBaseline_toBaselineOf="@id/fragment_details_controls_temperature_label"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_controls_temperature_down"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_temperature_up" />
+
+            <ImageView
+                android:id="@+id/fragment_details_controls_temperature_down"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/fragment_details_controls_temperature_down_desc"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_temperature_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_temperature"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_temperature_label"
+                app:srcCompat="@drawable/ic_wedge_down" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_humidity_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_details_control_spacing"
+                android:labelFor="@id/fragment_details_controls_humidity"
+                android:text="@string/fragment_details_controls_humidity_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_temperature_label" />
+
+            <ImageView
+                android:id="@+id/fragment_details_controls_humidity_up"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/fragment_details_controls_humidity_up_desc"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_humidity_label"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_controls_humidity"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_humidity_label"
+                app:srcCompat="@drawable/ic_wedge_up" />
+
+            <EditText
+                android:id="@+id/fragment_details_controls_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:gravity="center"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:textCursorDrawable="@null"
+                app:layout_constraintBaseline_toBaselineOf="@id/fragment_details_controls_humidity_label"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_controls_humidity_down"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_humidity_up" />
+
+            <ImageView
+                android:id="@+id/fragment_details_controls_humidity_down"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/fragment_details_controls_humidity_down_desc"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_humidity_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_humidity"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_humidity_label"
+                app:srcCompat="@drawable/ic_wedge_down" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_sampling_rate_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_details_control_spacing"
+                android:labelFor="@id/fragment_details_controls_sampling_rate"
+                android:text="@string/fragment_details_controls_sampling_rate_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_humidity_label" />
+
+            <ImageView
+                android:id="@+id/fragment_details_controls_sampling_rate_up"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/fragment_details_controls_sampling_rate_up_desc"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_sampling_rate_label"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_controls_sampling_rate"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_sampling_rate_label"
+                app:srcCompat="@drawable/ic_wedge_up" />
+
+            <EditText
+                android:id="@+id/fragment_details_controls_sampling_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:gravity="center"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:textCursorDrawable="@null"
+                app:layout_constraintBaseline_toBaselineOf="@id/fragment_details_controls_sampling_rate_label"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_controls_sampling_rate_down"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_sampling_rate_up" />
+
+            <ImageView
+                android:id="@+id/fragment_details_controls_sampling_rate_down"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/fragment_details_controls_sampling_rate_down_desc"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_sampling_rate_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_sampling_rate"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_sampling_rate_label"
+                app:srcCompat="@drawable/ic_wedge_down" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_power_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_details_control_spacing"
+                android:text="@string/fragment_details_controls_power_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_sampling_rate_label" />
+
+            <Switch
+                android:id="@+id/fragment_details_controls_power"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:switchPadding="@dimen/padding_small"
+                android:text="@string/off"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_power_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_power_label" />
+
+            <View
+                android:id="@+id/fragment_details_controls_bluetooth_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_x_large"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_power_label" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_address_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_x_large"
+                android:text="@string/fragment_details_controls_address_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_bluetooth_divider" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_details_controls_address_default"
+                app:layout_constraintBaseline_toBaselineOf="@id/fragment_details_controls_address_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_connect_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_details_control_spacing"
+                android:text="@string/fragment_details_controls_connect_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_address_label" />
+
+            <Switch
+                android:id="@+id/fragment_details_controls_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:switchPadding="@dimen/padding_small"
+                android:text="@string/no"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_connect_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_connect_label" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_manual_sample_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_details_control_spacing"
+                android:text="@string/fragment_details_controls_manual_sample_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_connect_label" />
+
+            <Button
+                android:id="@+id/fragment_details_controls_manual_sample"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button"
+                android:padding="@dimen/padding_large"
+                android:text="@string/fragment_details_controls_manual_sample_button"
+                android:textSize="@dimen/text"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_manual_sample_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_manual_sample_label" />
+
+            <TextView
+                android:id="@+id/fragment_details_controls_remove_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_details_control_spacing"
+                android:text="@string/fragment_details_controls_remove_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_controls_manual_sample_label" />
+
+            <Button
+                android:id="@+id/fragment_details_controls_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button"
+                android:padding="@dimen/padding_large"
+                android:text="@string/fragment_details_controls_remove_button"
+                android:textSize="@dimen/text"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_controls_remove_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_details_controls_label_barrier"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_controls_remove_label" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/fragment_details_history_header"
+            style="@style/TextSectionHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_xx_large"
+            android:background="@drawable/background_simple_item"
+            android:text="@string/fragment_details_history_header" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_details_history_temperature_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:background="@drawable/background_complex_item"
+            android:padding="@dimen/padding_x_large">
+
+            <TextView
+                android:id="@+id/fragment_details_history_temperature_header"
+                style="@style/TextHeader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_med"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:text="@string/fragment_details_history_temperature_header"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_history_temperature_more_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fragment_details_history_temperature_more_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:text="@string/more"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_history_temperature_more_icon"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_history_temperature_more_icon"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_history_temperature_more_icon" />
+
+            <ImageView
+                android:id="@+id/fragment_details_history_temperature_more_icon"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/fragment_details_history_temperature_more_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_right" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/fragment_details_history_temperature_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/chart_height"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_history_temperature_header" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_details_history_humidity_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_xx_large"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:background="@drawable/background_complex_item"
+            android:padding="@dimen/padding_x_large">
+
+            <TextView
+                android:id="@+id/fragment_details_history_humidity_header"
+                style="@style/TextHeader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_med"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:text="@string/fragment_details_history_humidity_header"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_history_humidity_more_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fragment_details_history_humidity_more_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:text="@string/more"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_details_history_humidity_more_icon"
+                app:layout_constraintEnd_toStartOf="@id/fragment_details_history_humidity_more_icon"
+                app:layout_constraintTop_toTopOf="@id/fragment_details_history_humidity_more_icon" />
+
+            <ImageView
+                android:id="@+id/fragment_details_history_humidity_more_icon"
+                android:layout_width="@dimen/icon_small"
+                android:layout_height="@dimen/icon_small"
+                android:contentDescription="@string/fragment_details_history_humidity_more_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_right" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/fragment_details_history_humidity_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/chart_height"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_details_history_humidity_header" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Space
+            android:id="@+id/fragment_details_fab_space"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fab_space" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

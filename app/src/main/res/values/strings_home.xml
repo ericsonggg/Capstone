@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fragment_home_notification_header">Notifications:</string>
-    <string name="fragment_home_temperature_data_header">Temperature Data:</string>
-    <string name="fragment_home_humidity_data_header">Humidity Data:</string>
-    <string name="fragment_home_no_notifications">No Notifications to Display</string>
+    <string name="fragment_home_urgent_label">Urgent (%1$d)</string>
+    <string name="fragment_home_warning_label">Warning (%1$d)</string>
+
+    <string name="fragment_home_urgent_dialog_title">Go to Freezer with Urgent Alerts</string>
+    <string name="fragment_home_urgent_dialog_list_item">%1$s : %2$d Urgents</string>
+    <string name="fragment_home_warning_dialog_title">Go to Freezer with Warnings</string>
+    <string name="fragment_home_warning_dialog_list_item">%1$s : %2$d Warnings</string>
+
+    <string name="fragment_home_favorites_label">Favorites</string>
+
+    <string name="fragment_home_freezer_list_name">Freezer Name</string>
+    <string name="fragment_home_freezer_list_alert_desc">Alert</string>
+    <string name="fragment_home_freezer_list_details_desc">Details</string>
+    <string name="fragment_home_freezer_list_none">No Freezers were found.\nAdd a new Freezer with the "+" button</string>
 </resources>

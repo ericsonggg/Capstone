@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="component_freezer_overview_freezer_name">Freezer Name</string>
+    <string name="component_freezer_overview_temp_label">Recent Temperature: </string>
+    <string name="component_freezer_overview_temp">%1$.2f\u2103</string>
+    <string name="component_freezer_overview_humidity_label">Recent Humidity: </string>
+    <string name="component_freezer_overview_humidity">%1$.2f%%</string>
+    <string name="component_freezer_overview_battery_label">Recent Battery: </string>
+    <string name="component_freezer_overview_battery">%1$d%%</string>
+    <string name="component_freezer_overview_last_update_label">Last Updated: </string>
+    <string name="component_freezer_overview_last_update">%1$tb %1$te %1$tH:%1$tM:%1$tS.%1$tL</string>
+    <string name="component_freezer_overview_favorite_desc">Favorite this freezer</string>
+    <string name="component_freezer_overview_alert_desc">Alert</string>
+
+    <string name="component_freezer_overview_no_favorite">Favorite a freezer to see its overview!\nTap the heart icon in a Freezer\'s details page.</string>
+    <string name="component_freezer_overview_none_heart_desc">Heart</string>
+    <string name="component_freezer_overview_no_record">No record</string>
+</resources>

@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.Menu
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
@@ -28,17 +27,20 @@ import com.example.coolerthanyou.BaseActivity
 import com.example.coolerthanyou.BaseApplication
 import com.example.coolerthanyou.R
 import com.example.coolerthanyou.bluetooth.BluetoothService
+import com.example.coolerthanyou.model.Freezer
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 
 /**
  * Main Activity for all core functions.
- * Each "function" should reside as a fragment within this activity, swapping the [Fragment] and [ViewModel] as necessary.
+ * Each "function" should reside as a fragment within this activity, swapping the Fragment and ViewModel as necessary.
  */
 class MainActivity : BaseActivity() {
 
     private val logTag: String = "MainActivity"
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
+
+    private lateinit var fab: FloatingActionButton
 
     private var isServiceBound: Boolean = false
     private var bluetoothService: BluetoothService? = null
@@ -62,10 +64,7 @@ class MainActivity : BaseActivity() {
             .setTitle(R.string.main_scan_title)
             .setView(R.layout.activity_main_scan_recycler)
             .setCancelable(true)
-            .setOnCancelListener { _ ->
-                scanDialog.dismiss()
-            }
-            .setOnDismissListener { _ ->
+            .setOnDismissListener {
                 if (isServiceBound) {
                     bluetoothService!!.stopDiscovery()
                 }
@@ -81,42 +80,18 @@ class MainActivity : BaseActivity() {
         logger.d(logTag, "onCreate started")
 
         setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.activity_main_toolbar)
         setSupportActionBar(toolbar)
 
-        (findViewById<FloatingActionButton>(R.id.fab)).apply {
-            setOnClickListener { _ ->
-                discoverDevices()
-            }
-        }
+        fab = findViewById(R.id.activity_main_fab)
 
-        val boxValue: TextView = findViewById(R.id.quick_access_drawer_box_value)
-
-        val boxValueList = arrayOf(
-            getText(R.string.quick_access_drawer_default_box_value),
-            getText(R.string.quick_access_drawer_secondary_box_value),
-            getText(R.string.quick_access_drawer_tertiary_box_value)
-        )
-        val boxSelectionTool = BoxSelector(boxValueList, viewModel)
-
-        val quickAccessDrawer: View = findViewById(R.id.quick_access_drawer)
-        quickAccessDrawer.setOnClickListener { _ ->
-            val boxSelectionDialog: AlertDialog.Builder = boxSelectionTool.getAlertDialog(this, boxValue)
-            boxSelectionDialog.show()
-        }
-
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+        val drawerLayout: DrawerLayout = findViewById(R.id.activity_main_drawer_layout)
+        val navView: NavigationView = findViewById(R.id.activity_main_nav)
+        val navController = findNavController(R.id.activity_main_fragment_host)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home,
-                R.id.nav_data,
-                R.id.nav_about,
-                R.id.nav_control
-            ), drawerLayout
+            setOf(R.id.nav_home), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -124,14 +99,8 @@ class MainActivity : BaseActivity() {
         logger.d(logTag, "onCreate completed")
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.activity_main_fragment_host)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
@@ -139,8 +108,127 @@ class MainActivity : BaseActivity() {
         super.onStart()
         logger.d(logTag, "onStart")
 
-        Intent(this, BluetoothService::class.java).let { intent ->
-            bindService(intent, bluetoothServiceConn, Context.BIND_AUTO_CREATE)
+        bindService(Intent(this, BluetoothService::class.java), bluetoothServiceConn, Context.BIND_AUTO_CREATE)
+
+        fab.setOnClickListener {
+            discoverDevices()
+        }
+    }
+
+    /**
+     * Update the action bar
+     *
+     * @param title New title of the action bar
+     */
+    internal fun updateActionBar(title: String) {
+        supportActionBar?.title = title
+    }
+
+    /**
+     * Show the fab
+     */
+    internal fun showFab() {
+        fab.visibility = View.VISIBLE
+    }
+
+    /**
+     * Hide the fab
+     */
+    internal fun hideFab() {
+        fab.visibility = View.GONE
+    }
+
+    /**
+     * Check whether bluetooth is on or not
+     *
+     * @return
+     */
+    internal fun isBluetoothOn(): Boolean {
+        return if (isServiceBound) {
+            bluetoothService!!.isBluetoothOn()
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Check whether the freezer is connected to bluetooth
+     *
+     * @param freezer   The freezer to check
+     * @return  True if connected, false if not connected, bluetooth is off, or service is unbound
+     */
+    internal fun checkIfConnected(freezer: Freezer): Boolean {
+        return if (isServiceBound) {
+            bluetoothService!!.checkIfConnected(freezer)
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Try to connect to the freezer
+     *
+     * @param freezer   The freezer to connect to
+     */
+    internal fun tryConnect(freezer: Freezer) {
+        if (isServiceBound) {
+            bluetoothService!!.connectToDevice(freezer.bluetoothAddress)
+        }
+    }
+
+    /**
+     * Disconnect from the freezer
+     *
+     * @param freezer   The freezer to disconnect from
+     */
+    internal fun disconnect(freezer: Freezer) {
+        if (isServiceBound) {
+            bluetoothService!!.disconnectDevice(freezer.bluetoothAddress)
+        }
+    }
+
+    /**
+     * Update the name of the freezer via Bluetooth
+     *
+     * @param freezer   The freezer with the new name
+     */
+    internal fun updateName(freezer: Freezer) {
+        if (isServiceBound) {
+            bluetoothService!!.updateName(freezer)
+        }
+    }
+
+    /**
+     * Update the refresh rate of the freezer via Bluetooth
+     *
+     * @param freezer   The freezer with the new refresh rate
+     */
+    internal fun updateRefreshRate(freezer: Freezer) {
+        if (isServiceBound) {
+            bluetoothService!!.updateRefreshRate(freezer)
+        }
+    }
+
+    /**
+     * Update the settings of the freezer via Bluetooth
+     *
+     * @param freezer   The freezer with updated settings
+     */
+    internal fun updateSettings(freezer: Freezer) {
+        if (isServiceBound) {
+            bluetoothService!!.updateSettings(freezer)
+        }
+    }
+
+    /**
+     * Manually sample the data for [freezer].
+     * Does nothing if the service is unbound
+     *
+     * @param freezer   The freezer to sample
+     */
+    internal fun manualSample(freezer: Freezer) {
+        if (isServiceBound) {
+            bluetoothService!!.pullData(freezer)
         }
     }
 
@@ -172,10 +260,6 @@ class MainActivity : BaseActivity() {
         val scanCallback: ScanCallback = object : ScanCallback() {
             override fun onScanResult(callbackType: Int, result: ScanResult) {
                 this@MainActivity.runOnUiThread {
-                    logger.w(
-                        "KEK",
-                        "scanCallback: scan found result - ${result.device.name} | ${BluetoothService.scanFilter.matches(result)}"
-                    )
                     if (BluetoothService.scanFilter.matches(result)) {
                         scanAdapter.apply {
                             addDevice(result.device)
@@ -198,6 +282,5 @@ class MainActivity : BaseActivity() {
      */
     private fun scanClickCallback(device: BluetoothDevice) {
         bluetoothService?.connectToDevice(device)
-        //TODO: add to database
     }
 }
